@@ -1,5 +1,12 @@
 // Общие компоненты
 
+const SERVICE_LABELS = {
+  viral: 'Вирусные видеоролики',
+  production: 'Продюсирование и СММ',
+  corporate: 'Корпоративные фильмы',
+  'ai-content': 'ИИ контент',
+}
+
 export function Card({ title, text }) {
   return (
     <div className="p-6" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
@@ -45,7 +52,7 @@ export function CaseCard({ item, href }) {
     <div className="cyber-card w-full overflow-hidden block">
       <div className="relative z-10 p-8 md:p-10">
         <div className="flex items-center justify-between gap-4 flex-wrap mb-8">
-          <div className="font-mono-terminal border border-red-950/40 px-4 py-2 text-xs text-red-400 uppercase tracking-[2px]">{item.category}</div>
+          <div className="font-mono-terminal border border-red-950/40 px-4 py-2 text-xs text-red-400 uppercase tracking-[2px]">{SERVICE_LABELS[item.service] || item.category || item.service}</div>
           <div className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[3px]">{item.accent}</div>
         </div>
         <div className="h-[220px] bg-gradient-to-br from-red-950/10 to-black border border-red-950/20 flex items-center justify-center text-zinc-600 text-sm uppercase tracking-[3px] mb-8"
