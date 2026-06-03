@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRef } from 'react'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
 import { getCases } from '@/lib/sanity'
@@ -26,7 +25,6 @@ const SERVICES = [
 
 export default function Home({ cases }) {
   const featured = (cases || []).filter(c => c.featured).slice(0, 4)
-  const scrollContainerRef = useRef(null)
 
   return (
     <Layout
@@ -41,22 +39,10 @@ export default function Home({ cases }) {
         <link rel="canonical" href="https://rguard.ru/" />
       </Head>
 
-      {/* Scroll animation container — высота управляет скоростью анимации */}
-      <div ref={scrollContainerRef} style={{ position: 'relative', minHeight: '600vh' }}>
+      {/* Scroll animation — фиксированный фон слева */}
+      <ScrollAnimation />
 
-        {/* Левая колонка — scroll-анимация */}
-        <div style={{
-          position: 'sticky', top: 0, height: '100vh',
-          display: 'flex', alignItems: 'center',
-          float: 'left', width: '45%',
-          pointerEvents: 'none',
-        }}>
-          <ScrollAnimation containerRef={scrollContainerRef} />
-        </div>
-
-        {/* Правая колонка — весь контент страницы */}
-        <div style={{ marginLeft: '45%' }}>
-      <div className="px-4 sm:px-6 py-20 lg:py-32 relative" style={{ zIndex: 2 }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32 relative" style={{ zIndex: 2 }}>
 
         {/* HERO */}
         <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-14 items-center mb-32">
@@ -230,8 +216,6 @@ export default function Home({ cases }) {
         </div>
 
       </div>
-      </div> {/* right column */}
-      </div> {/* scroll container */}
     </Layout>
   )
 }
