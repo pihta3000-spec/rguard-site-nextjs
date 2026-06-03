@@ -1,0 +1,75 @@
+// Общие компоненты
+
+export function Card({ title, text }) {
+  return (
+    <div className="p-6" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+      <div className="font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs mb-4">RGUARD</div>
+      <h3 className="text-xl font-extrabold mb-3 leading-tight">{title}</h3>
+      <p className="text-zinc-500 text-sm leading-relaxed">{text}</p>
+    </div>
+  )
+}
+
+export function SectionTitle({ eyebrow, title, text }) {
+  return (
+    <div className="max-w-4xl mb-14">
+      <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-4">// {eyebrow}</div>
+      <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight mb-6">{title}</h2>
+      {text && <p className="text-zinc-400 text-lg leading-relaxed">{text}</p>}
+    </div>
+  )
+}
+
+export function LeadForm({ button = 'Отправить заявку', textarea = 'Опишите задачу' }) {
+  return (
+    <div className="space-y-3">
+      <input placeholder="Название компании" className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm" style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }} />
+      <input placeholder="Телефон или Telegram" className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm" style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }} />
+      <textarea placeholder={textarea} className="w-full h-28 px-5 py-4 outline-none resize-none text-white placeholder-zinc-600 font-mono-terminal text-sm" style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }} />
+      <button className="btn-primary w-full">{button}</button>
+    </div>
+  )
+}
+
+export function StatBlock({ value, label }) {
+  return (
+    <div className="p-6 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+      <div className="font-mono-terminal text-3xl font-black neon-red mb-2">{value}</div>
+      <div className="font-mono-terminal text-zinc-500 text-xs uppercase leading-relaxed" style={{ wordBreak: 'normal', overflowWrap: 'normal', letterSpacing: '0.05em' }}>{label}</div>
+    </div>
+  )
+}
+
+export function CaseCard({ item, href }) {
+  const content = (
+    <div className="cyber-card w-full overflow-hidden block">
+      <div className="relative z-10 p-8 md:p-10">
+        <div className="flex items-center justify-between gap-4 flex-wrap mb-8">
+          <div className="font-mono-terminal border border-red-950/40 px-4 py-2 text-xs text-red-400 uppercase tracking-[2px]">{item.category}</div>
+          <div className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[3px]">{item.accent}</div>
+        </div>
+        <div className="h-[220px] bg-gradient-to-br from-red-950/10 to-black border border-red-950/20 flex items-center justify-center text-zinc-600 text-sm uppercase tracking-[3px] mb-8"
+          style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}>
+          Видео / Изображение кейса
+        </div>
+        <div className="text-3xl md:text-4xl font-black mb-5">{item.title}</div>
+        <div className="text-zinc-400 text-lg leading-relaxed">{item.shortText || item.text}</div>
+      </div>
+    </div>
+  )
+
+  if (href) {
+    const Link = require('next/link').default
+    return <Link href={href} className="block">{content}</Link>
+  }
+  return content
+}
+
+export function BackButton({ href, label }) {
+  const Link = require('next/link').default
+  return (
+    <Link href={href} className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 transition-all text-xs uppercase tracking-[3px] cursor-pointer">
+      ← {label}
+    </Link>
+  )
+}
