@@ -106,7 +106,6 @@ export default function Home({ cases }) {
 
         {/* УСЛУГИ */}
         <div className="mb-32">
-          </div>
           <div className="mb-10 relative z-10">
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-3">// SERVICES.LIST</div>
             <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight mb-4">Строим контент-системы, а не просто снимаем ролики</h2>
