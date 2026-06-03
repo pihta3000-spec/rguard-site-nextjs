@@ -65,6 +65,9 @@ export default function ScrollAnimation() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [loaded])
 
+  // Не показываем на мобильных
+  if (typeof window !== 'undefined' && window.innerWidth < 1024) return null
+
   return (
     <div
       style={{
