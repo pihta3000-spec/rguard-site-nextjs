@@ -7,6 +7,7 @@ export default function ScrollAnimation() {
   const framesRef = useRef([])
   const rafRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
+  const [canvasOpacity, setCanvasOpacity] = useState(0)
 
   // Preload all frames
   useEffect(() => {
@@ -44,12 +45,19 @@ export default function ScrollAnimation() {
     if (!loaded) return
 
     const onScroll = () => {
-      // Анимация играет пока скроллим первые 300vh страницы
       const scrolled = window.scrollY
       const totalScroll = window.innerHeight * 3
       const progress = Math.max(0, Math.min(1, scrolled / totalScroll))
       const frameIndex = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1)
       draw(frameIndex)
+
+      // Плавное исчезновение в последние 10% анимации
+      if (progress >= 0.9) {
+        const fadeOut = 1 - (progress - 0.9) / 0.1
+        setCanvasOpacity(0.45 * fadeOut)
+      } else {
+        setCanvasOpacity(0.45)
+      }
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -62,7 +70,7 @@ export default function ScrollAnimation() {
       style={{
         position: 'fixed',
         top: 0,
-        left: 0,
+        left: '-8%',
         width: '45vw',
         height: '100vh',
         zIndex: 0,
@@ -80,8 +88,8 @@ export default function ScrollAnimation() {
         style={{
           width: '90%',
           height: 'auto',
-          opacity: loaded ? 0.9 : 0,
-          transition: 'opacity 0.5s ease',
+          opacity: loaded ? canvasOpacity : 0,
+          transition: 'opacity 0.4s ease',
         }}
       />
     </div>

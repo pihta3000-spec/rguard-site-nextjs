@@ -105,9 +105,7 @@ export default function Home({ cases }) {
         </div>
 
         {/* УСЛУГИ */}
-        <div className="mb-32 relative overflow-hidden">
-          <div className="absolute -right-16 top-0 bottom-0 flex items-end pb-10 pointer-events-none" style={{ zIndex: 0, width: '300px', opacity: 0.07 }}>
-            <img src="/arts/analyze.svg" alt="" className="art-float" style={{ width: '100%' }} />
+        <div className="mb-32">
           </div>
           <div className="mb-10 relative z-10">
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-3">// SERVICES.LIST</div>
@@ -163,10 +161,7 @@ export default function Home({ cases }) {
         </div>
 
         {/* КЕЙСЫ */}
-        <div className="mb-32 relative overflow-hidden">
-          <div className="absolute -left-24 top-1/2 -translate-y-1/2 pointer-events-none" style={{ zIndex: 0, width: '380px', opacity: 0.07 }}>
-            <img src="/arts/aship.svg" alt="" className="art-float" style={{ width: '100%' }} />
-          </div>
+        <div className="mb-32">
           <div className="mb-10 relative z-10">
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-3">// CASES.FEATURED</div>
             <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight">Проекты, которые показывают наш подход в действии</h2>
@@ -182,11 +177,8 @@ export default function Home({ cases }) {
         </div>
 
         {/* БЛОГЕРЫ */}
-        <div className="mb-16 relative overflow-hidden">
-          <div className="absolute -right-16 top-0 bottom-0 flex items-center pointer-events-none" style={{ zIndex: 0, width: '280px', opacity: 0.08 }}>
-            <img src="/arts/monolith.svg" alt="" style={{ width: '100%' }} />
-          </div>
-          <div className="mb-10 relative z-10">
+        <div className="mb-16">
+          <div className="mb-10">
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-3">// BLOGGERS.INDEX</div>
             <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight mb-4">Люди, через которых индустрия смотрит контент RGUARD</h2>
             <p className="text-zinc-400 text-lg">Каждый блогер — отдельный тип подачи и взаимодействия с аудиторией.</p>
