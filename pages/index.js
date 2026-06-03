@@ -1,9 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
+import { useRef } from 'react'
 import Layout from '@/components/Layout'
-import { LeadForm, StatBlock, CaseCard, SectionTitle, Card } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
 import { getCases } from '@/lib/sanity'
+import dynamic from 'next/dynamic'
+
+const ScrollAnimation = dynamic(() => import('@/components/ScrollAnimation'), { ssr: false })
 
 const BLOGGERS_PREVIEW = [
   { id: 'damir', name: 'Дамир Ильгамович', desc: 'Главное лицо RGUARD. Вирусная подача, industrial-харизма и сильная связь с real sector.' },
@@ -23,6 +26,7 @@ const SERVICES = [
 
 export default function Home({ cases }) {
   const featured = (cases || []).filter(c => c.featured).slice(0, 4)
+  const scrollContainerRef = useRef(null)
 
   return (
     <Layout
@@ -37,27 +41,22 @@ export default function Home({ cases }) {
         <link rel="canonical" href="https://rguard.ru/" />
       </Head>
 
-      <div className="relative overflow-hidden">
-        {/* Art layer */}
-        <div className="pointer-events-none absolute inset-0" style={{ zIndex: 1 }}>
-          <div className="absolute" style={{ top: '4%', left: '-8%', width: '680px', opacity: 0.05 }}>
-            <img src="/arts/sign.svg" alt="" className="art-pulse" style={{ width: '100%' }} />
-          </div>
-          <div className="absolute" style={{ top: '10%', right: '-12%', width: '520px', opacity: 0.07 }}>
-            <img src="/arts/astro.svg" alt="" className="art-rotate" style={{ width: '100%' }} />
-          </div>
-          <div className="absolute" style={{ top: '48%', right: '-6%', width: '420px', opacity: 0.07 }}>
-            <img src="/arts/analyze.svg" alt="" className="art-float" style={{ width: '100%' }} />
-          </div>
-          <div className="absolute" style={{ top: '72%', left: '-8%', width: '480px', opacity: 0.07 }}>
-            <img src="/arts/aship.svg" alt="" className="art-float" style={{ width: '100%', animationDelay: '3s' }} />
-          </div>
-          <div className="absolute" style={{ top: '85%', right: '-4%', width: '320px', opacity: 0.08 }}>
-            <img src="/arts/monolith.svg" alt="" style={{ width: '100%' }} />
-          </div>
+      {/* Scroll animation container — высота управляет скоростью анимации */}
+      <div ref={scrollContainerRef} style={{ position: 'relative', minHeight: '600vh' }}>
+
+        {/* Левая колонка — scroll-анимация */}
+        <div style={{
+          position: 'sticky', top: 0, height: '100vh',
+          display: 'flex', alignItems: 'center',
+          float: 'left', width: '45%',
+          pointerEvents: 'none',
+        }}>
+          <ScrollAnimation containerRef={scrollContainerRef} />
         </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32 relative" style={{ zIndex: 2 }}>
+        {/* Правая колонка — весь контент страницы */}
+        <div style={{ marginLeft: '45%' }}>
+      <div className="px-4 sm:px-6 py-20 lg:py-32 relative" style={{ zIndex: 2 }}>
 
         {/* HERO */}
         <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-14 items-center mb-32">
@@ -231,7 +230,8 @@ export default function Home({ cases }) {
         </div>
 
       </div>
-      </div>
+      </div> {/* right column */}
+      </div> {/* scroll container */}
     </Layout>
   )
 }
