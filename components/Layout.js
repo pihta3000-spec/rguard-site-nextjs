@@ -111,7 +111,10 @@ export default function Layout({ children, title, description }) {
             <div className="font-mono-terminal text-zinc-600 mt-2 text-xs tracking-[3px] uppercase">// Industrial Creative Agency</div>
           </div>
           <div className="font-mono-terminal text-zinc-600 text-xs max-w-xl leading-relaxed tracking-[1px]">Вирусные видеоролики, продюсирование, мероприятия и креативные концепции для компаний реального сектора.</div>
-          <Link href="/privacy" className="font-mono-terminal text-zinc-600 text-xs hover:text-red-400 transition-colors">Политика конфиденциальности</Link>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/privacy" className="font-mono-terminal text-zinc-600 text-xs hover:text-red-400 transition-colors">Политика конфиденциальности</Link>
+            <Link href="/personal-data" className="font-mono-terminal text-zinc-600 text-xs hover:text-red-400 transition-colors">Обработка персональных данных</Link>
+          </div>
         </div>
       </footer>
     </div>

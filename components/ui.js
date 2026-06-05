@@ -34,9 +34,15 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
       <input placeholder="Телефон или Telegram" className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm" style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }} />
       <textarea placeholder={textarea} className="w-full h-28 px-5 py-4 outline-none resize-none text-white placeholder-zinc-600 font-mono-terminal text-sm" style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }} />
       <label className="flex items-start gap-3 cursor-pointer group">
-        <input type="checkbox" className="mt-1 shrink-0 cursor-pointer accent-red-500" style={{ width: '16px', height: '16px' }} />
+        <input type="checkbox" defaultChecked className="mt-1 shrink-0 cursor-pointer accent-red-500" style={{ width: '16px', height: '16px' }} />
         <span className="font-mono-terminal text-zinc-400 text-xs leading-relaxed group-hover:text-zinc-300 transition-colors">
-          Даю согласие на обработку персональных данных, согласно действующей{' '}
+          Даю согласие на{' '}
+          <a href="/personal-data" target="_blank" rel="noreferrer"
+            className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
+            onClick={e => e.stopPropagation()}>
+            обработку персональных данных
+          </a>
+          , согласно действующей{' '}
           <a href="/privacy" target="_blank" rel="noreferrer"
             className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
             onClick={e => e.stopPropagation()}>
