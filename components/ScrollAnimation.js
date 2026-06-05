@@ -19,7 +19,7 @@ export default function ScrollAnimation() {
       const img = new window.Image()
       img.src = `/frames/${String(i).padStart(3, '0')}.webp`
       const idx = i - 1
-      img.onload  = () => { frames[idx] = img; if (++count === TOTAL_FRAMES) { framesRef.current = frames; setLoaded(true) } }
+      img.onload  = () => { frames[idx] = img; if (++count === TOTAL_FRAMES) { framesRef.current = frames; setLoaded(true); drawFrame(0) } }
       img.onerror = () => { if (++count === TOTAL_FRAMES) { framesRef.current = frames; setLoaded(true) } }
     }
   }, [])
@@ -39,6 +39,8 @@ export default function ScrollAnimation() {
 
     const lerp = (a, b, t) => a + (b - a) * t
     const SPEED = 0.12  // скорость догонки (0.05=очень медленно, 0.2=быстро)
+
+    drawFrame(0) // показываем первый кадр сразу
 
     const loop = () => {
       const diff = targetRef.current - currentRef.current
