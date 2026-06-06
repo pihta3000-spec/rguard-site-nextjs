@@ -37,11 +37,24 @@ export default function Cases({ cases }) {
         </div>
 
         <div className="mb-24">
-          <div className="font-mono-terminal text-4xl font-black mb-4">Компании, которые уже работали с нами</div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="h-[100px] flex items-center justify-center" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.8)' }}>
-                <span className="font-mono-terminal text-zinc-700 text-xs tracking-[3px] uppercase">Logo</span>
+          <div className="font-mono-terminal text-4xl font-black mb-10">Компании, которые уже работали с нами</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[
+              { src: '/logos/iscpetro.webp',            alt: 'ISC Petro Engineering' },
+              { src: '/logos/rostelecom.webp',          alt: 'Ростелеком' },
+              { src: '/logos/sibur.webp',               alt: 'СИБУР' },
+              { src: '/logos/devon.webp',               alt: 'Devon' },
+              { src: '/logos/vezuviy.webp',             alt: 'Везувий' },
+              { src: '/logos/birdsbuild.webp',          alt: 'Birds Build' },
+              { src: '/logos/ogrk.webp',                alt: 'ОГРК' },
+              { src: '/logos/kpd.webp',                 alt: 'КПД' },
+              { src: '/logos/servis.webp',              alt: 'Сервис Интегратор' },
+              { src: '/logos/alabuga.webp',             alt: 'Алабуга' },
+              { src: '/logos/wasserjet.webp',           alt: 'Wasserjet' },
+              { src: '/logos/bashkirskiy-kirpich.webp', alt: 'Башкирский кирпич' },
+            ].map((logo) => (
+              <div key={logo.alt} className="h-[110px] flex items-center justify-center px-6" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.8)' }}>
+                <img src={logo.src} alt={logo.alt} style={{ maxWidth: '100%', maxHeight: '60px', objectFit: 'contain' }} />
               </div>
             ))}
           </div>
