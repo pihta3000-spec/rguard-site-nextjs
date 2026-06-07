@@ -5,84 +5,104 @@ const pad = (n) => String(n).padStart(3, '0')
 const frameSrc = (i) => `/cases-astro/frame-${pad(i)}.webp`
 
 // Декоративная скролл-анимация (астрообъект, вращение) — зеркальный аналог
-// ShipScrollSequence: появляется справа от контента, прогоняется по той же
-// схеме (lerp прогресса + кросс-фейд кадров). Вертикально смещена относительно
-// корабля, чтобы не идти строго по одной линии (визуальная асимметрия).
+// ShipScrollSequence: появляется справа от контента, со смещением вниз
+// (асимметрия относительно корабля слева). Архитектура — canvas + drawImage,
+// без React re-render в rAF-цикле (см. комментарии в ShipScrollSequence.js).
 export default function AstroScrollSequence({ targetRef }) {
-  const [tick, setTick] = useState(0)
+  const canvasRef = useRef(null)
+  const framesRef = useRef([])
+  const currentRef = useRef(0)
+  const targetIdxRef = useRef(0)
+  const rafRef = useRef(null)
+  const [loaded, setLoaded] = useState(false)
   const [visible, setVisible] = useState(false)
-  const [ready, setReady] = useState(false)
-
-  const targetProgress = useRef(0)
-  const smoothProgress = useRef(0)
-  const rafId = useRef(null)
 
   useEffect(() => {
-    // Ждём полной предзагрузки кадров перед стартом — на проде сеть медленнее
-    // диска, и показ ещё не загруженного кадра во время скролла дёргает анимацию.
-    let cancelled = false
-    const loaders = []
+    let count = 0
+    const frames = new Array(FRAME_COUNT).fill(null)
     for (let i = 0; i < FRAME_COUNT; i++) {
-      loaders.push(
-        new Promise((resolve) => {
-          const img = new Image()
-          img.onload = resolve
-          img.onerror = resolve
-          img.src = frameSrc(i)
-        })
-      )
+      const img = new window.Image()
+      img.src = frameSrc(i)
+      img.onload = () => {
+        frames[i] = img
+        if (++count === FRAME_COUNT) {
+          framesRef.current = frames
+          setLoaded(true)
+          drawFrame(0)
+        }
+      }
+      img.onerror = () => {
+        if (++count === FRAME_COUNT) {
+          framesRef.current = frames
+          setLoaded(true)
+        }
+      }
     }
-    Promise.all(loaders).then(() => {
-      if (!cancelled) setReady(true)
-    })
-    return () => { cancelled = true }
   }, [])
 
+  function drawFrame(idx) {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const frame = framesRef.current[Math.round(idx)]
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    if (frame) ctx.drawImage(frame, 0, 0, canvas.width, canvas.height)
+  }
+
   useEffect(() => {
+    if (!loaded) return
+
+    const lerp = (a, b, t) => a + (b - a) * t
+    const SPEED = 0.12
+
+    const loop = () => {
+      const diff = targetIdxRef.current - currentRef.current
+      if (Math.abs(diff) > 0.05) {
+        currentRef.current = lerp(currentRef.current, targetIdxRef.current, SPEED)
+        drawFrame(currentRef.current)
+      }
+      rafRef.current = requestAnimationFrame(loop)
+    }
+    rafRef.current = requestAnimationFrame(loop)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [loaded])
+
+  useEffect(() => {
+    if (!loaded) return
     const el = targetRef?.current
     if (!el) return
 
-    const computeProgress = () => {
+    let top = 0
+    let height = 0
+
+    const measure = () => {
       const rect = el.getBoundingClientRect()
-      const vh = window.innerHeight || 1
-      const total = rect.height + vh
-      const passed = vh - rect.top
-      return Math.min(1, Math.max(0, passed / total))
+      top = rect.top + window.scrollY
+      height = rect.height
     }
 
     const onScroll = () => {
-      targetProgress.current = computeProgress()
+      const vh = window.innerHeight || 1
+      const total = height + vh
+      const passed = window.scrollY + vh - top
+      const progress = Math.min(1, Math.max(0, passed / total))
+
+      targetIdxRef.current = progress * (FRAME_COUNT - 1)
+      setVisible(progress > 0.001 && progress < 0.999)
     }
 
-    const loop = () => {
-      const cur = smoothProgress.current
-      const target = targetProgress.current
-      const next = cur + (target - cur) * 0.12
-      smoothProgress.current = Math.abs(next - target) < 0.0008 ? target : next
-
-      setVisible(smoothProgress.current > 0.001 && smoothProgress.current < 0.999)
-      setTick((t) => (t + 1) % 1000000)
-
-      rafId.current = requestAnimationFrame(loop)
-    }
-
+    measure()
     onScroll()
-    smoothProgress.current = targetProgress.current
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    rafId.current = requestAnimationFrame(loop)
 
+    const onResize = () => { measure(); onScroll() }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      if (rafId.current) cancelAnimationFrame(rafId.current)
+      window.removeEventListener('resize', onResize)
     }
-  }, [targetRef])
-
-  const exact = smoothProgress.current * (FRAME_COUNT - 1)
-  const idx = Math.floor(exact)
-  const frac = exact - idx
-  const idxNext = Math.min(FRAME_COUNT - 1, idx + 1)
+  }, [loaded, targetRef])
 
   return (
     <div
@@ -90,7 +110,7 @@ export default function AstroScrollSequence({ targetRef }) {
       className="hidden 2xl:block fixed right-0 top-0 h-screen pointer-events-none z-0"
       style={{
         width: 'clamp(260px, calc((100vw - 1180px) / 2), 560px)',
-        opacity: visible && ready ? 1 : 0,
+        opacity: visible && loaded ? 1 : 0,
         transition: 'opacity 0.5s ease',
       }}
     >
@@ -99,30 +119,14 @@ export default function AstroScrollSequence({ targetRef }) {
           контейнер decorative/pointer-events:none, лёгкий заход на контент допустим */}
       <div className="relative w-full h-full flex items-start justify-end pr-2" style={{ paddingTop: '22vh', overflow: 'visible' }}>
         <div className="relative" style={{ width: '156%' }}>
-          <img
-            src={frameSrc(idx)}
-            alt=""
-            width={360}
-            height={360}
+          <canvas
+            ref={canvasRef}
+            width={720}
+            height={720}
             style={{
               width: '100%',
               height: 'auto',
               display: 'block',
-              filter: 'drop-shadow(0 0 32px rgba(239,68,68,0.28))',
-            }}
-          />
-          <img
-            src={frameSrc(idxNext)}
-            alt=""
-            width={360}
-            height={360}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-              opacity: frac,
               filter: 'drop-shadow(0 0 32px rgba(239,68,68,0.28))',
             }}
           />

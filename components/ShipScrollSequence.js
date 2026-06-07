@@ -4,94 +4,113 @@ const FRAME_COUNT = 150
 const pad = (n) => String(n).padStart(3, '0')
 const frameSrc = (i) => `/cases-ship/frame-${pad(i)}.webp`
 
-// Декоративная скролл-анимация: последовательность кадров переключается
+// Декоративная скролл-анимация: последовательность кадров рисуется на <canvas>
 // в зависимости от прогресса прокрутки родительской секции.
-// Располагается слева за пределами центральной колонки контента и не влияет
-// на её раскладку (position: fixed, pointer-events: none, скрыта на узких экранах).
-//
-// Плавность достигается двумя приёмами:
-//  1) прогресс скролла плавно «догоняется» (lerp) в непрерывном rAF-цикле,
-//     а не дискретно прыгает по событию scroll;
-//  2) между соседними кадрами делается кросс-фейд по дробной части индекса —
-//     визуально получается межкадровая интерполяция без доп. рендера.
+// Архитектура скопирована с проверенного ScrollAnimation.js (главная страница):
+//  - кадры рисуются через ctx.drawImage — без создания/переключения DOM-узлов
+//    и без перерисовки React на каждый кадр (никаких setState в rAF-цикле);
+//  - прогресс скролла плавно «догоняется» (lerp) в непрерывном rAF-цикле;
+//  - позиция секции кэшируется и обновляется только по scroll/resize редко,
+//    без принудительного layout (getBoundingClientRect) на каждом кадре.
 export default function ShipScrollSequence({ targetRef }) {
-  const [tick, setTick] = useState(0)
+  const canvasRef = useRef(null)
+  const framesRef = useRef([])
+  const currentRef = useRef(0)
+  const targetIdxRef = useRef(0)
+  const rafRef = useRef(null)
+  const [loaded, setLoaded] = useState(false)
   const [visible, setVisible] = useState(false)
-  const [ready, setReady] = useState(false)
 
-  const targetProgress = useRef(0)
-  const smoothProgress = useRef(0)
-  const rafId = useRef(null)
-
+  // Preload — рисуем первый кадр, как только он готов
   useEffect(() => {
-    // Предзагрузка ВСЕХ кадров и ожидание её завершения перед стартом анимации.
-    // На локалке кадры читаются с диска мгновенно, поэтому дёрганий не было —
-    // но на проде (загрузка по сети) показ ещё не загруженного кадра во время
-    // скролла даёт визуальные рывки. Поэтому держим анимацию скрытой, пока
-    // все кадры не окажутся в кэше браузера.
-    let cancelled = false
-    const loaders = []
+    let count = 0
+    const frames = new Array(FRAME_COUNT).fill(null)
     for (let i = 0; i < FRAME_COUNT; i++) {
-      loaders.push(
-        new Promise((resolve) => {
-          const img = new Image()
-          img.onload = resolve
-          img.onerror = resolve
-          img.src = frameSrc(i)
-        })
-      )
+      const img = new window.Image()
+      img.src = frameSrc(i)
+      img.onload = () => {
+        frames[i] = img
+        if (++count === FRAME_COUNT) {
+          framesRef.current = frames
+          setLoaded(true)
+          drawFrame(0)
+        }
+      }
+      img.onerror = () => {
+        if (++count === FRAME_COUNT) {
+          framesRef.current = frames
+          setLoaded(true)
+        }
+      }
     }
-    Promise.all(loaders).then(() => {
-      if (!cancelled) setReady(true)
-    })
-    return () => { cancelled = true }
   }, [])
 
+  function drawFrame(idx) {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const frame = framesRef.current[Math.round(idx)]
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    if (frame) ctx.drawImage(frame, 0, 0, canvas.width, canvas.height)
+  }
+
+  // RAF-цикл: плавно догоняет целевой кадр и рисует его — никакого React re-render
   useEffect(() => {
+    if (!loaded) return
+
+    const lerp = (a, b, t) => a + (b - a) * t
+    const SPEED = 0.12
+
+    const loop = () => {
+      const diff = targetIdxRef.current - currentRef.current
+      if (Math.abs(diff) > 0.05) {
+        currentRef.current = lerp(currentRef.current, targetIdxRef.current, SPEED)
+        drawFrame(currentRef.current)
+      }
+      rafRef.current = requestAnimationFrame(loop)
+    }
+    rafRef.current = requestAnimationFrame(loop)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [loaded])
+
+  // Прогресс скролла относительно секции — позиция кэшируется,
+  // пересчитывается только по scroll/resize (без layout-трешинга в rAF)
+  useEffect(() => {
+    if (!loaded) return
     const el = targetRef?.current
     if (!el) return
 
-    const computeProgress = () => {
+    let top = 0
+    let height = 0
+
+    const measure = () => {
       const rect = el.getBoundingClientRect()
-      const vh = window.innerHeight || 1
-      const total = rect.height + vh
-      const passed = vh - rect.top
-      return Math.min(1, Math.max(0, passed / total))
+      top = rect.top + window.scrollY
+      height = rect.height
     }
 
     const onScroll = () => {
-      targetProgress.current = computeProgress()
+      const vh = window.innerHeight || 1
+      const total = height + vh
+      const passed = window.scrollY + vh - top
+      const progress = Math.min(1, Math.max(0, passed / total))
+
+      targetIdxRef.current = progress * (FRAME_COUNT - 1)
+      setVisible(progress > 0.001 && progress < 0.999)
     }
 
-    const loop = () => {
-      const cur = smoothProgress.current
-      const target = targetProgress.current
-      const next = cur + (target - cur) * 0.12
-      smoothProgress.current = Math.abs(next - target) < 0.0008 ? target : next
-
-      setVisible(smoothProgress.current > 0.001 && smoothProgress.current < 0.999)
-      setTick((t) => (t + 1) % 1000000)
-
-      rafId.current = requestAnimationFrame(loop)
-    }
-
+    measure()
     onScroll()
-    smoothProgress.current = targetProgress.current
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    rafId.current = requestAnimationFrame(loop)
 
+    const onResize = () => { measure(); onScroll() }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      if (rafId.current) cancelAnimationFrame(rafId.current)
+      window.removeEventListener('resize', onResize)
     }
-  }, [targetRef])
-
-  const exact = smoothProgress.current * (FRAME_COUNT - 1)
-  const idx = Math.floor(exact)
-  const frac = exact - idx
-  const idxNext = Math.min(FRAME_COUNT - 1, idx + 1)
+  }, [loaded, targetRef])
 
   return (
     <div
@@ -99,40 +118,22 @@ export default function ShipScrollSequence({ targetRef }) {
       className="hidden 2xl:block fixed left-0 top-0 h-screen pointer-events-none z-0"
       style={{
         width: 'clamp(280px, calc((100vw - 1180px) / 2), 640px)',
-        opacity: visible && ready ? 1 : 0,
+        opacity: visible && loaded ? 1 : 0,
         transition: 'opacity 0.5s ease',
       }}
     >
       <div className="relative w-full h-full flex items-center justify-end pr-2">
-        <div className="relative" style={{ width: '100%' }}>
-          <img
-            src={frameSrc(idx)}
-            alt=""
-            width={480}
-            height={480}
-            style={{
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-              filter: 'drop-shadow(0 0 32px rgba(239,68,68,0.28))',
-            }}
-          />
-          <img
-            src={frameSrc(idxNext)}
-            alt=""
-            width={480}
-            height={480}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-              opacity: frac,
-              filter: 'drop-shadow(0 0 32px rgba(239,68,68,0.28))',
-            }}
-          />
-        </div>
+        <canvas
+          ref={canvasRef}
+          width={800}
+          height={800}
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'block',
+            filter: 'drop-shadow(0 0 32px rgba(239,68,68,0.28))',
+          }}
+        />
       </div>
     </div>
   )
