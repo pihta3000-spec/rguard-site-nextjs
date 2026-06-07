@@ -11,16 +11,31 @@ const frameSrc = (i) => `/cases-astro/frame-${pad(i)}.webp`
 export default function AstroScrollSequence({ targetRef }) {
   const [tick, setTick] = useState(0)
   const [visible, setVisible] = useState(false)
+  const [ready, setReady] = useState(false)
 
   const targetProgress = useRef(0)
   const smoothProgress = useRef(0)
   const rafId = useRef(null)
 
   useEffect(() => {
+    // Ждём полной предзагрузки кадров перед стартом — на проде сеть медленнее
+    // диска, и показ ещё не загруженного кадра во время скролла дёргает анимацию.
+    let cancelled = false
+    const loaders = []
     for (let i = 0; i < FRAME_COUNT; i++) {
-      const img = new Image()
-      img.src = frameSrc(i)
+      loaders.push(
+        new Promise((resolve) => {
+          const img = new Image()
+          img.onload = resolve
+          img.onerror = resolve
+          img.src = frameSrc(i)
+        })
+      )
     }
+    Promise.all(loaders).then(() => {
+      if (!cancelled) setReady(true)
+    })
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
@@ -75,7 +90,7 @@ export default function AstroScrollSequence({ targetRef }) {
       className="hidden 2xl:block fixed right-0 top-0 h-screen pointer-events-none z-0"
       style={{
         width: 'clamp(260px, calc((100vw - 1180px) / 2), 560px)',
-        opacity: visible ? 1 : 0,
+        opacity: visible && ready ? 1 : 0,
         transition: 'opacity 0.5s ease',
       }}
     >

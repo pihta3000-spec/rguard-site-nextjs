@@ -17,19 +17,34 @@ const frameSrc = (i) => `/cases-ship/frame-${pad(i)}.webp`
 export default function ShipScrollSequence({ targetRef }) {
   const [tick, setTick] = useState(0)
   const [visible, setVisible] = useState(false)
+  const [ready, setReady] = useState(false)
 
   const targetProgress = useRef(0)
   const smoothProgress = useRef(0)
   const rafId = useRef(null)
 
   useEffect(() => {
-    // прогрев всех кадров — чтобы кросс-фейд не дёргался на не загруженных кадрах
-    const imgs = []
+    // Предзагрузка ВСЕХ кадров и ожидание её завершения перед стартом анимации.
+    // На локалке кадры читаются с диска мгновенно, поэтому дёрганий не было —
+    // но на проде (загрузка по сети) показ ещё не загруженного кадра во время
+    // скролла даёт визуальные рывки. Поэтому держим анимацию скрытой, пока
+    // все кадры не окажутся в кэше браузера.
+    let cancelled = false
+    const loaders = []
     for (let i = 0; i < FRAME_COUNT; i++) {
-      const img = new Image()
-      img.src = frameSrc(i)
-      imgs.push(img)
+      loaders.push(
+        new Promise((resolve) => {
+          const img = new Image()
+          img.onload = resolve
+          img.onerror = resolve
+          img.src = frameSrc(i)
+        })
+      )
     }
+    Promise.all(loaders).then(() => {
+      if (!cancelled) setReady(true)
+    })
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
@@ -84,7 +99,7 @@ export default function ShipScrollSequence({ targetRef }) {
       className="hidden 2xl:block fixed left-0 top-0 h-screen pointer-events-none z-0"
       style={{
         width: 'clamp(280px, calc((100vw - 1180px) / 2), 640px)',
-        opacity: visible ? 1 : 0,
+        opacity: visible && ready ? 1 : 0,
         transition: 'opacity 0.5s ease',
       }}
     >
