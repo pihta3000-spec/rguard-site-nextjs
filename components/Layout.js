@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import BriefModal from './BriefModal'
 
 const nav = [
   { href: '/cases', label: 'Кейсы' },
@@ -23,6 +24,7 @@ const nav = [
 export default function Layout({ children, title, description }) {
   const router = useRouter()
   const [menu, setMenu] = useState(false)
+  const [briefOpen, setBriefOpen] = useState(false)
 
   const siteTitle = title ? `${title} — RGUARD.RU` : 'RGUARD.RU — Вирусные ролики для промышленности'
   const siteDesc = description || 'Вирусные видеоролики, продюсирование и контент-стратегии для компаний реального сектора.'
@@ -117,6 +119,16 @@ export default function Layout({ children, title, description }) {
           </div>
         </div>
       </footer>
+
+      <button
+        onClick={() => setBriefOpen(true)}
+        className="btn-primary fixed bottom-6 right-6 z-40 shadow-lg"
+        style={{ boxShadow: '0 4px 24px rgba(239,68,68,0.35)' }}
+      >
+        Заполнить бриф
+      </button>
+
+      <BriefModal open={briefOpen} onClose={() => setBriefOpen(false)} />
     </div>
   )
 }
