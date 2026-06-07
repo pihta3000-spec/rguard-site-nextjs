@@ -1,9 +1,11 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
 import { getCases } from '@/lib/sanity'
+import ShipScrollSequence from '@/components/ShipScrollSequence'
+import AstroScrollSequence from '@/components/AstroScrollSequence'
 
 const FILTERS = [
   { id: 'all', label: 'Все кейсы' },
@@ -16,6 +18,7 @@ const FILTERS = [
 export default function Cases({ cases }) {
   const [filter, setFilter] = useState('all')
   const filtered = filter === 'all' ? cases : cases.filter(c => c.service === filter)
+  const sectionRef = useRef(null)
 
   return (
     <Layout title="Кейсы" description="Реальные результаты: 40+ млн просмотров, корпоративные фильмы, SMM для B2B.">
@@ -24,7 +27,11 @@ export default function Cases({ cases }) {
         <meta name="description" content="Реальные результаты: 40+ млн просмотров для Петроинжиниринг, корпоративные фильмы, SMM для B2B." />
         <link rel="canonical" href="https://rguard.ru/cases" />
       </Head>
-      <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
+
+      <ShipScrollSequence targetRef={sectionRef} />
+      <AstroScrollSequence targetRef={sectionRef} />
+
+      <section ref={sectionRef} className="relative px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="mb-24">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// CASES.RGUARD</div>
           <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">Мы превращаем<br />сложный бизнес<br />в медийный</h1>
