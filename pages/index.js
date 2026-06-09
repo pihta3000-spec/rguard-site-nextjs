@@ -2,16 +2,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
-import { getCases } from '@/lib/sanity'
+import { getCases, getBloggers } from '@/lib/sanity'
 import dynamic from 'next/dynamic'
 
 const ScrollAnimation = dynamic(() => import('@/components/ScrollAnimation'), { ssr: false })
 
-const BLOGGERS_PREVIEW = [
-  { id: 'damir', name: 'Дамир Ильгамович', desc: 'Главное лицо RGUARD. Вирусная подача, industrial-харизма и сильная связь с real sector.' },
-  { id: 'dima', name: 'Дима Хрисанов', desc: 'Динамичная подача и контент с высокой вовлечённостью аудитории.' },
-  { id: 'nadir', name: 'Надир', desc: 'Контент через реализм, атмосферу и живое взаимодействие.' },
-]
 
 const SERVICES = [
   { href: '/viral', title: 'Вирусные видеоролики', text: 'Вертикальный контент с акцентом на вирусность и органическое распространение.' },
@@ -23,7 +18,7 @@ const SERVICES = [
   { href: '/events', title: 'Организация мероприятий', text: 'События, которые становятся контентом и инфоповодом.' },
 ]
 
-export default function Home({ cases }) {
+export default function Home({ cases, bloggers }) {
   const featured = (cases || []).filter(c => c.featured).slice(0, 4)
 
   return (
@@ -183,15 +178,23 @@ export default function Home({ cases }) {
             <p className="text-zinc-400 text-lg">Каждый блогер — отдельный тип подачи и взаимодействия с аудиторией.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
-            {BLOGGERS_PREVIEW.map((blogger, i) => (
-              <Link key={blogger.id} href={`/bloggers/${blogger.id}`} className="cyber-card overflow-hidden block">
-                <div className="aspect-[4/5] flex items-center justify-center text-center p-6 relative overflow-hidden"
-                  style={{ borderBottom: '1px solid rgba(239,68,68,0.12)', background: 'rgba(0,0,0,0.35)' }}>
-                  <div className="absolute top-3 left-3 font-mono-terminal text-red-500/30 text-xs">#{String(i+1).padStart(2,'0')}</div>
-                  <div>
-                    <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-3 flicker">[ PHOTO ]</div>
-                    <div className="text-2xl font-extrabold">{blogger.name}</div>
-                  </div>
+            {(bloggers || []).slice(0, 3).map((blogger, i) => (
+              <Link key={blogger.slug} href={`/bloggers/${blogger.slug}`} className="cyber-card overflow-hidden block">
+                <div className="aspect-[3/4] relative overflow-hidden"
+                  style={{ borderBottom: '1px solid rgba(239,68,68,0.12)' }}>
+                  <div className="absolute top-3 left-3 z-10 font-mono-terminal text-red-500/40 text-xs">#{String(i+1).padStart(2,'0')}</div>
+                  {blogger.photos?.[0] ? (
+                    <img
+                      src={blogger.photos[0]}
+                      alt={blogger.name}
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.35)' }}>
+                      <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] flicker">[ PHOTO ]</div>
+                    </div>
+                  )}
+                  <div className="absolute inset-x-0 bottom-0 h-20" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }} />
                 </div>
                 <div className="p-6">
                   <div className="text-xl font-bold mb-3">{blogger.name}</div>
@@ -212,6 +215,6 @@ export default function Home({ cases }) {
 }
 
 export async function getStaticProps() {
-  const cases = await getCases()
-  return { props: { cases: cases || [] }, revalidate: 60 }
+  const [cases, bloggers] = await Promise.all([getCases(), getBloggers()])
+  return { props: { cases: cases || [], bloggers: bloggers || [] }, revalidate: 60 }
 }
