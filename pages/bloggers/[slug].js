@@ -6,24 +6,44 @@ import Layout from '@/components/Layout'
 import { LeadForm } from '@/components/ui'
 import { getBloggers, getBlogger } from '@/lib/sanity'
 
-function PhotoGallery({ count = 6 }) {
+function PhotoGallery({ photos = [] }) {
   const [current, setCurrent] = useState(0)
+  const count = photos.length
+
+  if (count === 0) return (
+    <div className="relative aspect-[3/4] bg-black overflow-hidden select-none flex items-center justify-center" style={{ border: '1px solid rgba(239,68,68,0.4)' }}>
+      <div className="font-mono-terminal text-zinc-600 uppercase tracking-[3px] text-xs">Фото не добавлены</div>
+    </div>
+  )
+
   return (
-    <div className="relative aspect-[4/5] bg-black overflow-hidden select-none" style={{ border: '1px solid rgba(239,68,68,0.4)' }}>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.10),transparent_40%)]" />
-      <div className="absolute inset-0 flex items-center justify-center text-center p-8 z-10">
-        <div>
-          <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-4">Фото {current + 1} / {count}</div>
-          <div className="text-zinc-600 uppercase tracking-[3px] text-sm">Photo Placeholder</div>
+    <div className="relative aspect-[3/4] bg-black overflow-hidden select-none" style={{ border: '1px solid rgba(239,68,68,0.4)' }}>
+      {/* Фото */}
+      {photos.map((url, i) => (
+        <img
+          key={i}
+          src={url}
+          alt={`Фото ${i + 1}`}
+          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500"
+          style={{ opacity: i === current ? 1 : 0 }}
+        />
+      ))}
+      {/* Оверлей снизу */}
+      <div className="absolute inset-x-0 bottom-0 h-24 z-10" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }} />
+      {/* Счётчик */}
+      <div className="absolute top-4 right-4 z-20 font-mono-terminal text-red-400 text-xs tracking-[3px] px-3 py-1" style={{ background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(239,68,68,0.3)' }}>
+        {current + 1} / {count}
+      </div>
+      {/* Навигация */}
+      {count > 1 && <>
+        <button onClick={() => setCurrent(i => (i - 1 + count) % count)} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg hover:text-red-400 transition-colors" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(0,0,0,0.7)' }}>‹</button>
+        <button onClick={() => setCurrent(i => (i + 1) % count)} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg hover:text-red-400 transition-colors" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(0,0,0,0.7)' }}>›</button>
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {photos.map((_, i) => (
+            <button key={i} onClick={() => setCurrent(i)} className={`h-1.5 rounded-full transition-all ${i === current ? 'bg-red-500 w-6' : 'bg-white/40 w-1.5'}`} />
+          ))}
         </div>
-      </div>
-      <button onClick={() => setCurrent(i => (i - 1 + count) % count)} className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(0,0,0,0.7)' }}>‹</button>
-      <button onClick={() => setCurrent(i => (i + 1) % count)} className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(0,0,0,0.7)' }}>›</button>
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-        {Array.from({ length: count }).map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className={`h-2 rounded-full transition-all ${i === current ? 'bg-red-500 w-5' : 'bg-white/30 w-2'}`} />
-        ))}
-      </div>
+      </>}
     </div>
   )
 }
@@ -42,7 +62,7 @@ export default function BloggerPage({ blogger }) {
         <Link href="/bloggers" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Все блогеры</Link>
 
         <div className="grid lg:grid-cols-2 gap-12 mb-16 items-start">
-          <PhotoGallery count={blogger.photoCount || 6} />
+          <PhotoGallery photos={blogger.photos || []} />
           <div>
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// BLOGGER.RGUARD</div>
             <h1 className="glitch-hero text-5xl md:text-6xl font-black leading-none mb-6">{blogger.name}</h1>
