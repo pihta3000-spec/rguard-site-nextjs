@@ -36,6 +36,7 @@ export default function BriefModal({ open, onClose }) {
   const [history, setHistory] = React.useState([])
   const [answers, setAnswers] = React.useState({})       // { stepId: value | value[] }
   const [contacts, setContacts] = React.useState({})
+  const [consent, setConsent]  = React.useState(false)
   const [status, setStatus]   = React.useState('idle')   // idle | loading | success | error
   const [errMsg, setErrMsg]   = React.useState('')
   const [textVal, setTextVal] = React.useState('')
@@ -51,6 +52,7 @@ export default function BriefModal({ open, onClose }) {
       setHistory([])
       setAnswers({})
       setContacts({})
+      setConsent(false)
       setStatus('idle')
       setErrMsg('')
     }
@@ -108,6 +110,7 @@ export default function BriefModal({ open, onClose }) {
         return
       }
     }
+    if (!consent) { setErrMsg('Необходимо согласие на обработку данных'); return }
     setErrMsg('')
     setStatus('loading')
     try {
@@ -224,10 +227,25 @@ export default function BriefModal({ open, onClose }) {
                   style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
                 />
               ))}
+              <label className="flex items-start gap-3 cursor-pointer group pt-1">
+                <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)}
+                  className="mt-1 shrink-0 cursor-pointer accent-red-500" style={{ width: '16px', height: '16px' }} />
+                <span className="font-mono-terminal text-zinc-400 text-xs leading-relaxed group-hover:text-zinc-300 transition-colors">
+                  Даю согласие на{' '}
+                  <a href="/personal-data" target="_blank" rel="noreferrer"
+                    className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
+                    onClick={e => e.stopPropagation()}>обработку персональных данных</a>
+                  , согласно действующей{' '}
+                  <a href="/privacy" target="_blank" rel="noreferrer"
+                    className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
+                    onClick={e => e.stopPropagation()}>Политике конфиденциальности</a>
+                </span>
+              </label>
               {errMsg && <p className="font-mono-terminal text-red-400 text-xs">{errMsg}</p>}
               <div className="flex items-center justify-between pt-2">
                 <button type="button" onClick={goBack} className="btn-secondary">← Назад</button>
-                <button type="submit" disabled={status === 'loading'} className="btn-primary" style={{ opacity: status === 'loading' ? 0.5 : 1 }}>
+                <button type="submit" disabled={status === 'loading' || !consent} className="btn-primary"
+                  style={{ opacity: (!consent || status === 'loading') ? 0.5 : 1, cursor: (!consent || status === 'loading') ? 'not-allowed' : 'pointer' }}>
                   {status === 'loading' ? '...' : 'Отправить бриф'}
                 </button>
               </div>

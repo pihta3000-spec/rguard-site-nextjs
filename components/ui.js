@@ -34,7 +34,7 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
   const [company,  setCompany]  = React.useState('')
   const [contact,  setContact]  = React.useState('')
   const [message,  setMessage]  = React.useState('')
-  const [consent,  setConsent]  = React.useState(true)
+  const [consent,  setConsent]  = React.useState(false)
   const [status,   setStatus]   = React.useState('idle') // idle | loading | success | error
   const [errMsg,   setErrMsg]   = React.useState('')
 
