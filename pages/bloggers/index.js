@@ -21,11 +21,15 @@ export default function Bloggers({ bloggers }) {
           {bloggers.map((blogger, i) => (
             <Link key={blogger._id} href={`/bloggers/${blogger.slug}`} className="cyber-card overflow-hidden block">
               <div className="aspect-[4/5] flex items-center justify-center text-center p-6 relative overflow-hidden" style={{ borderBottom: '1px solid rgba(239,68,68,0.12)', background: 'rgba(0,0,0,0.35)' }}>
-                <div className="absolute top-3 left-3 font-mono-terminal text-red-500/30 text-xs">#{String(i+1).padStart(2,'0')}</div>
-                <div>
-                  <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-3 flicker">[ PHOTO ]</div>
-                  <div className="text-2xl font-extrabold">{blogger.name}</div>
-                </div>
+                <div className="absolute top-3 left-3 font-mono-terminal text-red-500/30 text-xs z-10">#{String(i+1).padStart(2,'0')}</div>
+                {blogger.photos?.[0] ? (
+                  <img src={blogger.photos[0]} alt={blogger.name} className="absolute inset-0 w-full h-full object-cover object-top" />
+                ) : (
+                  <div>
+                    <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-3 flicker">[ PHOTO ]</div>
+                    <div className="text-2xl font-extrabold">{blogger.name}</div>
+                  </div>
+                )}
               </div>
               <div className="p-6">
                 <div className="text-xl font-bold mb-3">{blogger.name}</div>
