@@ -88,11 +88,19 @@ export default function Events() {
         {/* Ведущие */}
         <div className="mb-24 p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
           <div className="text-4xl font-black mb-10">Наши ведущие</div>
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            {[['Дамир Ильгамович','Харизматичный ведущий с сильной медийной подачей.'],['Дмитрий Хрисанов','Энергичная работа с аудиторией и динамичная подача.']].map(([name,desc]) => (
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            {[
+              ['Дамир Ильгамович','Харизматичный ведущий с сильной медийной подачей.', null],
+              ['Рамиль Ахтареев','Уверенная подача и контакт с аудиторией.', 'https://cdn.sanity.io/images/y9ptramm/production/de8bacf08f394ee19774cfa1f62851a1bff3ba15-900x1200.jpg'],
+              ['Дима Хрисанов','Энергичная работа с аудиторией и динамичная подача.', 'https://cdn.sanity.io/images/y9ptramm/production/af78c328f9829e6e81b9966abf8ac4dea82da77a-900x1200.jpg'],
+            ].map(([name,desc,photo]) => (
               <div key={name} className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
-                <div className="aspect-square flex items-center justify-center mb-6" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
-                  <span className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[3px]">Photo</span>
+                <div className="aspect-square flex items-center justify-center mb-6 overflow-hidden" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
+                  {photo ? (
+                    <img src={photo} alt={name} className="w-full h-full object-cover object-top" />
+                  ) : (
+                    <span className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[3px]">Photo</span>
+                  )}
                 </div>
                 <div className="text-2xl font-black mb-3">{name}</div>
                 <div className="text-zinc-300 leading-relaxed">{desc}</div>
