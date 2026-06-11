@@ -40,7 +40,7 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
 
   const submit = async (e) => {
     e.preventDefault()
-    if (!contact.trim()) { setErrMsg('Укажите телефон или Telegram'); return }
+    if (!contact.trim()) { setErrMsg('Укажите номер телефона'); return }
     if (!consent)         { setErrMsg('Необходимо согласие на обработку данных'); return }
     setErrMsg('')
     setStatus('loading')
@@ -74,8 +74,9 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
         style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
       />
       <input
+        type="tel"
         value={contact} onChange={e => setContact(e.target.value)}
-        placeholder="Телефон или Telegram *"
+        placeholder="Номер телефона *"
         required
         className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm"
         style={{ background: 'rgba(0,0,0,0.6)', border: `1px solid ${errMsg && !contact ? 'rgba(239,68,68,0.8)' : 'rgba(239,68,68,0.25)'}`, color: 'inherit' }}

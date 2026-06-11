@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   const { company, contact, message, button } = req.body
 
-  if (!contact) return res.status(400).json({ error: 'Телефон или Telegram обязателен' })
+  if (!contact) return res.status(400).json({ error: 'Телефон обязателен' })
 
   try {
     fetch(ALBATO_WEBHOOK, {
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
           <table style="width:100%;border-collapse:collapse;">
             <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#94a3b8;width:180px;">Источник формы</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);">${button || '—'}</td></tr>
             <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#94a3b8;">Компания</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);">${company || '—'}</td></tr>
-            <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#94a3b8;">Телефон / Telegram</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-weight:bold;color:#ef4444;">${contact}</td></tr>
+            <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#94a3b8;">Телефон</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-weight:bold;color:#ef4444;">${contact}</td></tr>
             <tr><td style="padding:10px 0;color:#94a3b8;vertical-align:top;">Сообщение</td><td style="padding:10px 0;">${message || '—'}</td></tr>
           </table>
           <p style="margin:24px 0 0;color:#64748b;font-size:12px;">Письмо отправлено автоматически с сайта rguard.ru</p>
