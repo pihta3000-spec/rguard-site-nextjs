@@ -90,6 +90,7 @@ async function ptToHtml(blocks) {
 }
 
 // ── Запись в БД ──────────────────────────────────────────────────────────────
+fs.mkdirSync(path.dirname(DB_PATH), { recursive: true })
 const db = new Database(DB_PATH)
 db.pragma('journal_mode = WAL')
 db.exec(fs.readFileSync(path.join(ROOT, 'lib', 'schema.sql'), 'utf8'))
