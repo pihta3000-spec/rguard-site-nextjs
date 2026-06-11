@@ -9,9 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@portabletext/react": "^6.2.0",
-    "@portabletext/to-html": "^5.0.2",
-    "@sanity/client": "^7.22.1",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.10.0",
     "exceljs": "^4.4.0",
