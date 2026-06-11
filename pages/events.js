@@ -91,8 +91,8 @@ export default function Events() {
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             {[
               ['Дамир Ильгамович','Харизматичный ведущий с сильной медийной подачей.', '/uploads/20c3a9ed652261d41f35cc14c480c6f6b5d8476f-900x1200.jpg'],
-              ['Рамиль Ахтареев','Уверенная подача и контакт с аудиторией.', 'https://cdn.sanity.io/images/y9ptramm/production/de8bacf08f394ee19774cfa1f62851a1bff3ba15-900x1200.jpg'],
-              ['Дима Хрисанов','Энергичная работа с аудиторией и динамичная подача.', 'https://cdn.sanity.io/images/y9ptramm/production/af78c328f9829e6e81b9966abf8ac4dea82da77a-900x1200.jpg'],
+              ['Рамиль Ахтареев','Уверенная подача и контакт с аудиторией.', '/uploads/de8bacf08f394ee19774cfa1f62851a1bff3ba15-900x1200.jpg'],
+              ['Дима Хрисанов','Энергичная работа с аудиторией и динамичная подача.', '/uploads/af78c328f9829e6e81b9966abf8ac4dea82da77a-900x1200.jpg'],
             ].map(([name,desc,photo]) => (
               <div key={name} className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
                 <div className="aspect-square flex items-center justify-center mb-6 overflow-hidden" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
