@@ -90,7 +90,7 @@ export default function Events() {
           <div className="text-4xl font-black mb-10">Наши ведущие</div>
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             {[
-              ['Дамир Ильгамович','Харизматичный ведущий с сильной медийной подачей.', null],
+              ['Дамир Ильгамович','Харизматичный ведущий с сильной медийной подачей.', '/uploads/20c3a9ed652261d41f35cc14c480c6f6b5d8476f-900x1200.jpg'],
               ['Рамиль Ахтареев','Уверенная подача и контакт с аудиторией.', 'https://cdn.sanity.io/images/y9ptramm/production/de8bacf08f394ee19774cfa1f62851a1bff3ba15-900x1200.jpg'],
               ['Дима Хрисанов','Энергичная работа с аудиторией и динамичная подача.', 'https://cdn.sanity.io/images/y9ptramm/production/af78c328f9829e6e81b9966abf8ac4dea82da77a-900x1200.jpg'],
             ].map(([name,desc,photo]) => (
