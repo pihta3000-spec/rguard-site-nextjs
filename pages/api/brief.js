@@ -4,7 +4,7 @@ import { STEPS, ROOT_ID, TASK_LABELS } from '../../lib/briefSteps'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const TO = ['pihta3000@gmail.com', 'usmanov.radimjob@gmail.com']
-const ALBATO_WEBHOOK = 'https://h.albato.ru/wh/38/1lfg8o0/6SsVMAXBQo-THCEglgsN0ZD0Rm63g2zTWQbdFhZCzdg/'
+const ALBATO_WEBHOOK = 'https://h.albato.ru/wh/38/1lfg8o0/-XgPGat0ujBNegk17qGVkDHoTQo0s8MOuT6MlJfRxC8/'
 
 function answerLabel(stepId, value) {
   const step = STEPS[stepId]
