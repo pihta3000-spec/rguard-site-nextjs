@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const TO = ['pihta3000@gmail.com', 'usmanov.radimjob@gmail.com']
+const ALBATO_WEBHOOK = 'https://h.albato.ru/wh/38/1lfg8o0/6SsVMAXBQo-THCEglgsN0ZD0Rm63g2zTWQbdFhZCzdg/'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
@@ -12,6 +13,12 @@ export default async function handler(req, res) {
   if (!contact) return res.status(400).json({ error: 'Телефон или Telegram обязателен' })
 
   try {
+    fetch(ALBATO_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ form: 'contact', company, contact, message, button, page: req.headers.referer || '' }),
+    }).catch(err => console.error('Albato webhook error:', err))
+
     await resend.emails.send({
       from: 'RGUARD Сайт <onboarding@resend.dev>',
       to: TO,

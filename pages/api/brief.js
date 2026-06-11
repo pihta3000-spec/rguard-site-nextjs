@@ -4,6 +4,7 @@ import { STEPS, ROOT_ID, TASK_LABELS } from '../../lib/briefSteps'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const TO = ['pihta3000@gmail.com', 'usmanov.radimjob@gmail.com']
+const ALBATO_WEBHOOK = 'https://h.albato.ru/wh/38/1lfg8o0/6SsVMAXBQo-THCEglgsN0ZD0Rm63g2zTWQbdFhZCzdg/'
 
 function answerLabel(stepId, value) {
   const step = STEPS[stepId]
@@ -34,6 +35,21 @@ export default async function handler(req, res) {
   try {
     const taskLabel = TASK_LABELS[answers[ROOT_ID]] || '—'
     const answerRows = buildAnswersRows(answers)
+
+    fetch(ALBATO_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        form: 'brief',
+        taskLabel,
+        company: contacts.company || '',
+        city: contacts.city || '',
+        activity: contacts.activity || '',
+        phone: contacts.phone,
+        answers: answerRows,
+        page: req.headers.referer || '',
+      }),
+    }).catch(err => console.error('Albato webhook error:', err))
 
     const answersHtml = answerRows.map(r => `
       <tr>
