@@ -47,6 +47,7 @@ export default async function handler(req, res) {
         activity: contacts.activity || '',
         phone: contacts.phone,
         answers: answerRows,
+        answersText: answerRows.map(r => `${r.question}: ${r.answer}`).join('\n'),
         page: req.headers.referer || '',
       }),
     }).catch(err => console.error('Albato webhook error:', err))
