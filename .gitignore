@@ -36,6 +36,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# SQLite content DB (живёт на VPS, бэкап = копия файла)
+/data/
+*.db
+*.db-shm
+*.db-wal
+
+# Загруженные через админку картинки
+/public/uploads/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

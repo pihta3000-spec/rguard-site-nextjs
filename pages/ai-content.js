@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
-import { getCases } from '@/lib/sanity'
+import { getCases } from '@/lib/db'
 
 const STEPS = [
   { title: 'Определяем задачу', desc: 'Выясняем, какую цель должен решить ИИ-ролик: внимание, продажи, презентация идеи, тест гипотезы или рекламная кампания.' },

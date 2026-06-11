@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { Pickaxe } from 'lucide-react'
 import Layout from '@/components/Layout'
 import { LeadForm } from '@/components/ui'
-import { getBloggers, getBlogger } from '@/lib/sanity'
+import RichText from '@/components/RichText'
+import { getBloggers, getBlogger } from '@/lib/db'
 
 function PhotoGallery({ photos = [] }) {
   const [current, setCurrent] = useState(0)
@@ -66,11 +67,7 @@ export default function BloggerPage({ blogger }) {
           <div>
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// BLOGGER.RGUARD</div>
             <h1 className="glitch-hero text-5xl md:text-6xl font-black leading-none mb-6">{blogger.name}</h1>
-            <div className="space-y-4 text-zinc-300 text-lg leading-relaxed mb-10">
-              {(blogger.bio || []).map((block, i) => (
-                <p key={i}>{block?.children?.[0]?.text || ''}</p>
-              ))}
-            </div>
+            <RichText html={blogger.bio} className="text-zinc-300 text-lg leading-relaxed mb-10" />
             <div className="grid grid-cols-3 gap-4 mb-10">
               {(blogger.metrics || []).map((m) => {
                 const v = m.value || m[0]; const l = m.label || m[1];

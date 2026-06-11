@@ -1,42 +1,11 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { PortableText } from '@portabletext/react'
 import Layout from '@/components/Layout'
 import { LeadForm } from '@/components/ui'
-import { getPosts, getPost } from '@/lib/sanity'
+import RichText from '@/components/RichText'
+import { getPosts, getPost } from '@/lib/db'
 
 const CATEGORIES = { viral: 'Вирусный контент', cases: 'Кейсы', tools: 'Инструменты', trends: 'Тренды' }
-
-const ptComponents = {
-  block: {
-    h2: ({ children }) => <h2 className="glitch-hero text-3xl font-black mt-12 mb-6">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-2xl font-bold mt-8 mb-4 text-white">{children}</h3>,
-    normal: ({ children }) => <p className="text-zinc-300 text-lg leading-relaxed mb-6">{children}</p>,
-    blockquote: ({ children }) => (
-      <blockquote className="my-8 pl-6 py-4" style={{ borderLeft: '3px solid rgba(239,68,68,0.6)', background: 'rgba(239,68,68,0.04)' }}>
-        <p className="text-zinc-200 text-lg italic">{children}</p>
-      </blockquote>
-    ),
-  },
-  marks: {
-    strong: ({ children }) => <strong className="text-white font-bold">{children}</strong>,
-    link: ({ value, children }) => <a href={value?.href} target={value?.blank ? '_blank' : undefined} rel="noreferrer" className="text-red-400 hover:text-red-300 underline underline-offset-4">{children}</a>,
-  },
-  types: {
-    image: ({ value }) => value?.asset?.url ? (
-      <figure className="my-10">
-        <img src={value.asset.url} alt={value.caption || ''} className="w-full" style={{ border: '1px solid rgba(239,68,68,0.15)' }} />
-        {value.caption && <figcaption className="font-mono-terminal text-zinc-500 text-xs mt-3 text-center">{value.caption}</figcaption>}
-      </figure>
-    ) : null,
-    videoEmbed: ({ value }) => value?.url ? (
-      <a href={value.url} target="_blank" rel="noreferrer" className="flex items-center gap-4 p-6 cyber-card my-10 block">
-        <div className="font-mono-terminal text-red-500 text-xs tracking-[3px]">[ VIDEO ]</div>
-        <div className="text-zinc-300 text-sm">{value.caption || value.url}</div>
-      </a>
-    ) : null,
-  },
-}
 
 export default function Article({ post }) {
   if (!post) return null
@@ -63,7 +32,7 @@ export default function Article({ post }) {
         </div>
         <h1 className="glitch-hero text-4xl md:text-6xl font-black leading-tight mb-8">{post.title}</h1>
         {post.excerpt && <p className="text-zinc-300 text-xl leading-relaxed mb-12 pb-12" style={{ borderBottom: '1px solid rgba(239,68,68,0.15)' }}>{post.excerpt}</p>}
-        {post.body && <PortableText value={post.body} components={ptComponents} />}
+        <RichText html={post.body} />
 
         {post.relatedPosts?.length > 0 && (
           <div className="mt-20 pt-12" style={{ borderTop: '1px solid rgba(239,68,68,0.15)' }}>

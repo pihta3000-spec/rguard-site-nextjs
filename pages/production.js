@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
-import { getCases } from '@/lib/sanity'
+import { getCases } from '@/lib/db'
 
 const STEPS = [
   { title: 'Компания обращается с запросом на создание вертикального контента', desc: 'На старте определяем реальные задачи бизнеса: нужен ли поток заявок, рост узнаваемости, усиление HR-бренда или медийность внутри рынка.' },

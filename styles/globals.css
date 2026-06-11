@@ -93,3 +93,24 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
   83% { transform: none; filter: none; opacity: 1; }
 }
 .logo-glitch { animation: logo-glitch 6s infinite; }
+
+/* ── Rich-text контент (статьи, отрасли, био блогеров) ── */
+.rich-content > :first-child { margin-top: 0; }
+.rich-content p { color: #d4d4d8; font-size: 1.125rem; line-height: 1.7; margin: 0 0 1.5rem; }
+.rich-content h2 { font-size: 1.875rem; font-weight: 900; color: #fff; margin: 3rem 0 1.5rem; line-height: 1.15; }
+.rich-content h3 { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 2rem 0 1rem; }
+.rich-content h4 { font-size: 1.25rem; font-weight: 700; color: #fff; margin: 1.5rem 0 .75rem; }
+.rich-content strong { color: #fff; font-weight: 700; }
+.rich-content em { font-style: italic; }
+.rich-content a { color: #f87171; text-decoration: underline; text-underline-offset: 4px; }
+.rich-content a:hover { color: #fca5a5; }
+.rich-content ul, .rich-content ol { color: #d4d4d8; font-size: 1.125rem; line-height: 1.7; margin: 0 0 1.5rem; padding-left: 1.5rem; }
+.rich-content ul { list-style: disc; }
+.rich-content ol { list-style: decimal; }
+.rich-content li { margin-bottom: .5rem; }
+.rich-content blockquote { margin: 2rem 0; padding: 1rem 0 1rem 1.5rem; border-left: 3px solid rgba(239,68,68,0.6); background: rgba(239,68,68,0.04); }
+.rich-content blockquote p { color: #e4e4e7; font-style: italic; margin: 0; }
+.rich-content figure { margin: 2.5rem 0; }
+.rich-content img { width: 100%; border: 1px solid rgba(239,68,68,0.15); }
+.rich-content figcaption { font-family: var(--font-mono, monospace); color: #71717a; font-size: .75rem; margin-top: .75rem; text-align: center; }
+.rich-content video { width: 100%; border: 1px solid rgba(239,68,68,0.15); display: block; margin: 2.5rem 0; }

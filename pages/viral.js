@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
-import { getCases } from '@/lib/sanity'
+import { getCases } from '@/lib/db'
 
 const STEPS = [
   { title: 'Анализ продукта и бизнес-процессов компании', desc: 'Погружаемся в продукт, внутренние процессы и специфику бизнеса, чтобы контент выглядел как часть индустрии, а не как внешняя реклама.' },

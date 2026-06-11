@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
-import { getBloggers } from '@/lib/sanity'
+import { getBloggers } from '@/lib/db'
 
 export default function Bloggers({ bloggers }) {
   return (

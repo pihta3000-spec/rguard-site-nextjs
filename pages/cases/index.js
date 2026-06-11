@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useState, useRef } from 'react'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
-import { getCases } from '@/lib/sanity'
+import { getCases } from '@/lib/db'
 import ShipScrollSequence from '@/components/ShipScrollSequence'
 import AstroScrollSequence from '@/components/AstroScrollSequence'
 

@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Pickaxe, HardHat, Factory, Wheat, Flame, Building2 } from 'lucide-react'
 import Layout from '@/components/Layout'
-import { getIndustries } from '@/lib/sanity'
+import { getIndustries } from '@/lib/db'
 
 const ICONS = {
   mining: Pickaxe, construction: HardHat, manufacturing: Factory,

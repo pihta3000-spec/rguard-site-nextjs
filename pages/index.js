@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
-import { getCases, getBloggers } from '@/lib/sanity'
+import { getCases, getBloggers } from '@/lib/db'
 import dynamic from 'next/dynamic'
 
 const ScrollAnimation = dynamic(() => import('@/components/ScrollAnimation'), { ssr: false })

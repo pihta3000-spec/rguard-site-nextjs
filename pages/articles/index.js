@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
 import Layout from '@/components/Layout'
-import { getPosts } from '@/lib/sanity'
+import { getPosts } from '@/lib/db'
 
 const CATEGORIES = [
   { id: 'all', label: 'Все статьи' },

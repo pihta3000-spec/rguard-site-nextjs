@@ -1,34 +1,14 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { PortableText } from '@portabletext/react'
 import { Pickaxe, HardHat, Factory, Wheat, Flame, Building2 } from 'lucide-react'
 import Layout from '@/components/Layout'
 import { LeadForm } from '@/components/ui'
-import { getIndustries, getIndustry } from '@/lib/sanity'
+import RichText from '@/components/RichText'
+import { getIndustries, getIndustry } from '@/lib/db'
 
 const ICONS = {
   mining: Pickaxe, construction: HardHat, manufacturing: Factory,
   agro: Wheat, 'oil-gas': Flame, realty: Building2,
-}
-
-const ptComponents = {
-  block: {
-    h2: ({ children }) => <h2 className="glitch-hero text-3xl font-black mt-12 mb-6">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-2xl font-bold mt-8 mb-4 text-white">{children}</h3>,
-    normal: ({ children }) => <p className="text-zinc-300 text-lg leading-relaxed mb-6">{children}</p>,
-    blockquote: ({ children }) => (
-      <blockquote className="my-8 pl-6 py-4" style={{ borderLeft: '3px solid rgba(239,68,68,0.6)', background: 'rgba(239,68,68,0.04)' }}>
-        <p className="text-zinc-200 text-lg italic">{children}</p>
-      </blockquote>
-    ),
-  },
-  marks: {
-    strong: ({ children }) => <strong className="text-white font-bold">{children}</strong>,
-    link: ({ value, children }) => <a href={value?.href} target="_blank" rel="noreferrer" className="text-red-400 hover:text-red-300 underline underline-offset-4">{children}</a>,
-  },
-  types: {
-    image: ({ value }) => value?.asset?.url ? <img src={value.asset.url} alt="" className="w-full my-8" style={{ border: '1px solid rgba(239,68,68,0.15)' }} /> : null,
-  },
 }
 
 export default function IndustryPage({ industry }) {
@@ -63,9 +43,9 @@ export default function IndustryPage({ industry }) {
           )}
         </div>
 
-        {industry.body?.length > 0 && (
+        {industry.body && (
           <div className="max-w-4xl mb-20">
-            <PortableText value={industry.body} components={ptComponents} />
+            <RichText html={industry.body} />
           </div>
         )}
 

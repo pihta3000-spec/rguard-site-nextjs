@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import { LeadForm, CaseCard, Card } from '@/components/ui'
-import { getCases } from '@/lib/sanity'
+import { getCases } from '@/lib/db'
 
 const FILM_TYPES = ['HR-фильмы','Фильмы о компании','Видео для адаптации сотрудников','Техника безопасности','Обучающие ролики','Фильмы для внутренних мероприятий','Бренд-фильмы','Видео для HR-бренда']
 
