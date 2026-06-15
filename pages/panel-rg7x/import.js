@@ -32,7 +32,20 @@ export default function ImportPage() {
       </p>
 
       <div style={{ border: '1px solid rgba(239,68,68,0.25)', padding: 20, display: 'flex', flexDirection: 'column', gap: 14 }}>
-        <input type="file" accept=".xlsx" onChange={e => setFile(e.target.files?.[0] || null)} style={{ color: '#e2e8f0' }} />
+        <label style={{ alignSelf: 'flex-start', cursor: 'pointer', border: '1px solid rgba(239,68,68,0.5)', color: '#fca5a5', padding: '10px 20px', fontSize: 14, fontWeight: 600, userSelect: 'none' }}>
+          {file ? '📄 Выбрать другой файл' : '📂 Выбрать файл .xlsx'}
+          <input
+            type="file"
+            accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            onChange={e => { setFile(e.target.files?.[0] || null); setErr(''); setResult(null) }}
+            style={{ display: 'none' }}
+          />
+        </label>
+
+        {file
+          ? <div style={{ color: '#cbd5e1', fontSize: 14 }}>Выбран: <b style={{ color: '#fff' }}>{file.name}</b> ({(file.size / 1024).toFixed(0)} КБ)</div>
+          : <div style={{ color: '#64748b', fontSize: 13 }}>Сначала выберите файл — затем кнопка «Импортировать» станет активной.</div>}
+
         <button onClick={submit} disabled={!file || busy}
           style={{ alignSelf: 'flex-start', background: '#ef4444', color: '#fff', border: 'none', padding: '12px 28px', fontWeight: 700, cursor: (!file || busy) ? 'not-allowed' : 'pointer', opacity: (!file || busy) ? 0.6 : 1 }}>
           {busy ? 'Импорт…' : 'Импортировать'}
