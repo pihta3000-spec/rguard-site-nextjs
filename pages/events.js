@@ -1,6 +1,13 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import { LeadForm, Card } from '@/components/ui'
+import { PhotoGallery, VideoWall } from '@/components/EventMedia'
+
+const PHOTOS = Array.from({ length: 45 }, (_, i) => `/events/photos/ev-${String(i + 1).padStart(2, '0')}.webp`)
+const VIDEOS = Array.from({ length: 7 }, (_, i) => ({
+  src: `/events/videos/ev-${i + 1}.mp4`,
+  poster: `/events/posters/ev-${i + 1}.jpg`,
+}))
 
 const SERVICES = [
   ['Подбор площадки','Ищем локацию под формат и бюджет.'],
@@ -12,8 +19,6 @@ const SERVICES = [
   ['Фото и видео','Съёмка и контент с мероприятия.'],
   ['Полная координация','От идеи до финала события.'],
 ]
-
-const PHOTO_LAYOUTS = ['col-span-2 row-span-2','col-span-1 row-span-1','col-span-1 row-span-1','col-span-1 row-span-2','col-span-1 row-span-1','col-span-2 row-span-1','col-span-1 row-span-1','col-span-1 row-span-2','col-span-1 row-span-1','col-span-2 row-span-2','col-span-1 row-span-1','col-span-1 row-span-1']
 
 export default function Events() {
   return (
@@ -31,8 +36,8 @@ export default function Events() {
         </div>
 
         {/* Hero */}
-        <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
-          <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ Hero Event Photo / Video ]</span>
+        <div className="mb-24 overflow-hidden" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+          <img src="/events/photos/ev-44.webp" alt="Мероприятие RGUARD" className="w-full h-full object-cover" />
         </div>
 
         {/* Частные / Масштабные */}
@@ -64,25 +69,14 @@ export default function Events() {
         {/* Фото галерея */}
         <div className="mb-24">
           <div className="text-4xl font-black mb-10">Фото с мероприятий</div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[180px] md:auto-rows-[220px] grid-flow-dense">
-            {PHOTO_LAYOUTS.map((layout, i) => (
-              <div key={i} className={`flex items-center justify-center ${layout}`} style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
-                <span className="font-mono-terminal text-zinc-700 text-xs uppercase tracking-[3px]">Photo</span>
-              </div>
-            ))}
-          </div>
+          <PhotoGallery photos={PHOTOS} />
         </div>
 
         {/* Видео */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Видео с мероприятий</div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[0,1].map(i => (
-              <div key={i} className="aspect-video flex items-center justify-center" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
-                <span className="font-mono-terminal text-zinc-600 text-sm tracking-[3px] uppercase">Video Placeholder</span>
-              </div>
-            ))}
-          </div>
+          <div className="text-4xl font-black mb-3">Видео с мероприятий</div>
+          <p className="text-zinc-400 mb-10">Нажмите на любой ролик, чтобы посмотреть.</p>
+          <VideoWall videos={VIDEOS} />
         </div>
 
         {/* Ведущие */}

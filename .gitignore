@@ -48,3 +48,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Event videos (тяжёлые, заливаются на VPS отдельно через scp)
+/public/events/videos/
