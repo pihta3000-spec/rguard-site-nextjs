@@ -3,7 +3,24 @@ import Layout from '@/components/Layout'
 import { LeadForm, Card } from '@/components/ui'
 import { PhotoGallery, VideoWall } from '@/components/EventMedia'
 
-const PHOTOS = Array.from({ length: 45 }, (_, i) => `/events/photos/ev-${String(i + 1).padStart(2, '0')}.webp`)
+// Отобранные 24 фото (3 модуля по 8). Порядок = порядок ячеек в DESKTOP_BENTO.
+const P = (n) => `/events/photos/ev-${String(n).padStart(2, '0')}.webp`
+const PHOTOS = [17, 2, 11, 12, 9, 10, 16, 30, 5, 45, 8, 31, 6, 13, 35, 7, 43, 41, 23, 42, 37, 32, 15, 1].map(P)
+
+// Бенто-раскладка для 4 колонок: {c=столбец, r=строка, cs/rs=span}.
+// Три модуля 4×4 (строки 1-4, 5-8, 9-12), каждый замощается без пробелов.
+const DESKTOP_BENTO = [
+  // Модуль 1 (строки 1-4): большой квадрат слева
+  { c: 1, r: 1, cs: 2, rs: 2 }, { c: 3, r: 1, cs: 1, rs: 1 }, { c: 4, r: 1, cs: 1, rs: 2 }, { c: 3, r: 2, cs: 1, rs: 2 },
+  { c: 1, r: 3, cs: 1, rs: 2 }, { c: 2, r: 3, cs: 1, rs: 2 }, { c: 4, r: 3, cs: 1, rs: 2 }, { c: 3, r: 4, cs: 1, rs: 1 },
+  // Модуль 2 (строки 5-8): горизонтальные баннеры
+  { c: 1, r: 5, cs: 1, rs: 2 }, { c: 2, r: 5, cs: 2, rs: 1 }, { c: 4, r: 5, cs: 1, rs: 2 }, { c: 2, r: 6, cs: 1, rs: 2 },
+  { c: 3, r: 6, cs: 1, rs: 2 }, { c: 1, r: 7, cs: 1, rs: 2 }, { c: 4, r: 7, cs: 1, rs: 2 }, { c: 2, r: 8, cs: 2, rs: 1 },
+  // Модуль 3 (строки 9-12): большой квадрат справа
+  { c: 3, r: 9, cs: 2, rs: 2 }, { c: 2, r: 9, cs: 1, rs: 1 }, { c: 1, r: 9, cs: 1, rs: 2 }, { c: 2, r: 10, cs: 1, rs: 2 },
+  { c: 4, r: 11, cs: 1, rs: 2 }, { c: 3, r: 11, cs: 1, rs: 2 }, { c: 1, r: 11, cs: 1, rs: 2 }, { c: 2, r: 12, cs: 1, rs: 1 },
+]
+
 const VIDEOS = Array.from({ length: 7 }, (_, i) => ({
   src: `/events/videos/ev-${i + 1}.mp4`,
   poster: `/events/posters/ev-${i + 1}.jpg`,
@@ -37,7 +54,7 @@ export default function Events() {
 
         {/* Hero */}
         <div className="mb-24 overflow-hidden" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
-          <img src="/events/photos/ev-44.webp" alt="Мероприятие RGUARD" className="w-full h-full object-cover" />
+          <img src="/events/photos/ev-38.webp" alt="Мероприятие RGUARD" className="w-full h-full object-cover" />
         </div>
 
         {/* Частные / Масштабные */}
@@ -69,7 +86,7 @@ export default function Events() {
         {/* Фото галерея */}
         <div className="mb-24">
           <div className="text-4xl font-black mb-10">Фото с мероприятий</div>
-          <PhotoGallery photos={PHOTOS} />
+          <PhotoGallery photos={PHOTOS} desktopLayout={DESKTOP_BENTO} />
         </div>
 
         {/* Видео */}

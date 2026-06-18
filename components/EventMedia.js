@@ -1,9 +1,44 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
-// Галерея фото с лайтбоксом (стрелки + Esc + клик по фону закрывает)
-export function PhotoGallery({ photos }) {
+const GAP = 12 // px, совпадает с gap сетки
+
+// Мобильная раскладка (2 колонки): модуль из 3 фото — широкий баннер + 2 вертикальных.
+// Идеально замощает 2×3 и повторяется; для кратного 3 числа фото дыр нет.
+function mobileLayout(n) {
+  return Array.from({ length: n }, (_, i) => {
+    const base = Math.floor(i / 3) * 3 + 1
+    const pos = i % 3
+    if (pos === 0) return { c: 1, r: base, cs: 2, rs: 1 }       // широкий
+    if (pos === 1) return { c: 1, r: base + 1, cs: 1, rs: 2 }   // вертикаль
+    return { c: 2, r: base + 1, cs: 1, rs: 2 }                  // вертикаль
+  })
+}
+
+// Галерея фото — «бенто» из ячеек разного размера. desktopLayout (4 колонки)
+// передаётся пропом; ячейки квадратные за счёт измеренной ширины контейнера.
+export function PhotoGallery({ photos, desktopLayout }) {
+  const wrapRef = useRef(null)
+  const [cols, setCols] = useState(4)
+  const [cell, setCell] = useState(0)
   const [index, setIndex] = useState(null)
   const open = index !== null
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const measure = () => {
+      const w = el.clientWidth
+      const c = w >= 768 ? 4 : 2
+      setCols(c)
+      setCell((w - (c - 1) * GAP) / c)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const layout = cols === 4 ? desktopLayout : mobileLayout(photos.length)
 
   const close = useCallback(() => setIndex(null), [])
   const prev = useCallback(() => setIndex(i => (i + photos.length - 1) % photos.length), [photos.length])
@@ -23,22 +58,38 @@ export function PhotoGallery({ photos }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {photos.map((src, i) => (
-          <button
-            key={src}
-            onClick={() => setIndex(i)}
-            className="relative overflow-hidden group"
-            style={{ aspectRatio: '4/3', border: '1px solid rgba(239,68,68,0.15)', background: '#0a0a14' }}
-          >
-            <img
-              src={src}
-              alt={`Фото с мероприятия ${i + 1}`}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </button>
-        ))}
+      <div
+        ref={wrapRef}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gridAutoRows: cell ? `${cell}px` : 'auto',
+          gap: GAP,
+        }}
+      >
+        {photos.map((src, i) => {
+          const L = layout[i] || { c: 1, r: 'auto', cs: 1, rs: 1 }
+          return (
+            <button
+              key={src}
+              onClick={() => setIndex(i)}
+              className="relative overflow-hidden group"
+              style={{
+                gridColumn: `${L.c} / span ${L.cs}`,
+                gridRow: `${L.r} / span ${L.rs}`,
+                border: '1px solid rgba(239,68,68,0.15)',
+                background: '#0a0a14',
+              }}
+            >
+              <img
+                src={src}
+                alt={`Фото с мероприятия ${i + 1}`}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </button>
+          )
+        })}
       </div>
 
       {open && (
