@@ -27,7 +27,10 @@ export default function AdminDashboard({ counts }) {
         <main style={{ maxWidth: 900, margin: '0 auto', padding: 32 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
             <h1 style={{ fontSize: 28, fontWeight: 900 }}>Контент</h1>
-            <a href={`${ADMIN_PATH}/import`} style={{ border: '1px solid rgba(239,68,68,0.4)', color: '#fca5a5', padding: '10px 18px', textDecoration: 'none', fontSize: 14 }}>↑ Импорт таблицы</a>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <a href={`${ADMIN_PATH}/seo`} style={{ border: '1px solid rgba(239,68,68,0.4)', color: '#fca5a5', padding: '10px 18px', textDecoration: 'none', fontSize: 14 }}>★ SEO страниц</a>
+              <a href={`${ADMIN_PATH}/import`} style={{ border: '1px solid rgba(239,68,68,0.4)', color: '#fca5a5', padding: '10px 18px', textDecoration: 'none', fontSize: 14 }}>↑ Импорт таблицы</a>
+            </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
             {TYPES.map(t => (

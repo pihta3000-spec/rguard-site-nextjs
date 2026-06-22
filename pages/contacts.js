@@ -1,15 +1,13 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
+import Seo from '@/components/Seo'
+import { resolvePageSeo } from '@/lib/db'
 import { LeadForm } from '@/components/ui'
 
-export default function Contacts() {
+export default function Contacts({ seo }) {
   return (
     <Layout title="Контакты" description="Свяжитесь с Красной Гвардией. Вирусный контент, продюсирование и HR-маркетинг.">
-      <Head>
-        <title>Контакты RGUARD — Красная Гвардия</title>
-        <meta name="description" content="Свяжитесь с нами: вирусный контент, продюсирование, HR-маркетинг и медийность бренда." />
-        <link rel="canonical" href="https://rguard.ru/contacts" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-20">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// CONTACTS</div>
@@ -76,4 +74,8 @@ export default function Contacts() {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  return { props: { seo: resolvePageSeo('/contacts') }, revalidate: 60 }
 }

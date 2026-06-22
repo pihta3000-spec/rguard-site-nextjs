@@ -1,15 +1,12 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
+import Seo from '@/components/Seo'
+import { resolvePageSeo } from '@/lib/db'
 
-export default function PersonalData() {
+export default function PersonalData({ seo }) {
   return (
     <Layout title="Обработка персональных данных" description="Порядок обработки персональных данных RGUARD (ООО «Красная Гвардия»).">
-      <Head>
-        <title>Обработка персональных данных — RGUARD.RU</title>
-        <meta name="description" content="Согласие на обработку персональных данных и порядок их обработки в RGUARD." />
-        <link rel="canonical" href="https://rguard.ru/personal-data" />
-        <meta name="robots" content="noindex" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-4xl mx-auto">
         <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// LEGAL</div>
         <h1 className="text-4xl md:text-5xl font-black mb-12 leading-tight">Обработка персональных данных</h1>
@@ -79,4 +76,8 @@ export default function PersonalData() {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  return { props: { seo: resolvePageSeo('/personal-data') }, revalidate: 60 }
 }

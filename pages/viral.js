@@ -1,8 +1,9 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
-import { getCases } from '@/lib/db'
+import { getCases, resolvePageSeo } from '@/lib/db'
 
 const STEPS = [
   { title: 'Анализ продукта и бизнес-процессов компании', desc: 'Погружаемся в продукт, внутренние процессы и специфику бизнеса, чтобы контент выглядел как часть индустрии, а не как внешняя реклама.' },
@@ -16,15 +17,11 @@ const STEPS = [
   { title: 'Масштабирование лучших форматов', desc: 'Лучшие механики превращаем в системную контент-машину, которая стабильно приносит внимание, узнаваемость и входящие заявки.' },
 ]
 
-export default function Viral({ cases }) {
+export default function Viral({ cases , seo }) {
   const viralCases = cases.filter(c => c.service === 'viral')
   return (
     <Layout title="Вирусные видеоролики" description="Создаём вирусный контент для industrial-аудитории: производства, стройки, добыча, вахта. Ролики, которые пересылают в Telegram.">
-      <Head>
-        <title>Вирусные видеоролики для промышленности и B2B — RGUARD</title>
-        <meta name="description" content="Создаём вирусный контент для industrial-аудитории: производства, стройки, добыча, вахта. Ролики, которые пересылают в Telegram." />
-        <link rel="canonical" href="https://rguard.ru/viral" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-6">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// ФЛАГМАНСКОЕ НАПРАВЛЕНИЕ RGUARD</div>
@@ -111,5 +108,5 @@ export default function Viral({ cases }) {
 
 export async function getStaticProps() {
   const cases = await getCases()
-  return { props: { cases: cases || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/viral'), cases: cases || [] }, revalidate: 60 }
 }

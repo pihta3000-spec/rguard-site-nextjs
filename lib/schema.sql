@@ -44,6 +44,13 @@ CREATE TABLE IF NOT EXISTS industries (
   "order"        INTEGER
 );
 
+-- SEO статических страниц: переопределения по path. Пустые поля → берутся дефолты
+-- из lib/pageSeo.js. Спец-путь '__site__' хранит глобальные настройки/Organization.
+CREATE TABLE IF NOT EXISTS page_seo (
+  path  TEXT PRIMARY KEY,
+  data  TEXT             -- JSON {title,description,keywords,canonical,ogTitle,ogDescription,ogImage,ogType,twitterCard,twitterTitle,twitterDescription,twitterImage,noindex,nofollow,jsonLd}
+);
+
 CREATE TABLE IF NOT EXISTS bloggers (
   _id             TEXT PRIMARY KEY,
   name            TEXT,

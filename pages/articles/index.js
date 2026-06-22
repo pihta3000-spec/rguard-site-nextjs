@@ -1,8 +1,9 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
 import Layout from '@/components/Layout'
-import { getPosts } from '@/lib/db'
+import { getPosts, resolvePageSeo } from '@/lib/db'
 
 const CATEGORIES = [
   { id: 'all', label: 'Все статьи' },
@@ -12,18 +13,14 @@ const CATEGORIES = [
   { id: 'trends', label: 'Тренды' },
 ]
 
-export default function Articles({ posts }) {
+export default function Articles({ posts , seo }) {
   const [filter, setFilter] = useState('all')
   const filtered = useMemo(() => filter === 'all' ? posts : posts.filter(p => p.category === filter), [posts, filter])
   const formatDate = iso => iso ? new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : ''
 
   return (
     <Layout title="Статьи" description="Экспертные статьи о вирусном контенте, B2B-маркетинге и продвижении в реальном секторе.">
-      <Head>
-        <title>Статьи о вирусном контенте и industrial-маркетинге — RGUARD</title>
-        <meta name="description" content="Экспертные статьи о вирусном контенте, B2B-маркетинге и продвижении в реальном секторе." />
-        <link rel="canonical" href="https://rguard.ru/articles" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-16">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// ARTICLES</div>
@@ -75,5 +72,5 @@ export default function Articles({ posts }) {
 
 export async function getStaticProps() {
   const posts = await getPosts()
-  return { props: { posts: posts || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/articles'), posts: posts || [] }, revalidate: 60 }
 }

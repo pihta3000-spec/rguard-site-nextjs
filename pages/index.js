@@ -1,8 +1,9 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
-import { getCases, getBloggers } from '@/lib/db'
+import { getCases, getBloggers, resolvePageSeo } from '@/lib/db'
 import dynamic from 'next/dynamic'
 
 const ScrollAnimation = dynamic(() => import('@/components/ScrollAnimation'), { ssr: false })
@@ -18,7 +19,7 @@ const SERVICES = [
   { href: '/events', title: 'Организация мероприятий', text: 'События, которые становятся контентом и инфоповодом.' },
 ]
 
-export default function Home({ cases, bloggers }) {
+export default function Home({ cases, bloggers , seo }) {
   const featured = (cases || []).filter(c => c.featured).slice(0, 4)
 
   return (
@@ -26,13 +27,7 @@ export default function Home({ cases, bloggers }) {
       title="Вирусные ролики для промышленности и реального сектора"
       description="RGUARD — создаём контент, который рабочие пересылают в Telegram. Производства, стройки, карьеры, добыча — наша среда."
     >
-      <Head>
-        <title>RGUARD.RU — Вирусные ролики для промышленности</title>
-        <meta name="description" content="Вирусные видеоролики, продюсирование и контент-стратегии для компаний реального сектора. 2000+ роликов, 40+ млн просмотров." />
-        <meta property="og:title" content="RGUARD.RU — Вирусные ролики для промышленности" />
-        <meta property="og:description" content="Создаём контент, который рабочие пересылают в Telegram." />
-        <link rel="canonical" href="https://rguard.ru/" />
-      </Head>
+      <Seo seo={seo} />
 
       {/* Scroll animation — фиксированный фон слева */}
       <ScrollAnimation />
@@ -222,5 +217,5 @@ export default function Home({ cases, bloggers }) {
 
 export async function getStaticProps() {
   const [cases, bloggers] = await Promise.all([getCases(), getBloggers()])
-  return { props: { cases: cases || [], bloggers: bloggers || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/'), cases: cases || [], bloggers: bloggers || [] }, revalidate: 60 }
 }

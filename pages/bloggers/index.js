@@ -1,16 +1,13 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
-import { getBloggers } from '@/lib/db'
+import { getBloggers, resolvePageSeo } from '@/lib/db'
 
-export default function Bloggers({ bloggers }) {
+export default function Bloggers({ bloggers , seo }) {
   return (
     <Layout title="Блогеры" description="Лица проекта RGUARD — блогеры и амбассадоры industrial-контента.">
-      <Head>
-        <title>Блогеры и лица проекта RGUARD</title>
-        <meta name="description" content="Каждый блогер — отдельный тип подачи и взаимодействия с industrial-аудиторией." />
-        <link rel="canonical" href="https://rguard.ru/bloggers" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-16">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// BLOGGERS</div>
@@ -57,5 +54,5 @@ export default function Bloggers({ bloggers }) {
 
 export async function getStaticProps() {
   const bloggers = await getBloggers()
-  return { props: { bloggers: bloggers || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/bloggers'), bloggers: bloggers || [] }, revalidate: 60 }
 }

@@ -1,7 +1,8 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
-import { getCases } from '@/lib/db'
+import { getCases, resolvePageSeo } from '@/lib/db'
 
 const STEPS = [
   { title: 'Определяем задачу', desc: 'Выясняем, какую цель должен решить ИИ-ролик: внимание, продажи, презентация идеи, тест гипотезы или рекламная кампания.' },
@@ -12,15 +13,11 @@ const STEPS = [
   { title: 'Собираем ролик', desc: 'Дорабатываем монтаж, звук, ритм, титры и финальную подачу, чтобы видео работало как цельный рекламный продукт.' },
 ]
 
-export default function AIContent({ cases }) {
+export default function AIContent({ cases , seo }) {
   const aiCases = cases.filter(c => c.service === 'ai-content')
   return (
     <Layout title="ИИ контент" description="Создаём ИИ-ролики с сильной идеей: AI-рекламные видео, гибридный продакшн, визуализация концепций. Сначала идея — потом генерация.">
-      <Head>
-        <title>ИИ-контент и AI-видео для бизнеса — RGUARD</title>
-        <meta name="description" content="Создаём ИИ-ролики с сильной идеей: AI-рекламные видео, гибридный продакшн, визуализация концепций. Сначала идея — потом генерация." />
-        <link rel="canonical" href="https://rguard.ru/ai-content" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-16">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// СОЗДАНИЕ ВИДЕО / ИИ КОНТЕНТ</div>
@@ -125,5 +122,5 @@ export default function AIContent({ cases }) {
 
 export async function getStaticProps() {
   const cases = await getCases()
-  return { props: { cases: cases || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/ai-content'), cases: cases || [] }, revalidate: 60 }
 }

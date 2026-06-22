@@ -1,15 +1,12 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
+import Seo from '@/components/Seo'
+import { resolvePageSeo } from '@/lib/db'
 
-export default function Privacy() {
+export default function Privacy({ seo }) {
   return (
     <Layout title="Политика конфиденциальности" description="Политика конфиденциальности RGUARD — обработка персональных данных.">
-      <Head>
-        <title>Политика конфиденциальности — RGUARD.RU</title>
-        <meta name="description" content="Политика конфиденциальности и обработки персональных данных RGUARD (ООО «Красная Гвардия»)." />
-        <link rel="canonical" href="https://rguard.ru/privacy" />
-        <meta name="robots" content="noindex" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-4xl mx-auto">
         <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// LEGAL</div>
         <h1 className="text-4xl md:text-5xl font-black mb-12 leading-tight">Политика конфиденциальности</h1>
@@ -107,4 +104,8 @@ export default function Privacy() {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  return { props: { seo: resolvePageSeo('/privacy') }, revalidate: 60 }
 }

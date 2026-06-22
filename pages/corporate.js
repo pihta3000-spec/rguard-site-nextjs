@@ -1,19 +1,16 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import { LeadForm, CaseCard, Card } from '@/components/ui'
-import { getCases } from '@/lib/db'
+import { getCases, resolvePageSeo } from '@/lib/db'
 
 const FILM_TYPES = ['HR-фильмы','Фильмы о компании','Видео для адаптации сотрудников','Техника безопасности','Обучающие ролики','Фильмы для внутренних мероприятий','Бренд-фильмы','Видео для HR-бренда']
 
-export default function Corporate({ cases }) {
+export default function Corporate({ cases , seo }) {
   const corporateCases = cases.filter(c => c.service === 'corporate')
   return (
     <Layout title="Корпоративные фильмы" description="Снимаем корпоративные фильмы с юмором и динамикой: HR-фильмы, техника безопасности, бренд-фильмы для реального сектора.">
-      <Head>
-        <title>Корпоративные фильмы для B2B и промышленности — RGUARD</title>
-        <meta name="description" content="Снимаем корпоративные фильмы с юмором и динамикой: HR-фильмы, техника безопасности, бренд-фильмы и обучающий контент для реального сектора." />
-        <link rel="canonical" href="https://rguard.ru/corporate" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-16">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// СОЗДАНИЕ ВИДЕО / КОРПОРАТИВНЫЕ ФИЛЬМЫ</div>
@@ -100,5 +97,5 @@ export default function Corporate({ cases }) {
 
 export async function getStaticProps() {
   const cases = await getCases()
-  return { props: { cases: cases || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/corporate'), cases: cases || [] }, revalidate: 60 }
 }

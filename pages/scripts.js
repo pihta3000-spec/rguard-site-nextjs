@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
+import Seo from '@/components/Seo'
+import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card } from '@/components/ui'
 
 const STEPS = [
@@ -12,14 +14,10 @@ const STEPS = [
   ['07','Согласование','До съёмки клиент получает полное понимание будущего ролика без сюрпризов на площадке.'],
 ]
 
-export default function Scripts() {
+export default function Scripts({ seo }) {
   return (
     <Layout title="Написание сценариев" description="Разрабатываем вирусные сценарии для видеороликов: захват внимания, удержание, драматургия и призыв к действию. Раскадровка в комплекте.">
-      <Head>
-        <title>Написание сценариев для вирусных роликов — RGUARD</title>
-        <meta name="description" content="Разрабатываем вирусные сценарии для видеороликов: захват внимания, удержание, драматургия и призыв к действию. Раскадровка в комплекте." />
-        <link rel="canonical" href="https://rguard.ru/scripts" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-20">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// КРЕАТИВ / НАПИСАНИЕ СЦЕНАРИЕВ</div>
@@ -94,4 +92,8 @@ export default function Scripts() {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  return { props: { seo: resolvePageSeo('/scripts') }, revalidate: 60 }
 }

@@ -1,7 +1,8 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
-import { getCases } from '@/lib/db'
+import { getCases, resolvePageSeo } from '@/lib/db'
 
 const STEPS = [
   { title: 'Компания обращается с запросом на создание вертикального контента', desc: 'На старте определяем реальные задачи бизнеса: нужен ли поток заявок, рост узнаваемости, усиление HR-бренда или медийность внутри рынка.' },
@@ -15,15 +16,11 @@ const STEPS = [
   { title: 'Продолжаем производство с постоянными экспериментами', desc: 'Контент развивается циклично: тестируем новые идеи, адаптируемся под тренды и усиливаем работающие механики.' },
 ]
 
-export default function Production({ cases }) {
+export default function Production({ cases , seo }) {
   const productionCases = cases.filter(c => c.service === 'production')
   return (
     <Layout title="Продюсирование и СММ" description="Системный SMM и видеопродюсирование для B2B-компаний. Контент-стратегия, съёмка, публикации и аналитика под ключ — от 8 роликов в месяц.">
-      <Head>
-        <title>Продюсирование и SMM для бизнеса — RGUARD</title>
-        <meta name="description" content="Системный SMM и видеопродюсирование для B2B-компаний. Контент-стратегия, съёмка, публикации и аналитика под ключ." />
-        <link rel="canonical" href="https://rguard.ru/production" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-6">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// ПРОДЮСИРОВАНИЕ И СММ</div>
@@ -103,5 +100,5 @@ export default function Production({ cases }) {
 
 export async function getStaticProps() {
   const cases = await getCases()
-  return { props: { cases: cases || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/production'), cases: cases || [] }, revalidate: 60 }
 }

@@ -1,22 +1,19 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { Pickaxe, HardHat, Factory, Wheat, Flame, Building2 } from 'lucide-react'
 import Layout from '@/components/Layout'
-import { getIndustries } from '@/lib/db'
+import { getIndustries, resolvePageSeo } from '@/lib/db'
 
 const ICONS = {
   mining: Pickaxe, construction: HardHat, manufacturing: Factory,
   agro: Wheat, 'oil-gas': Flame, realty: Building2,
 }
 
-export default function Industries({ industries }) {
+export default function Industries({ industries , seo }) {
   return (
     <Layout title="Отраслевые решения" description="Готовые контент-решения для добычи, строительства, производства, нефтегаза, агросектора и недвижимости.">
-      <Head>
-        <title>Отраслевые решения для вашего бизнеса — RGUARD</title>
-        <meta name="description" content="Готовые контент-стратегии под вашу отрасль. Добыча, строительство, производство, нефтегаз, агросектор, недвижимость." />
-        <link rel="canonical" href="https://rguard.ru/industries" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-16">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// INDUSTRIES</div>
@@ -48,5 +45,5 @@ export default function Industries({ industries }) {
 
 export async function getStaticProps() {
   const industries = await getIndustries()
-  return { props: { industries: industries || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/industries'), industries: industries || [] }, revalidate: 60 }
 }

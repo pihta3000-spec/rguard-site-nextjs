@@ -1,9 +1,10 @@
 import Head from 'next/head'
+import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { useState, useRef } from 'react'
 import Layout from '@/components/Layout'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
-import { getCases } from '@/lib/db'
+import { getCases, resolvePageSeo } from '@/lib/db'
 import ShipScrollSequence from '@/components/ShipScrollSequence'
 import AstroScrollSequence from '@/components/AstroScrollSequence'
 
@@ -15,18 +16,14 @@ const FILTERS = [
   { id: 'ai-content', label: 'ИИ ролики' },
 ]
 
-export default function Cases({ cases }) {
+export default function Cases({ cases , seo }) {
   const [filter, setFilter] = useState('all')
   const filtered = filter === 'all' ? cases : cases.filter(c => c.service === filter)
   const sectionRef = useRef(null)
 
   return (
     <Layout title="Кейсы" description="Реальные результаты: 40+ млн просмотров, корпоративные фильмы, SMM для B2B.">
-      <Head>
-        <title>Кейсы RGUARD — вирусный контент для реального бизнеса</title>
-        <meta name="description" content="Реальные результаты: 40+ млн просмотров для Петроинжиниринг, корпоративные фильмы, SMM для B2B." />
-        <link rel="canonical" href="https://rguard.ru/cases" />
-      </Head>
+      <Seo seo={seo} />
 
       <ShipScrollSequence targetRef={sectionRef} />
       <AstroScrollSequence targetRef={sectionRef} />
@@ -100,5 +97,5 @@ export default function Cases({ cases }) {
 
 export async function getStaticProps() {
   const cases = await getCases()
-  return { props: { cases: cases || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/cases'), cases: cases || [] }, revalidate: 60 }
 }

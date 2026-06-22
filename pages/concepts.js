@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
+import Seo from '@/components/Seo'
+import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card } from '@/components/ui'
 
 const STEPS = [
@@ -13,14 +15,10 @@ const STEPS = [
 
 const TYPES = ['Рекламные кампании','Наружная реклама','Вирусные спецпроекты','HR-кампании','Социальные кампании','PR-инфоповоды','Запуски продуктов','Бренд-активации']
 
-export default function Concepts() {
+export default function Concepts({ seo }) {
   return (
     <Layout title="Концепции рекламных кампаний" description="Разрабатываем рекламные концепции, которые распространяются сами: HR-кампании, запуски продуктов, вирусные спецпроекты и PR-инфоповоды.">
-      <Head>
-        <title>Концепции рекламных кампаний — RGUARD</title>
-        <meta name="description" content="Разрабатываем рекламные концепции, которые распространяются сами: HR-кампании, запуски продуктов, вирусные спецпроекты и PR-инфоповоды." />
-        <link rel="canonical" href="https://rguard.ru/concepts" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-20">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// КРЕАТИВ / КОНЦЕПЦИИ РЕКЛАМНЫХ КАМПАНИЙ</div>
@@ -100,4 +98,8 @@ export default function Concepts() {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  return { props: { seo: resolvePageSeo('/concepts') }, revalidate: 60 }
 }

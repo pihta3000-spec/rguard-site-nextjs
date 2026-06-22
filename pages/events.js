@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
+import Seo from '@/components/Seo'
+import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card } from '@/components/ui'
 import { PhotoGallery, VideoWall } from '@/components/EventMedia'
 
@@ -37,14 +39,10 @@ const SERVICES = [
   ['Полная координация','От идеи до финала события.'],
 ]
 
-export default function Events() {
+export default function Events({ seo }) {
   return (
     <Layout title="Организация мероприятий" description="Организуем корпоративы, городские праздники, фестивали и бренд-активации. От идеи до финала под ключ — с видеосъёмкой и контентом.">
-      <Head>
-        <title>Организация мероприятий в Уфе — RGUARD</title>
-        <meta name="description" content="Организуем корпоративы, городские праздники, фестивали и бренд-активации. От идеи до финала под ключ — с видеосъёмкой и контентом." />
-        <link rel="canonical" href="https://rguard.ru/events" />
-      </Head>
+      <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         {/* HERO: текст слева, вертикальный шоурил справа (по образцу главной) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center mb-24">
@@ -161,4 +159,8 @@ export default function Events() {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  return { props: { seo: resolvePageSeo('/events') }, revalidate: 60 }
 }
