@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { STEPS, ROOT_ID, TASK_LABELS } from '../lib/briefSteps'
 
 function ProgressDots({ count, index }) {
@@ -40,6 +41,7 @@ export default function BriefModal({ open, onClose }) {
   const [status, setStatus]   = React.useState('idle')   // idle | loading | success | error
   const [errMsg, setErrMsg]   = React.useState('')
   const [textVal, setTextVal] = React.useState('')
+  const router = useRouter()
 
   const step = STEPS[stepId]
 
@@ -119,8 +121,8 @@ export default function BriefModal({ open, onClose }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers, contacts }),
       })
-      if (r.ok) setStatus('success')
-      else { setStatus('error'); setErrMsg('Ошибка отправки. Попробуйте ещё раз.') }
+      if (r.ok) { onClose?.(); router.push('/thank-you'); return }
+      setStatus('error'); setErrMsg('Ошибка отправки. Попробуйте ещё раз.')
     } catch {
       setStatus('error'); setErrMsg('Ошибка сети. Попробуйте ещё раз.')
     }

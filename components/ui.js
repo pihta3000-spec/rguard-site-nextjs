@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 // Общие компоненты
 
@@ -35,8 +36,9 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
   const [contact,  setContact]  = React.useState('')
   const [message,  setMessage]  = React.useState('')
   const [consent,  setConsent]  = React.useState(false)
-  const [status,   setStatus]   = React.useState('idle') // idle | loading | success | error
+  const [status,   setStatus]   = React.useState('idle') // idle | loading | error
   const [errMsg,   setErrMsg]   = React.useState('')
+  const router = useRouter()
 
   const submit = async (e) => {
     e.preventDefault()
@@ -50,20 +52,12 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ company, contact, message, button }),
       })
-      if (r.ok) { setStatus('success'); setCompany(''); setContact(''); setMessage('') }
-      else       { setStatus('error'); setErrMsg('Ошибка отправки. Попробуйте ещё раз.') }
+      if (r.ok) { router.push('/thank-you'); return }
+      setStatus('error'); setErrMsg('Ошибка отправки. Попробуйте ещё раз.')
     } catch {
       setStatus('error'); setErrMsg('Ошибка сети. Попробуйте ещё раз.')
     }
   }
-
-  if (status === 'success') return (
-    <div className="p-8 text-center" style={{border:'1px solid rgba(239,68,68,0.3)',background:'rgba(239,68,68,0.05)'}}>
-      <div className="font-mono-terminal text-red-400 text-xs tracking-[4px] uppercase mb-3">// ОТПРАВЛЕНО</div>
-      <div className="text-xl font-black mb-2">Заявка получена!</div>
-      <p className="text-zinc-400 text-sm">Свяжемся с вами в ближайшее время.</p>
-    </div>
-  )
 
   return (
     <form onSubmit={submit} className="space-y-3" noValidate>
