@@ -75,15 +75,31 @@ async function templateA({ title, accent, service, metric }) {
   </svg>`
 }
 
+// Локальный кадр по slug (приоритетнее YouTube): D:/скрин/<slug>.(jpg|jpeg|png|webp)
+const FRAMES = process.env.FRAMES_DIR || 'D:/скрин'
+function localFrame(slug) {
+  for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
+    const p = path.join(FRAMES, `${slug}.${ext}`)
+    if (fs.existsSync(p) && fs.statSync(p).size > 3000) return p
+  }
+  return null
+}
+
 const cases = await getCases()
-const yt = cases.filter(c => (c.links || []).some(l => /youtube|youtu\.be/i.test(l)))
-let ok = 0, fail = 0
-for (const c of yt) {
-  const link = (c.links || []).find(l => /youtube|youtu\.be/i.test(l))
-  const id = ytId(link)
-  const thumb = id && await fetchThumb(id)
-  if (!thumb) { console.log('✗ нет кадра:', c.id); fail++; continue }
-  const base = await sharp(thumb).resize(W, H, { fit: 'cover' }).toBuffer()
+let ok = 0, skip = 0
+for (const c of cases) {
+  // База обложки: сперва локальный кадр, иначе кадр YouTube
+  let buf = null
+  const lf = localFrame(c.id)
+  if (lf) buf = fs.readFileSync(lf)
+  else {
+    const link = (c.links || []).find(l => /youtube|youtu\.be/i.test(l))
+    const id = link && ytId(link)
+    buf = id ? await fetchThumb(id) : null
+  }
+  if (!buf) { skip++; continue } // нет кадра — остаётся фирменная заглушка
+
+  const base = await sharp(buf).resize(W, H, { fit: 'cover' }).toBuffer()
   const svg = await templateA({ title: c.title, accent: c.accent, service: c.service, metric: (c.metrics || [])[0] })
   const file = path.join(OUT, `${c.id}.webp`)
   await sharp(base).composite([{ input: Buffer.from(svg) }]).webp({ quality: 84 }).toFile(file)
@@ -91,7 +107,7 @@ for (const c of yt) {
     const doc = adminGetBySlug('cases', c.id)
     if (doc) adminUpsert('cases', { ...doc, coverImage: `/cases-covers/${c.id}.webp`, _id: doc._id })
   }
-  console.log('✓', c.id)
+  console.log('✓', c.id, lf ? '(кадр)' : '(youtube)')
   ok++
 }
-console.log(`Готово: ${ok}, ошибок: ${fail}${NO_DB ? ' (БД не трогали)' : ''}`)
+console.log(`Готово: ${ok}, без кадра (заглушка): ${skip}${NO_DB ? ' (БД не трогали)' : ''}`)
