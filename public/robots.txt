@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /panel-rg7x/
+Disallow: /api/
+
+Sitemap: https://rguard.ru/sitemap.xml
