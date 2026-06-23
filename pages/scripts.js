@@ -51,8 +51,8 @@ export default function Scripts({ seo }) {
             <p className="text-zinc-300 text-lg leading-relaxed mb-8">Клиент получает прозрачный рабочий документ, где собраны сценарий, сцены, визуальные ориентиры и логика ролика.</p>
             <a href="https://docs.google.com/spreadsheets/d/1zC_i7OlNglaqsuE-jAOFpRZc7jxqidL9Sbr0w3_ybvc/edit?gid=0#gid=0" target="_blank" rel="noreferrer" className="btn-primary inline-flex">Посмотреть пример раскадровки</a>
           </div>
-          <div className="flex items-center justify-center" style={{aspectRatio:'16/10',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
-            <span className="font-mono-terminal text-zinc-600 text-sm tracking-[3px] uppercase">Preview раскадровки</span>
+          <div className="overflow-hidden" style={{aspectRatio:'16/10',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
+            <img src="/scripts-storyboard.webp" alt="Пример рабочей раскадровки RGUARD" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
 
