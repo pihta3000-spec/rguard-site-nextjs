@@ -57,28 +57,21 @@ async function templateA({ title, accent, service, metric }) {
   const tagText = `// ${tag}`
   const TAG_FS = 20, TAG_LS = 2, TAG_PAD = 18
   const tagW = Math.round(await textWidth(tagText, TAG_FS, 700, TAG_LS)) + TAG_PAD * 2
-  const titleFs = title.length <= 13 ? 96 : title.length <= 19 ? 78 : 62
-  const lines = wrap(title, titleFs, 1180).slice(0, 2)
-  const lineH = titleFs * 1.02
-  const baseY = H - 56
-  const titleSvg = lines.map((l, i) => {
-    const y = baseY - (lines.length - 1 - i) * lineH
-    return `<text x='52' y='${y}' font-family='Arial' font-size='${titleFs}' font-weight='900' fill='#fff'>${esc(l)}</text>`
-  }).join('')
-  const metricY = baseY - (lines.length - 1) * lineH - titleFs - 26
+  // Заголовок в обложку НЕ вшиваем — он есть под карточкой и на детальной странице.
+  // Хук обложки — крупная метрика внизу слева.
   const metricSvg = metric && (metric.value || metric.label)
-    ? `<text x='56' y='${metricY}' font-family='Arial' font-size='60' font-weight='900' fill='${RED}'>${esc(metric.value || '')} <tspan fill='#fff' font-size='38'>${esc((metric.label || '').toUpperCase())}</tspan></text>`
+    ? `<text x='54' y='${H - 100}' font-family='Arial' font-size='118' font-weight='900' fill='${RED}'>${esc(metric.value || '')}</text>
+   <text x='58' y='${H - 52}' font-family='Arial' font-size='34' font-weight='700' fill='#fff' letter-spacing='3'>${esc((metric.label || '').toUpperCase())}</text>`
     : ''
   return `<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}'>
    <defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'>
-    <stop offset='0' stop-color='#05050c' stop-opacity='0'/><stop offset='0.5' stop-color='#05050c' stop-opacity='0.5'/><stop offset='1' stop-color='#05050c' stop-opacity='0.97'/></linearGradient></defs>
+    <stop offset='0' stop-color='#05050c' stop-opacity='0'/><stop offset='0.5' stop-color='#05050c' stop-opacity='0.45'/><stop offset='1' stop-color='#05050c' stop-opacity='0.92'/></linearGradient></defs>
    <rect width='${W}' height='${H}' fill='url(#g)'/>
    <rect width='${W}' height='6' fill='${RED}'/>
    <rect x='52' y='48' width='${tagW}' height='44' fill='none' stroke='${RED}' stroke-width='2'/>
    <text x='${52 + TAG_PAD}' y='76' font-family='Arial' font-size='${TAG_FS}' font-weight='700' fill='${RED}' letter-spacing='${TAG_LS}'>${esc(tagText)}</text>
    <text x='${W - 52}' y='80' text-anchor='end' font-family='Arial' font-size='26' font-weight='900' fill='${RED}'>RGUARD.RU</text>
    ${metricSvg}
-   ${titleSvg}
   </svg>`
 }
 

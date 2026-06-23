@@ -148,7 +148,7 @@ export function CaseCard({ item, href }) {
           <div className="font-mono-terminal border border-red-950/40 px-3 sm:px-4 py-2 text-xs text-red-400 uppercase tracking-[1px] sm:tracking-[2px] max-w-full break-words">{SERVICE_LABELS[item.service] || item.category || item.service}</div>
           {item.accent && <div className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[2px] sm:tracking-[3px] break-words min-w-0">{item.accent}</div>}
         </div>
-        <div className="h-[220px] border border-red-950/20 mb-8 overflow-hidden relative"
+        <div className="aspect-[16/9] border border-red-950/20 mb-8 overflow-hidden relative"
           style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}>
           {item.coverImage
             ? <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
