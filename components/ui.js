@@ -120,10 +120,10 @@ export function StatBlock({ value, label }) {
 export function CaseCard({ item, href }) {
   const content = (
     <div className="cyber-card w-full overflow-hidden block">
-      <div className="relative z-10 p-8 md:p-10">
-        <div className="flex items-center justify-between gap-4 flex-wrap mb-8">
-          <div className="font-mono-terminal border border-red-950/40 px-4 py-2 text-xs text-red-400 uppercase tracking-[2px]">{SERVICE_LABELS[item.service] || item.category || item.service}</div>
-          <div className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[3px]">{item.accent}</div>
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
+        <div className="flex flex-col items-start gap-2 mb-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:mb-8">
+          <div className="font-mono-terminal border border-red-950/40 px-3 sm:px-4 py-2 text-xs text-red-400 uppercase tracking-[1px] sm:tracking-[2px] max-w-full break-words">{SERVICE_LABELS[item.service] || item.category || item.service}</div>
+          {item.accent && <div className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[2px] sm:tracking-[3px] break-words min-w-0">{item.accent}</div>}
         </div>
         <div className="h-[220px] bg-gradient-to-br from-red-950/10 to-black border border-red-950/20 flex items-center justify-center text-zinc-600 text-sm uppercase tracking-[3px] mb-8 overflow-hidden"
           style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}>
@@ -131,7 +131,7 @@ export function CaseCard({ item, href }) {
             ? <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
             : 'Видео / Изображение кейса'}
         </div>
-        <div className="text-3xl md:text-4xl font-black mb-5">{item.title}</div>
+        <div className="text-2xl sm:text-3xl md:text-4xl font-black mb-5 break-words">{item.title}</div>
         <div className="text-zinc-400 text-lg leading-relaxed">{item.shortText || item.text}</div>
       </div>
     </div>
