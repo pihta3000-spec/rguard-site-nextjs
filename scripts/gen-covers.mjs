@@ -85,6 +85,14 @@ function localFrame(slug) {
   return null
 }
 
+// База обложки 1280x720: размытый фон на весь кадр + исходный кадр целиком по центру
+// (вертикальные кадры не обрезаются — заполнение по бокам размытием, как у Shorts).
+async function makeBase(buf) {
+  const bg = await sharp(buf).resize(W, H, { fit: 'cover' }).blur(28).modulate({ brightness: 0.6 }).toBuffer()
+  const fg = await sharp(buf).resize(W, H, { fit: 'inside' }).toBuffer()
+  return await sharp(bg).composite([{ input: fg, gravity: 'center' }]).toBuffer()
+}
+
 const cases = await getCases()
 let ok = 0, skip = 0
 for (const c of cases) {
@@ -99,7 +107,7 @@ for (const c of cases) {
   }
   if (!buf) { skip++; continue } // нет кадра — остаётся фирменная заглушка
 
-  const base = await sharp(buf).resize(W, H, { fit: 'cover' }).toBuffer()
+  const base = await makeBase(buf)
   const svg = await templateA({ title: c.title, accent: c.accent, service: c.service, metric: (c.metrics || [])[0] })
   const file = path.join(OUT, `${c.id}.webp`)
   await sharp(base).composite([{ input: Buffer.from(svg) }]).webp({ quality: 84 }).toFile(file)
