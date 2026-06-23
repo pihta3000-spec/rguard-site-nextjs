@@ -157,7 +157,7 @@ export default function Home({ cases, bloggers , seo }) {
           </div>
           <div className="grid md:grid-cols-2 gap-6 relative z-10">
             {featured.map(item => (
-              <CaseCard key={item.id} item={item} href={item.id === 'petro-engineering' ? '/cases/petro-engineering' : '/cases'} />
+              <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />
             ))}
           </div>
           <div className="mt-8 text-center relative z-10">

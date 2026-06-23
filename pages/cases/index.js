@@ -76,7 +76,7 @@ export default function Cases({ cases , seo }) {
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {filtered.map(item => (
-              <CaseCard key={item.id} item={item} href={item.id === 'petro-engineering' ? '/cases/petro-engineering' : '#'} />
+              <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />
             ))}
           </div>
         </div>

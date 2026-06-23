@@ -74,7 +74,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
             <div className="text-4xl font-black mb-10">Кейсы</div>
             <div className="grid md:grid-cols-2 gap-6">
               {cases.map(item => (
-                <CaseCard key={item.id} item={item} href={item.id === 'petro-engineering' ? '/cases/petro-engineering' : '/cases'} />
+                <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />
               ))}
             </div>
           </div>
