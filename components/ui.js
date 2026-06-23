@@ -125,9 +125,11 @@ export function CaseCard({ item, href }) {
           <div className="font-mono-terminal border border-red-950/40 px-4 py-2 text-xs text-red-400 uppercase tracking-[2px]">{SERVICE_LABELS[item.service] || item.category || item.service}</div>
           <div className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[3px]">{item.accent}</div>
         </div>
-        <div className="h-[220px] bg-gradient-to-br from-red-950/10 to-black border border-red-950/20 flex items-center justify-center text-zinc-600 text-sm uppercase tracking-[3px] mb-8"
+        <div className="h-[220px] bg-gradient-to-br from-red-950/10 to-black border border-red-950/20 flex items-center justify-center text-zinc-600 text-sm uppercase tracking-[3px] mb-8 overflow-hidden"
           style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}>
-          Видео / Изображение кейса
+          {item.coverImage
+            ? <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+            : 'Видео / Изображение кейса'}
         </div>
         <div className="text-3xl md:text-4xl font-black mb-5">{item.title}</div>
         <div className="text-zinc-400 text-lg leading-relaxed">{item.shortText || item.text}</div>

@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS cases (
   metrics    TEXT,            -- JSON [{value,label}]
   links      TEXT,            -- JSON [url]
   whatWorked TEXT,            -- JSON [string]
+  insight    TEXT,            -- «Главный инсайт кейса» (блок // СИЛЬНЫЙ ИНСАЙТ)
+  coverImage TEXT,            -- URL графической обложки карточки
   featured   INTEGER DEFAULT 0,
   "order"    INTEGER
 );
