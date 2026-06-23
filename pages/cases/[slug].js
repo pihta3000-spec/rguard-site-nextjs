@@ -143,15 +143,11 @@ export default function CasePage({ item }) {
 
 export async function getStaticPaths() {
   const cases = await getCases()
-  // petro-engineering обслуживается отдельной статической страницей
-  const paths = (cases || [])
-    .filter(c => c.id && c.id !== 'petro-engineering')
-    .map(c => ({ params: { slug: c.id } }))
+  const paths = (cases || []).filter(c => c.id).map(c => ({ params: { slug: c.id } }))
   return { paths, fallback: 'blocking' }
 }
 
 export async function getStaticProps({ params }) {
-  if (params.slug === 'petro-engineering') return { notFound: true }
   const item = await getCase(params.slug)
   if (!item) return { notFound: true }
   return { props: { item }, revalidate: 60 }
