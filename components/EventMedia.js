@@ -3,15 +3,20 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 const GAP = 12 // px, совпадает с gap сетки
 
 // Мобильная раскладка (2 колонки): модуль из 3 фото — широкий баннер + 2 вертикальных.
-// Идеально замощает 2×3 и повторяется; для кратного 3 числа фото дыр нет.
+// Остаток (1-2 фото) раскладывается без дыр → устойчиво к любому числу фото.
 function mobileLayout(n) {
-  return Array.from({ length: n }, (_, i) => {
-    const base = Math.floor(i / 3) * 3 + 1
-    const pos = i % 3
-    if (pos === 0) return { c: 1, r: base, cs: 2, rs: 1 }       // широкий
-    if (pos === 1) return { c: 1, r: base + 1, cs: 1, rs: 2 }   // вертикаль
-    return { c: 2, r: base + 1, cs: 1, rs: 2 }                  // вертикаль
-  })
+  const out = []
+  let i = 0, row = 1
+  while (n - i >= 3) {
+    out.push({ c: 1, r: row, cs: 2, rs: 1 })       // широкий баннер
+    out.push({ c: 1, r: row + 1, cs: 1, rs: 2 })   // вертикаль
+    out.push({ c: 2, r: row + 1, cs: 1, rs: 2 })   // вертикаль
+    i += 3; row += 3
+  }
+  const rem = n - i
+  if (rem === 1) out.push({ c: 1, r: row, cs: 2, rs: 1 })                              // на всю ширину
+  else if (rem === 2) { out.push({ c: 1, r: row, cs: 1, rs: 1 }); out.push({ c: 2, r: row, cs: 1, rs: 1 }) } // два в ряд
+  return out
 }
 
 // Галерея фото — «бенто» из ячеек разного размера. desktopLayout (4 колонки)
