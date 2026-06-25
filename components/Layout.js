@@ -38,9 +38,9 @@ export default function Layout({ children, title, description }) {
   const [briefOpen, setBriefOpen] = useState(false)
   const [showBrief, setShowBrief] = useState(false)
 
-  // Плавающая кнопка «Заполнить бриф» появляется после прокрутки 2 экранов
+  // Плавающая кнопка «Заполнить бриф» появляется после прокрутки одного экрана
   useEffect(() => {
-    const onScroll = () => setShowBrief(window.scrollY > window.innerHeight * 2)
+    const onScroll = () => setShowBrief(window.scrollY > window.innerHeight)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
