@@ -49,7 +49,25 @@ export default function Article({ post }) {
           </div>
         )}
 
-        <div className="mt-20 p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+        <div className="mt-16 pt-12" style={{ borderTop: '1px solid rgba(239,68,68,0.15)' }}>
+          <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// ЧЕМ МЫ ПОЛЕЗНЫ</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link href="/viral" className="cyber-card p-6 block">
+              <div className="text-lg font-black mb-2">Вирусные видеоролики</div>
+              <div className="text-zinc-500 text-sm leading-relaxed">Контент, который пересылают и обсуждают внутри индустрии.</div>
+            </Link>
+            <Link href="/cases" className="cyber-card p-6 block">
+              <div className="text-lg font-black mb-2">Наши кейсы</div>
+              <div className="text-zinc-500 text-sm leading-relaxed">Реальные результаты и метрики реализованных проектов.</div>
+            </Link>
+            <Link href="/industries" className="cyber-card p-6 block">
+              <div className="text-lg font-black mb-2">Отраслевые решения</div>
+              <div className="text-zinc-500 text-sm leading-relaxed">Контент-стратегии под вашу отрасль и аудиторию.</div>
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-16 p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="text-4xl font-black mb-6">Хотите такой же контент?</div>

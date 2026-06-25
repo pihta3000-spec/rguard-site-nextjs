@@ -21,6 +21,17 @@ const nav = [
   { href: '/contacts', label: 'Контакты' },
 ]
 
+// Услуги для перелинковки «Другие направления» (показывается на самих страницах услуг)
+const SERVICE_PAGES = [
+  ['/viral', 'Вирусные видеоролики'],
+  ['/corporate', 'Корпоративные фильмы'],
+  ['/production', 'Продюсирование и SMM'],
+  ['/ai-content', 'ИИ-контент'],
+  ['/scripts', 'Сценарии'],
+  ['/concepts', 'Концепции кампаний'],
+  ['/events', 'Мероприятия'],
+]
+
 export default function Layout({ children, title, description }) {
   const router = useRouter()
   const [menu, setMenu] = useState(false)
@@ -104,6 +115,17 @@ export default function Layout({ children, title, description }) {
       </header>
 
       <main className="pt-20 relative z-10">{children}</main>
+
+      {SERVICE_PAGES.some(([p]) => p === router.pathname) && (
+        <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pb-24">
+          <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// ДРУГИЕ НАПРАВЛЕНИЯ</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {SERVICE_PAGES.filter(([p]) => p !== router.pathname).map(([p, l]) => (
+              <Link key={p} href={p} className="cyber-card p-5 block font-bold leading-tight text-sm">{l}</Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <footer className="py-10 relative z-10" style={{ borderTop: '1px solid rgba(239,68,68,0.2)', background: 'rgba(5,5,12,0.98)' }}>
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(239,68,68,0.6), transparent)' }} />
