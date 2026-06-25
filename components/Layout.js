@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BriefModal from './BriefModal'
 
 const nav = [
@@ -36,6 +36,15 @@ export default function Layout({ children, title, description }) {
   const router = useRouter()
   const [menu, setMenu] = useState(false)
   const [briefOpen, setBriefOpen] = useState(false)
+  const [showBrief, setShowBrief] = useState(false)
+
+  // Плавающая кнопка «Заполнить бриф» появляется после прокрутки 2 экранов
+  useEffect(() => {
+    const onScroll = () => setShowBrief(window.scrollY > window.innerHeight * 2)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const siteTitle = title ? `${title} — RGUARD.RU` : 'RGUARD.RU — Вирусные ролики для промышленности'
   const siteDesc = description || 'Вирусные видеоролики, продюсирование и контент-стратегии для компаний реального сектора.'
@@ -144,8 +153,16 @@ export default function Layout({ children, title, description }) {
 
       <button
         onClick={() => setBriefOpen(true)}
+        aria-hidden={!showBrief}
+        tabIndex={showBrief ? 0 : -1}
         className="btn-primary fixed bottom-6 right-6 z-40 shadow-lg"
-        style={{ boxShadow: '0 4px 24px rgba(239,68,68,0.35)' }}
+        style={{
+          boxShadow: '0 4px 24px rgba(239,68,68,0.35)',
+          opacity: showBrief ? 1 : 0,
+          transform: showBrief ? 'translateY(0)' : 'translateY(20px)',
+          pointerEvents: showBrief ? 'auto' : 'none',
+          transition: 'opacity 0.4s ease, transform 0.4s ease',
+        }}
       >
         Заполнить бриф
       </button>
