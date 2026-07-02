@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
+import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card } from '@/components/ui'
 
@@ -21,7 +22,13 @@ export default function Scripts({ seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-20">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// КРЕАТИВ / НАПИСАНИЕ СЦЕНАРИЕВ</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">Сценарии, которые хочется досматривать и пересылать</h1>
+          <HeroTitle
+            className="mb-8"
+            before="Сценарии, которые"
+            accent="хочется досматривать"
+            after="и пересылать"
+            variant="split"
+          />
           <p className="text-zinc-300 text-xl leading-relaxed max-w-4xl">Создаём сценарии не ради красивого текста. Наша задача — удержать внимание зрителя, вызвать эмоцию и помочь ролику распространиться.</p>
         </div>
 

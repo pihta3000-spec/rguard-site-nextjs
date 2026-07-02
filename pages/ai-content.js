@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
@@ -21,7 +22,13 @@ export default function AIContent({ cases , seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-16">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// СОЗДАНИЕ ВИДЕО / ИИ КОНТЕНТ</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">ИИ-контент, в котором<br />есть идея, а не просто генерация</h1>
+          <HeroTitle
+            className="mb-8"
+            before="ИИ-контент, в котором"
+            accent="есть идея"
+            after="а не просто генерация"
+            variant="split"
+          />
           <p className="text-zinc-300 text-xl leading-relaxed max-w-5xl">С развитием искусственного интеллекта изменился баланс сил. Раньше дорого стоила реализация. Сегодня реализация стала доступнее. На первый план вышла идея.</p>
         </div>
 

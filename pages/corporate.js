@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { LeadForm, CaseCard, Card } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
@@ -14,7 +15,12 @@ export default function Corporate({ cases , seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-16">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// СОЗДАНИЕ ВИДЕО / КОРПОРАТИВНЫЕ ФИЛЬМЫ</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">Корпоративные фильмы,<br />которые не скучно смотреть</h1>
+          <HeroTitle
+            className="mb-8"
+            before={['Корпоративные фильмы,', 'которые']}
+            accent="не скучно смотреть"
+            variant="split"
+          />
           <p className="text-zinc-300 text-xl leading-relaxed max-w-5xl">Большинство корпоративных фильмов выглядят одинаково: медленный монтаж, шаблонный дикторский текст и ощущение обязательного просмотра. Мы делаем иначе.</p>
         </div>
 

@@ -3,6 +3,7 @@ import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { Pickaxe, HardHat, Factory, Wheat, Flame, Building2 } from 'lucide-react'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { getIndustries, resolvePageSeo } from '@/lib/db'
 
 const ICONS = {
@@ -17,7 +18,11 @@ export default function Industries({ industries , seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-16">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// INDUSTRIES</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-6">Отраслевые решения</h1>
+          <HeroTitle
+            className="mb-6"
+            accent="Отраслевые решения"
+            variant="split"
+          />
           <p className="text-zinc-400 text-xl max-w-3xl">Готовые контент-стратегии под вашу отрасль. Выберите направление — покажем, что работает именно в вашей нише.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

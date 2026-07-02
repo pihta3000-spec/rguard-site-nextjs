@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
+import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card } from '@/components/ui'
 import { PhotoGallery, VideoWall } from '@/components/EventMedia'
@@ -53,7 +54,12 @@ export default function Events({ seo }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center mb-24">
           <div>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// ОРГАНИЗАЦИЯ МЕРОПРИЯТИЙ</div>
-            <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">Организуем события, которые запоминаются и становятся контентом</h1>
+            <HeroTitle
+              className="mb-8"
+              before={['Организуем события, которые', 'запоминаются и']}
+              accent="становятся контентом"
+              variant="split"
+            />
             <p className="text-zinc-300 text-xl leading-relaxed mb-10">От камерных частных праздников до масштабных городских мероприятий на тысячи гостей. Берём на себя организацию под ключ или подключаемся как отдельная команда.</p>
             <a href="#events-contact" className="btn-primary">Обсудить мероприятие</a>
           </div>

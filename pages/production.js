@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
@@ -24,7 +25,12 @@ export default function Production({ cases , seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-6xl mb-6">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// ПРОДЮСИРОВАНИЕ И СММ</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">Контент-система<br />для бизнеса</h1>
+          <HeroTitle
+            className="mb-8"
+            accent="Контент-система"
+            after="для бизнеса"
+            variant="split"
+          />
           <p className="text-zinc-300 text-xl leading-relaxed max-w-4xl">Строим системную медийность компании: анализируем рынок, находим сильные стороны бизнеса, создаём вирусные форматы и превращаем соцсети в постоянный источник внимания и входящих заявок.</p>
         </div>
 

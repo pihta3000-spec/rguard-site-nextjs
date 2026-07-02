@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
 import { getCases, getBloggers, resolvePageSeo } from '@/lib/db'
 import dynamic from 'next/dynamic'
@@ -42,11 +43,14 @@ export default function Home({ cases, bloggers , seo }) {
               <span className="w-2 h-2 rounded-full bg-red-500 flicker" style={{ boxShadow: '0 0 6px #ef4444' }} />
               [ VIRAL_CONTENT • INDUSTRIAL_AUDIENCE ]
             </div>
-            <h1 className="glitch-hero text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-[0.92] mb-8">
-              Вирусные ролики для промышленности и реального сектора
-            </h1>
+            <HeroTitle
+              className="mb-8"
+              accent="Вирусные ролики"
+              after={['для промышленности', 'и реального сектора']}
+              variant="split"
+            />
             <div className="space-y-4 mb-10" style={{ borderLeft: '2px solid rgba(239,68,68,0.4)', paddingLeft: '1.25rem' }}>
-              <p className="text-zinc-300 text-lg leading-relaxed">Мы создаём контент, который рабочие пересылают друг другу в Telegram и обсуждают внутри индустрии.</p>
+              <p className="text-zinc-300 text-lg leading-relaxed">Мы создаём контент, который пересылают и обсуждают внутри индустрии.</p>
               <p className="text-zinc-500 text-lg leading-relaxed">Производства, стройки, карьеры, тяжёлая техника и добыча — наша естественная среда.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 mb-12">

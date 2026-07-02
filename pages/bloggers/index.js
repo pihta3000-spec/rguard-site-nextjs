@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { getBloggers, resolvePageSeo } from '@/lib/db'
 
 export default function Bloggers({ bloggers , seo }) {
@@ -11,7 +12,13 @@ export default function Bloggers({ bloggers , seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-16">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// BLOGGERS</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-6">Люди, которые делают контент RGUARD живым</h1>
+          <HeroTitle
+            className="mb-6"
+            before="Люди, которые"
+            accent="делают контент"
+            after="RGUARD живым"
+            variant="split"
+          />
           <p className="text-zinc-300 text-xl">Каждый блогер — отдельный тип подачи, аудитории и взаимодействия с industrial-средой.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

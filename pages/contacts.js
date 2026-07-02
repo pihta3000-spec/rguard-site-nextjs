@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
+import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
 import { LeadForm } from '@/components/ui'
 
@@ -11,7 +12,12 @@ export default function Contacts({ seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-20">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// CONTACTS</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">Свяжитесь с Красной Гвардией</h1>
+          <HeroTitle
+            className="mb-8"
+            before="Свяжитесь с"
+            accent="Красной Гвардией"
+            variant="split"
+          />
           <p className="text-zinc-300 text-xl leading-relaxed">Если у вас задача по вирусному контенту, продюсированию, HR-маркетингу или медийности бренда — свяжитесь напрямую.</p>
         </div>
 

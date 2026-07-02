@@ -3,6 +3,7 @@ import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { getPosts, resolvePageSeo } from '@/lib/db'
 
 const CATEGORIES = [
@@ -24,7 +25,11 @@ export default function Articles({ posts , seo }) {
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-16">
           <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// ARTICLES</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-6">Статьи</h1>
+          <HeroTitle
+            className="mb-6"
+            accent="Статьи"
+            variant="split"
+          />
           <p className="text-zinc-400 text-xl">Экспертный контент о вирусном маркетинге, industrial-аудитории и реальных кейсах.</p>
         </div>
         <div className="flex flex-wrap gap-3 mb-12">

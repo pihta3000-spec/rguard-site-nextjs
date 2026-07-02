@@ -3,6 +3,7 @@ import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { useState, useRef } from 'react'
 import Layout from '@/components/Layout'
+import HeroTitle from '@/components/HeroTitle'
 import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 import ShipScrollSequence from '@/components/ShipScrollSequence'
@@ -31,7 +32,12 @@ export default function Cases({ cases , seo }) {
       <section ref={sectionRef} className="relative px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="mb-24">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// CASES.RGUARD</div>
-          <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">Мы превращаем<br />сложный бизнес<br />в медийный</h1>
+          <HeroTitle
+            className="mb-8"
+            before={['Мы превращаем', 'сложный бизнес']}
+            accent="в медийный"
+            variant="split"
+          />
           <p className="text-zinc-400 text-xl leading-relaxed max-w-4xl mb-12">Производство. Стройка. Инженерия. Добыча. Реальный сектор.</p>
           <div className="grid md:grid-cols-3 gap-4">
             {[['1500+','Вертикальных роликов снято командой'],['B2B','Специализация на сложных нишах'],['Full','Production, продюсирование и креатив']].map(([v,l]) => (
