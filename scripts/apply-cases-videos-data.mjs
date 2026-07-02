@@ -5,7 +5,7 @@ import path from 'node:path'
 import { adminGetBySlug, adminUpsert } from '../lib/db.js'
 
 const payloadPath = path.join(process.cwd(), 'scripts', 'cases-videos-data.json')
-const markerPath = path.join(process.cwd(), 'data', '.case-videos-20260702-applied')
+const markerPath = path.join(process.cwd(), 'data', '.case-videos-20260702-alabuga-cleanup-applied')
 
 if (fs.existsSync(markerPath) && !process.argv.includes('--force')) {
   console.log('Case videos already applied. Use --force to reapply.')
