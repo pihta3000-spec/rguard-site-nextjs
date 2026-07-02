@@ -29,6 +29,7 @@ export default function CasePage({ item, related = [] }) {
   const metrics = (item.metrics || []).filter(m => m.value || m.label)
   const links = item.links || []
   const worked = item.whatWorked || []
+  const isLocalVideo = (link) => /^\/.*\.(mp4|webm|mov)(\?|#|$)/i.test(link)
 
   return (
     <Layout title={`${item.title} — кейс RGUARD`} description={item.shortText || `Кейс RGUARD: ${item.title}.`}>
@@ -63,19 +64,36 @@ export default function CasePage({ item, related = [] }) {
             <div className="text-4xl font-black mb-10">Видео кейса</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {links.map((link, i) => (
-                <a key={i} href={link} target="_blank" rel="noreferrer"
-                  className="relative aspect-[9/16] flex items-center justify-center text-center p-5 transition-all hover:border-red-500"
-                  style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(180deg,#111 0%,black 100%)' }}>
-                  <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top,rgba(239,68,68,0.16),transparent 40%)' }} />
-                  <div className="relative z-10">
-                    <div className="font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs mb-4">Ролик {i + 1}</div>
-                    <div className="mx-auto mb-4 flex items-center justify-center rounded-full" style={{ width: 56, height: 56, background: 'rgba(239,68,68,0.9)' }}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z" /></svg>
+                isLocalVideo(link) ? (
+                  <div key={i}
+                    className="relative overflow-hidden transition-all hover:border-red-500"
+                    style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(180deg,#111 0%,black 100%)' }}>
+                    <video
+                      src={link}
+                      controls
+                      preload="metadata"
+                      playsInline
+                      className="block w-full aspect-[9/16] object-cover bg-black"
+                    />
+                    <div className="pointer-events-none absolute left-3 top-3 font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs bg-black/70 px-2 py-1">
+                      Ролик {i + 1}
                     </div>
-                    <div className="text-xl font-black mb-2">Смотреть ролик</div>
-                    <div className="font-mono-terminal text-zinc-500 text-xs">Откроется в новой вкладке</div>
                   </div>
-                </a>
+                ) : (
+                  <a key={i} href={link} target="_blank" rel="noreferrer"
+                    className="relative aspect-[9/16] flex items-center justify-center text-center p-5 transition-all hover:border-red-500"
+                    style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(180deg,#111 0%,black 100%)' }}>
+                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top,rgba(239,68,68,0.16),transparent 40%)' }} />
+                    <div className="relative z-10">
+                      <div className="font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs mb-4">Ролик {i + 1}</div>
+                      <div className="mx-auto mb-4 flex items-center justify-center rounded-full" style={{ width: 56, height: 56, background: 'rgba(239,68,68,0.9)' }}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z" /></svg>
+                      </div>
+                      <div className="text-xl font-black mb-2">Смотреть ролик</div>
+                      <div className="font-mono-terminal text-zinc-500 text-xs">Откроется в новой вкладке</div>
+                    </div>
+                  </a>
+                )
               ))}
             </div>
           </div>

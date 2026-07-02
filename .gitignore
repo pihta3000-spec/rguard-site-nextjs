@@ -51,3 +51,6 @@ next-env.d.ts
 
 # Event videos (тяжёлые, заливаются на VPS отдельно через scp)
 /public/events/videos/
+
+# Local temp for processing case video archives
+/.case-video-work/

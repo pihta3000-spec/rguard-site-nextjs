@@ -24,7 +24,10 @@ const CYAN = '#00f0ff'
 const MAGENTA = '#ff003c'
 const OUT = 'public/cases-covers'
 const CACHE = process.env.THUMB_CACHE || 'D:/Temp/yt'
-const FRAMES = process.env.FRAMES_DIR || 'D:/скрин'
+const FRAMES = [
+  process.env.CASE_FRAMES_DIR || path.join(process.cwd(), 'public', 'cases-video-frames'),
+  process.env.FRAMES_DIR || 'D:/скрин',
+]
 
 fs.mkdirSync(OUT, { recursive: true })
 if (OUT_FILE) fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true })
@@ -85,9 +88,11 @@ async function textWidth(str, fontSize, weight = 700, letterSpacing = 0) {
 }
 
 function localFrame(slug) {
-  for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
-    const file = path.join(FRAMES, `${slug}.${ext}`)
-    if (fs.existsSync(file) && fs.statSync(file).size > 3000) return file
+  for (const dir of FRAMES) {
+    for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
+      const file = path.join(dir, `${slug}.${ext}`)
+      if (fs.existsSync(file) && fs.statSync(file).size > 3000) return file
+    }
   }
   return null
 }

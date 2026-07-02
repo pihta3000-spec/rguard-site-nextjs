@@ -21,6 +21,7 @@ jobs:
             GIT_SSH_COMMAND='ssh -i /root/.ssh/deploy_rguard' git pull origin main
             npm ci --production=false
             node scripts/apply-fresh-cases-data.mjs
+            node scripts/apply-cases-videos-data.mjs
             npm run build
             pm2 restart rguard
             echo "Deploy done at $(date)"
