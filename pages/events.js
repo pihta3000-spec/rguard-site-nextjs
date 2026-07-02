@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
-import { LeadForm, Card } from '@/components/ui'
+import { LeadForm, Card, CaptureTitle } from '@/components/ui'
 import { PhotoGallery, VideoWall } from '@/components/EventMedia'
 
 // 23 фото (фото с детьми убраны, добавлены кадры с корпоратива). Без детей.
@@ -162,7 +162,7 @@ export default function Events({ seo }) {
         {/* CTA */}
         <div id="events-contact" className="grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14 scroll-mt-24" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
           <div>
-            <div className="text-5xl font-black leading-tight mb-6">Обсудим ваше мероприятие</div>
+            <CaptureTitle before="Обсудим" accent="ваше мероприятие" />
             <p className="text-zinc-300 text-xl">Расскажите о формате, масштабе и задачах — предложим оптимальный вариант организации.</p>
           </div>
           <LeadForm button="Обсудить мероприятие" textarea="Опишите ваше событие" />

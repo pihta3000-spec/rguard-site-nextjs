@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
-import { LeadForm } from '@/components/ui'
+import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
 import { getPosts, getPost } from '@/lib/db'
 
@@ -70,7 +70,7 @@ export default function Article({ post }) {
         <div className="mt-16 p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-4xl font-black mb-6">Хотите такой же контент?</div>
+              <CaptureTitle before="Хотите" accent="такой же контент?" />
               <p className="text-zinc-400 text-lg">Разберём нишу и предложим форматы.</p>
             </div>
             <LeadForm button="Обсудить проект" />

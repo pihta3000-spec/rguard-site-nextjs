@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, CaseCard, Card } from '@/components/ui'
+import { LeadForm, CaseCard, Card, CaptureTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
 const HAS_CORPORATE_HERO_MEDIA = false
@@ -96,7 +96,10 @@ export default function Corporate({ cases , seo }) {
         {/* CTA */}
         <div className="grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
           <div>
-            <div className="text-5xl font-black leading-tight mb-6">Обсудим корпоративный фильм, который не захочется перемотать</div>
+            <CaptureTitle
+              before={['Обсудим корпоративный фильм,', 'который']}
+              accent="не захочется перемотать"
+            />
             <p className="text-zinc-300 text-xl">Разберём вашу задачу и предложим современный формат.</p>
           </div>
           <LeadForm button="Обсудить корпоративный фильм" />

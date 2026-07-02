@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
-import { LeadForm, Card } from '@/components/ui'
+import { LeadForm, Card, CaptureTitle } from '@/components/ui'
 
 const HAS_CONCEPTS_HERO_MEDIA = false
 
@@ -100,7 +100,7 @@ export default function Concepts({ seo }) {
         {/* CTA */}
         <div className="grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
           <div>
-            <div className="text-5xl font-black leading-tight mb-6">Обсудим вашу рекламную кампанию</div>
+            <CaptureTitle before="Обсудим вашу" accent="рекламную кампанию" />
             <p className="text-zinc-300 text-xl">Разберём задачу и предложим концепцию, которая сможет выйти за пределы оплаченного охвата.</p>
           </div>
           <LeadForm button="Обсудить кампанию" textarea="Опишите вашу рекламную задачу" />

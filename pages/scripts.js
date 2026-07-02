@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
-import { LeadForm, Card } from '@/components/ui'
+import { LeadForm, Card, CaptureTitle } from '@/components/ui'
 
 const STEPS = [
   ['01','Изучаем аудиторию','Разбираемся в продукте, задачах бизнеса, болях клиентов, возражениях и конфликтных точках.'],
@@ -91,7 +91,10 @@ export default function Scripts({ seo }) {
         {/* CTA */}
         <div className="grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
           <div>
-            <div className="text-5xl font-black leading-tight mb-6">Нужен сценарий, который будут смотреть до конца?</div>
+            <CaptureTitle
+              before={['Нужен сценарий,', 'который']}
+              accent="будут смотреть до конца?"
+            />
             <p className="text-zinc-300 text-xl">Разберём вашу задачу и предложим сценарный подход под вашу аудиторию.</p>
           </div>
           <LeadForm button="Обсудить сценарий" />

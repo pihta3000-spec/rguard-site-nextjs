@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Pickaxe, HardHat, Factory, Wheat, Flame, Building2 } from 'lucide-react'
 import Layout from '@/components/Layout'
-import { LeadForm } from '@/components/ui'
+import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
 import { getIndustries, getIndustry } from '@/lib/db'
 
@@ -68,7 +68,7 @@ export default function IndustryPage({ industry }) {
         <div className="p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-4xl font-black leading-tight mb-6">Нужен контент для {industry.title.toLowerCase()}?</div>
+              <CaptureTitle before="Нужен контент" accent={`для ${industry.title.toLowerCase()}?`} />
               <p className="text-zinc-400 text-lg">Разберём специфику бизнеса и предложим подходящие форматы.</p>
             </div>
             <LeadForm button="Обсудить проект" />

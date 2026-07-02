@@ -168,10 +168,29 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
   color: #d4d4d8;
 }
 
+.capture-title {
+  --hero-accent-size: 2.5rem;
+  --hero-rest-size: 2.2rem;
+  max-width: 620px;
+}
+.capture-title.hero-title--split {
+  padding-left: .24em;
+}
+.capture-title .hero-title-main {
+  line-height: .88;
+}
+.capture-title .hero-title-rest {
+  line-height: 1;
+}
+
 @media (max-width: 430px) {
   .hero-title {
     --hero-accent-size: clamp(1.5rem, 7.2vw, 1.8rem);
     --hero-rest-size: 1.55rem;
+  }
+  .capture-title {
+    --hero-accent-size: clamp(2.05rem, 10vw, 2.65rem);
+    --hero-rest-size: clamp(1.75rem, 8.4vw, 2.25rem);
   }
   .hero-title--signal .hero-title-rest,
   .hero-title-rest {
@@ -190,12 +209,20 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
     --hero-accent-size: 4.1rem;
     --hero-rest-size: 2.8rem;
   }
+  .capture-title {
+    --hero-accent-size: 3.35rem;
+    --hero-rest-size: 2.85rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .hero-title {
     --hero-accent-size: 4.35rem;
     --hero-rest-size: 2.75rem;
+  }
+  .capture-title {
+    --hero-accent-size: 3.6rem;
+    --hero-rest-size: 3rem;
   }
 }
 

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Pickaxe } from 'lucide-react'
 import Layout from '@/components/Layout'
-import { LeadForm } from '@/components/ui'
+import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
 import { getBloggers, getBlogger } from '@/lib/db'
 
@@ -104,7 +104,7 @@ export default function BloggerPage({ blogger }) {
         <div className="p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(239,68,68,0.04)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-4xl md:text-5xl font-black mb-6">Хотите снять контент с {blogger.name}?</div>
+              <CaptureTitle before="Хотите снять контент" accent={`с ${blogger.name}?`} />
               <p className="text-zinc-400 text-xl">Обсудим задачу и подберём формат.</p>
             </div>
             <LeadForm button="Обсудить проект" />

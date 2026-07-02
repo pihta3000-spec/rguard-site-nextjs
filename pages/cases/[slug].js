@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
-import { LeadForm } from '@/components/ui'
+import { LeadForm, CaptureTitle } from '@/components/ui'
 import { getCases, getCase } from '@/lib/db'
 
 const SERVICE_LABELS = {
@@ -181,7 +181,7 @@ export default function CasePage({ item, related = [] }) {
         <div className="p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-4xl md:text-5xl font-black leading-tight mb-6">Хотите похожий результат для своей компании?</div>
+              <CaptureTitle before="Хотите" accent="похожий результат" after="для своей компании?" />
               <p className="text-zinc-300 text-xl">Разберём вашу задачу и предложим формат, который привлечёт внимание нужной аудитории.</p>
             </div>
             <LeadForm button="Обсудить проект" />

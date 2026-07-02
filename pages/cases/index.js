@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useRef } from 'react'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, CaptureTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 import ShipScrollSequence from '@/components/ShipScrollSequence'
 import AstroScrollSequence from '@/components/AstroScrollSequence'
@@ -90,7 +90,7 @@ export default function Cases({ cases , seo }) {
         <div className="mt-24 p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-4xl font-black leading-tight mb-6">Хотите такой же эффект для своей компании?</div>
+              <CaptureTitle before="Хотите" accent="такой же эффект" after="для своей компании?" />
               <p className="text-zinc-400 text-xl">Разберём задачу и предложим формат.</p>
             </div>
             <LeadForm button="Получить предложение" textarea="Кратко опишите задачу" />

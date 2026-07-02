@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import HeroTitle from './HeroTitle'
 
 // Общие компоненты
 
@@ -28,6 +29,19 @@ export function SectionTitle({ eyebrow, title, text }) {
       <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight mb-6">{title}</h2>
       {text && <p className="text-zinc-400 text-lg leading-relaxed">{text}</p>}
     </div>
+  )
+}
+
+export function CaptureTitle({ before, accent, after, className = '' }) {
+  return (
+    <HeroTitle
+      as="h2"
+      before={before}
+      accent={accent}
+      after={after}
+      variant="split"
+      className={`capture-title mb-6 ${className}`}
+    />
   )
 }
 
