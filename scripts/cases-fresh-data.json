@@ -830,5 +830,45 @@
     "insight": "Этот кейс породил целое направление в нашем творчестве, когда мы рассказываем про рабочие профессии через пародию на телепередачу В мире животных. Кто-то мог подумать, что рабочие обидятся, но рабочие обладают отличным чувством юмора и самоиронией.",
     "featured": false,
     "order": ""
+  },
+  {
+    "slug": "centr-otopleniya",
+    "title": "Центр Отопления",
+    "service": "production",
+    "accent": "Отопление и водоснабжение",
+    "shortText": "С нуля запустили TikTok-канал, выпускали по 30 роликов в месяц и построили узнаваемость бренда через репосты и персонажей.",
+    "task": "Повысить узнаваемость бренда, привлечь аудиторию через социальные сети, создать положительные ассоциации с брендом",
+    "solution": "С абсолютного нуля создали канал в TikTok, стали выпускать по 30 роликов в месяц, целились на репосты и узнаваемость персонажей.",
+    "metrics": [
+      {
+        "value": "200млн+",
+        "label": "просмотров"
+      },
+      {
+        "value": "9млн+",
+        "label": "лайков"
+      },
+      {
+        "value": "2млн+",
+        "label": "репостов"
+      }
+    ],
+    "links": [
+      "/cases-videos/centr-otopleniya/centr-otopleniya-01.mp4",
+      "/cases-videos/centr-otopleniya/centr-otopleniya-02.mp4",
+      "/cases-videos/centr-otopleniya/centr-otopleniya-03.mp4",
+      "/cases-videos/centr-otopleniya/centr-otopleniya-04.mp4",
+      "/cases-videos/centr-otopleniya/centr-otopleniya-05.mp4",
+      "/cases-videos/centr-otopleniya/centr-otopleniya-06.mp4"
+    ],
+    "whatWorked": [
+      "Простой, запоминающийся образ",
+      "Харизма блогера",
+      "Текстовый и диалоговый юмор"
+    ],
+    "insight": "Создали для клиента вечный остров контента. Канал прибавил сотни тысяч новых подписчиков спустя время после публикации последнего ролика несколько лет назад.",
+    "coverImage": "/cases-covers/centr-otopleniya.webp",
+    "featured": false,
+    "order": 26
   }
 ]

@@ -59,6 +59,17 @@ export default function CasePage({ item, related = [] }) {
           </div>
         )}
 
+        {metrics.length > 0 && (
+          <div className="flex flex-wrap gap-4 mb-24">
+            {metrics.map((m, i) => (
+              <div key={i} className="flex-1 min-w-[140px] p-8 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+                <div className="font-mono-terminal text-3xl font-black neon-red mb-2">{m.value}</div>
+                <div className="font-mono-terminal text-zinc-500 text-xs uppercase leading-relaxed" style={{ letterSpacing: '0.05em' }}>{m.label}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {links.length > 0 && (
           <div className="mb-24">
             <div className="text-4xl font-black mb-10">Видео кейса</div>
@@ -96,17 +107,6 @@ export default function CasePage({ item, related = [] }) {
                 )
               ))}
             </div>
-          </div>
-        )}
-
-        {metrics.length > 0 && (
-          <div className="flex flex-wrap gap-4 mb-24">
-            {metrics.map((m, i) => (
-              <div key={i} className="flex-1 min-w-[140px] p-8 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
-                <div className="font-mono-terminal text-3xl font-black neon-red mb-2">{m.value}</div>
-                <div className="font-mono-terminal text-zinc-500 text-xs uppercase leading-relaxed" style={{ letterSpacing: '0.05em' }}>{m.label}</div>
-              </div>
-            ))}
           </div>
         )}
 
