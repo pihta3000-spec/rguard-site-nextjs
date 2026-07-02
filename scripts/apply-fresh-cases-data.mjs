@@ -30,7 +30,7 @@ for (const item of cases) {
     task: item.task,
     solution: item.solution,
     metrics: item.metrics,
-    links: item.links,
+    links: item.links?.length ? item.links : (doc?.links || []),
     whatWorked: item.whatWorked,
     insight: item.insight,
     coverImage: item.coverImage || doc?.coverImage || null,
