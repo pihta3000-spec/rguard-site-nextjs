@@ -5,6 +5,8 @@ import HeroTitle from '@/components/HeroTitle'
 import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
+const HAS_AI_HERO_MEDIA = false
+
 const STEPS = [
   { title: 'Определяем задачу', desc: 'Выясняем, какую цель должен решить ИИ-ролик: внимание, продажи, презентация идеи, тест гипотезы или рекламная кампания.' },
   { title: 'Ищем сильную идею', desc: 'Используем опыт вирусных роликов: конфликт, юмор, преувеличение, неожиданные сравнения и понятную драматургию.' },
@@ -33,9 +35,11 @@ export default function AIContent({ cases , seo }) {
         </div>
 
         {/* Hero placeholder */}
-        <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
-          <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ AI Video Placeholder ]</span>
-        </div>
+        {HAS_AI_HERO_MEDIA && (
+          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+            <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ AI Video Placeholder ]</span>
+          </div>
+        )}
 
         {/* Старое vs новое */}
         <div className="grid lg:grid-cols-2 gap-10 mb-24">
@@ -99,20 +103,15 @@ export default function AIContent({ cases , seo }) {
         </div>
 
         {/* Кейсы */}
-        <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Кейсы ИИ-роликов</div>
-          {aiCases.length > 0 ? (
+        {aiCases.length > 0 && (
+          <div className="mb-24">
+            <div className="text-4xl font-black mb-10">Кейсы ИИ-роликов</div>
+
             <div className="grid md:grid-cols-2 gap-6">
               {aiCases.map(item => <CaseCard key={item.id} item={item} href="/cases" />)}
             </div>
-          ) : (
-            <div className="p-10 md:p-14 text-center" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
-              <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// СКОРО ЗДЕСЬ ПОЯВЯТСЯ КЕЙСЫ</div>
-              <div className="text-3xl font-black mb-5">Раздел готов к наполнению</div>
-              <p className="text-zinc-400 text-lg max-w-3xl mx-auto">На этапе заполнения сайта сюда будут подтягиваться кейсы с категорией «ИИ ролики».</p>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* CTA */}
         <div className="grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>

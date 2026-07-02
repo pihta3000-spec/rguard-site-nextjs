@@ -5,6 +5,8 @@ import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card } from '@/components/ui'
 
+const HAS_CONCEPTS_HERO_MEDIA = false
+
 const STEPS = [
   ['01','Определяем цель','Выясняем, чего хочет добиться рекламодатель: продажи, узнаваемость, запуск продукта, HR-набор или репозиционирование.'],
   ['02','Изучаем аудиторию','Проводим кастдев, изучаем боли, возражения, триггеры и реальные разговоры вашей аудитории.'],
@@ -33,9 +35,11 @@ export default function Concepts({ seo }) {
         </div>
 
         {/* Hero placeholder */}
-        <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
-          <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ Campaign Visual Placeholder ]</span>
-        </div>
+        {HAS_CONCEPTS_HERO_MEDIA && (
+          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+            <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ Campaign Visual Placeholder ]</span>
+          </div>
+        )}
 
         {/* Проблема + хорошая концепция */}
         <div className="grid lg:grid-cols-2 gap-10 mb-24">

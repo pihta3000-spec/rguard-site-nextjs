@@ -5,6 +5,9 @@ import HeroTitle from '@/components/HeroTitle'
 import { LeadForm, CaseCard, Card } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
+const HAS_CORPORATE_HERO_MEDIA = false
+const HAS_CORPORATE_MEDIA_GALLERY = false
+
 const FILM_TYPES = ['HR-фильмы','Фильмы о компании','Видео для адаптации сотрудников','Техника безопасности','Обучающие ролики','Фильмы для внутренних мероприятий','Бренд-фильмы','Видео для HR-бренда']
 
 export default function Corporate({ cases , seo }) {
@@ -24,12 +27,13 @@ export default function Corporate({ cases , seo }) {
           <p className="text-zinc-300 text-xl leading-relaxed max-w-5xl">Большинство корпоративных фильмов выглядят одинаково: медленный монтаж, шаблонный дикторский текст и ощущение обязательного просмотра. Мы делаем иначе.</p>
         </div>
 
-        {/* Hero placeholder */}
-        <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
-          <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ Corporate Film Hero ]</span>
-        </div>
-
         {/* Проблема + подход */}
+        {HAS_CORPORATE_HERO_MEDIA && (
+          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+            <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ Corporate Film Hero ]</span>
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-2 gap-10 mb-24">
           <div>
             <div className="text-4xl font-black mb-8">Проблема стандартных корпоративных фильмов</div>
@@ -58,6 +62,19 @@ export default function Corporate({ cases , seo }) {
         )}
 
         {/* Типы фильмов */}
+        {HAS_CORPORATE_MEDIA_GALLERY && (
+          <div className="mb-24">
+            <div className="text-4xl font-black mb-10">Фото и видео материалы</div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-center" style={{aspectRatio:'9/12',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.85)'}}>
+                  <span className="font-mono-terminal text-zinc-700 uppercase tracking-[3px] text-xs">Media {i + 1}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="mb-24">
           <div className="text-4xl font-black mb-10">Какие корпоративные фильмы мы создаём</div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -73,18 +90,6 @@ export default function Corporate({ cases , seo }) {
             <Card title="Смыслы запоминаются" text="За счёт эмоций и образов." />
             <Card title="Компания выглядит современно" text="Даже в консервативной отрасли." />
             <Card title="Контент вызывает уважение" text="А не неловкость при показе." />
-          </div>
-        </div>
-
-        {/* Медиа */}
-        <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Фото и видео материалы</div>
-          <div className="grid md:grid-cols-3 gap-4">
-            {Array.from({length:6}).map((_,i) => (
-              <div key={i} className="aspect-video flex items-center justify-center" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
-                <span className="font-mono-terminal text-zinc-600 text-xs tracking-[3px] uppercase">Media</span>
-              </div>
-            ))}
           </div>
         </div>
 

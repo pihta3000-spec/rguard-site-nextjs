@@ -94,10 +94,14 @@ export default function Viral({ cases , seo }) {
 
         {/* Кейсы + Цена */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Кейсы</div>
-          <div className="grid md:grid-cols-2 gap-6 mb-10">
-            {viralCases.map(item => <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />)}
-          </div>
+          {viralCases.length > 0 && (
+            <>
+              <div className="text-4xl font-black mb-10">Кейсы</div>
+              <div className="grid md:grid-cols-2 gap-6 mb-10">
+                {viralCases.map(item => <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />)}
+              </div>
+            </>
+          )}
           <div className="grid lg:grid-cols-2 gap-10 items-center p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
             <div>
               <div className="text-3xl font-black mb-6">Стоимость</div>

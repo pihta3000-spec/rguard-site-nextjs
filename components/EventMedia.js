@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 
 const GAP = 12 // px, совпадает с gap сетки
 
-// Мобильная раскладка (2 колонки): модуль из 3 фото — широкий баннер + 2 вертикальных.
-// Остаток (1-2 фото) раскладывается без дыр → устойчиво к любому числу фото.
+// Мобильная раскладка (2 колонки): модуль из 3 фото - широкий баннер + 2 вертикальных.
+// Остаток (1-2 фото) раскладывается без дыр, устойчиво к любому числу фото.
 function mobileLayout(n) {
   const out = []
   let i = 0, row = 1
@@ -18,9 +18,8 @@ function mobileLayout(n) {
   else if (rem === 2) { out.push({ c: 1, r: row, cs: 1, rs: 1 }); out.push({ c: 2, r: row, cs: 1, rs: 1 }) } // два в ряд
   return out
 }
-
-// Галерея фото — «бенто» из ячеек разного размера. desktopLayout (4 колонки)
-// передаётся пропом; ячейки квадратные за счёт измеренной ширины контейнера.
+// Галерея фото: бенто из ячеек разного размера. desktopLayout (4 колонки)
+// передается пропом; ячейки квадратные за счет измеренной ширины контейнера.
 export function PhotoGallery({ photos, desktopLayout }) {
   const wrapRef = useRef(null)
   const [cols, setCols] = useState(4)
@@ -103,8 +102,8 @@ export function PhotoGallery({ photos, desktopLayout }) {
           className="fixed inset-0 z-[100] flex items-center justify-center"
           style={{ background: 'rgba(3,3,8,0.94)', backdropFilter: 'blur(4px)' }}
         >
-          <button onClick={close} className="absolute top-5 right-6 text-zinc-300 hover:text-white" style={{ fontSize: 32, lineHeight: 1 }} aria-label="Закрыть">×</button>
-          <button onClick={(e) => { e.stopPropagation(); prev() }} className="absolute left-3 md:left-8 text-zinc-300 hover:text-white select-none" style={{ fontSize: 44, lineHeight: 1 }} aria-label="Назад">‹</button>
+          <button onClick={close} className="absolute top-5 right-6 text-zinc-300 hover:text-white" style={{ fontSize: 32, lineHeight: 1 }} aria-label="Закрыть">x</button>
+          <button onClick={(e) => { e.stopPropagation(); prev() }} className="absolute left-3 md:left-8 text-zinc-300 hover:text-white select-none" style={{ fontSize: 44, lineHeight: 1 }} aria-label="Назад">{'<'}</button>
           <img
             src={photos[index]}
             alt={`Фото с мероприятия ${index + 1}`}
@@ -112,7 +111,7 @@ export function PhotoGallery({ photos, desktopLayout }) {
             className="max-h-[88vh] max-w-[90vw] object-contain"
             style={{ border: '1px solid rgba(239,68,68,0.25)' }}
           />
-          <button onClick={(e) => { e.stopPropagation(); next() }} className="absolute right-3 md:right-8 text-zinc-300 hover:text-white select-none" style={{ fontSize: 44, lineHeight: 1 }} aria-label="Вперёд">›</button>
+          <button onClick={(e) => { e.stopPropagation(); next() }} className="absolute right-3 md:right-8 text-zinc-300 hover:text-white select-none" style={{ fontSize: 44, lineHeight: 1 }} aria-label="Вперёд">{'>'}</button>
           <div className="absolute bottom-5 left-0 right-0 text-center text-zinc-400 font-mono-terminal text-sm">{index + 1} / {photos.length}</div>
         </div>
       )}
@@ -120,36 +119,27 @@ export function PhotoGallery({ photos, desktopLayout }) {
   )
 }
 
-// Стена вертикальных видео — проигрываются по нажатию (одно за раз)
+// Стена вертикальных видео.
 export function VideoWall({ videos }) {
-  const [playing, setPlaying] = useState(null)
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {videos.map((v, i) => (
         <div
           key={v.src}
-          className="relative overflow-hidden"
-          style={{ aspectRatio: '9/16', border: '1px solid rgba(239,68,68,0.18)', background: '#05050c' }}
+          className="relative overflow-hidden transition-all hover:border-red-500"
+          style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(180deg,#111 0%,black 100%)' }}
         >
-          {playing === i ? (
             <video
               src={v.src}
               poster={v.poster}
               controls
-              autoPlay
+              preload="metadata"
               playsInline
-              className="w-full h-full object-cover"
+              className="block w-full aspect-[9/16] object-cover bg-black"
             />
-          ) : (
-            <button onClick={() => setPlaying(i)} className="absolute inset-0 w-full h-full group" aria-label="Воспроизвести видео">
-              <img src={v.poster} alt="" loading="lazy" className="w-full h-full object-cover" />
-              <span className="absolute inset-0 flex items-center justify-center transition" style={{ background: 'rgba(0,0,0,0.28)' }}>
-                <span className="flex items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110" style={{ width: 60, height: 60, background: 'rgba(239,68,68,0.92)', boxShadow: '0 0 24px rgba(239,68,68,0.5)' }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z" /></svg>
-                </span>
-              </span>
-            </button>
-          )}
+          <div className="pointer-events-none absolute left-3 top-3 font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs bg-black/70 px-2 py-1">
+            Ролик {i + 1}
+          </div>
         </div>
       ))}
     </div>
