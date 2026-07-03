@@ -134,7 +134,7 @@ export default function ProductionScrollAnimation() {
           width: 'min(78vh, 720px)',
           maxWidth: 'none',
           height: 'auto',
-          opacity: loaded ? 0.58 : 0,
+          opacity: loaded ? 0.85 : 0,
           filter: 'drop-shadow(0 0 30px rgba(239,68,68,0.34))',
           transform: 'rotate(90deg)',
           transformOrigin: 'center',
