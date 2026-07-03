@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
-import { LeadForm, Card, CaptureTitle } from '@/components/ui'
+import { LeadForm, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 
 const HAS_CONCEPTS_HERO_MEDIA = false
 
@@ -44,7 +44,7 @@ export default function Concepts({ seo }) {
         {/* Проблема + хорошая концепция */}
         <div className="grid lg:grid-cols-2 gap-10 mb-24">
           <div>
-            <div className="text-4xl font-black mb-8">Почему обычная реклама не работает</div>
+            <SectionAccentTitle className="mb-8" before="Почему обычная реклама" accent="не работает" />
             <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
               <p>Большинство рекламных кампаний выглядят одинаково: логотип, слоган, обещание скидки — и мгновенно забываются.</p>
               <p>Современный человек перегружен информацией. Если реклама не вызывает эмоцию или удивление, она исчезает в шуме.</p>
@@ -52,7 +52,7 @@ export default function Concepts({ seo }) {
             </div>
           </div>
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
-            <div className="text-3xl font-black mb-8">Что такое хорошая концепция</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-8" before="Что такое" accent="хорошая концепция" />
             <div className="space-y-4 text-zinc-300 text-lg leading-relaxed">
               {['Понятна за несколько секунд','Умещается в одну сильную мысль','Вызывает эмоцию и обсуждение','Легко пересказывается другим','Работает на конкретную бизнес-задачу'].map(t => <p key={t}>• {t}</p>)}
             </div>
@@ -64,14 +64,14 @@ export default function Concepts({ seo }) {
           <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(circle at top right,rgba(239,68,68,0.08) 0%,transparent 60%)'}} />
           <div className="relative z-10 max-w-5xl">
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// НАШ ПРИНЦИП</div>
-            <h2 className="text-4xl md:text-5xl font-black leading-tight mb-8">Лучшая реклама — та, которую распространяют сами люди</h2>
+            <SectionAccentTitle className="mb-8" before="Лучшая реклама — та, которую" accent="распространяют сами люди" />
             <p className="text-zinc-300 text-xl leading-relaxed">В каждой концепции мы задаём себе вопрос: захочет ли человек снять это на телефон, отправить друзьям или выложить в социальные сети? Если нет — идея недостаточно сильна.</p>
           </div>
         </div>
 
         {/* Шаги */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-12">Как мы работаем</div>
+          <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map(([num,title,desc]) => (
               <div key={num} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
@@ -84,7 +84,7 @@ export default function Concepts({ seo }) {
 
         {/* Какие концепции */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Какие концепции мы создаём</div>
+          <SectionAccentTitle className="mb-10" before="Какие концепции" accent="мы создаём" />
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {TYPES.map(t => <Card key={t} title={t} text="Идеи, которые работают на внимание и обсуждение." />)}
           </div>
@@ -93,7 +93,7 @@ export default function Concepts({ seo }) {
         {/* Наше мышление */}
         <div className="mb-24 p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// НАШЕ МЫШЛЕНИЕ</div>
-          <div className="text-4xl md:text-5xl font-black leading-tight mb-8">Мы не спрашиваем «как сделать красивую рекламу?»</div>
+          <SectionAccentTitle className="mb-8" before="Мы не спрашиваем" accent="«как сделать красивую рекламу?»" />
           <p className="text-zinc-300 text-2xl leading-relaxed max-w-5xl">Мы спрашиваем: как сделать так, чтобы люди сами стали распространителями этой идеи?</p>
         </div>
 

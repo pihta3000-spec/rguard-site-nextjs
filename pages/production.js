@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, SectionAccentTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
 const STEPS = [
@@ -40,7 +40,7 @@ export default function Production({ cases , seo }) {
 
         <div className="grid lg:grid-cols-2 gap-10 items-start mb-24">
           <div>
-            <div className="text-4xl font-black mb-8">Большинство компаний снимают контент хаотично</div>
+            <SectionAccentTitle className="mb-8" before="Большинство компаний снимают" accent="контент хаотично" />
             <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
               <p>Нет стратегии, нет понимания аудитории, нет системы тестирования гипотез. Контент превращается в набор случайных публикаций.</p>
               <p>Мы выстраиваем контент как полноценную медиа-систему: с аналитикой, гипотезами и постоянным усилением работающих форматов.</p>
@@ -48,7 +48,7 @@ export default function Production({ cases , seo }) {
             </div>
           </div>
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
-            <div className="text-3xl font-black mb-8">Что входит в продюсирование</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-8" before="Что входит" accent="в продюсирование" />
             <div className="space-y-4 text-zinc-300 text-lg leading-relaxed">
               {['Разработка контент-стратегии','Создание вирусных сценариев','Съёмка и монтаж роликов','Кросспостинг на платформы','Аналитика и тестирование гипотез','Усиление успешных форматов','Сторис и backstage-контент'].map(t => <p key={t}>• {t}</p>)}
             </div>
@@ -56,7 +56,7 @@ export default function Production({ cases , seo }) {
         </div>
 
         <div className="mb-24">
-          <div className="text-4xl font-black mb-12">Как мы работаем</div>
+          <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map((item, i) => (
               <div key={i} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
@@ -68,7 +68,7 @@ export default function Production({ cases , seo }) {
         </div>
 
         <div className="mb-24 p-10 md:p-12" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
-          <div className="text-4xl font-black mb-10">Принципы нашей работы</div>
+          <SectionAccentTitle className="mb-10" before="Принципы" accent="нашей работы" />
           <div className="grid md:grid-cols-2 gap-10 text-zinc-300 text-lg leading-relaxed">
             <div className="space-y-4">
               <p>• Контент должен выглядеть нативно, а не как реклама</p>
@@ -88,7 +88,7 @@ export default function Production({ cases , seo }) {
         <div>
           {productionCases.length > 0 && (
             <>
-              <div className="text-4xl font-black mb-10">Кейсы</div>
+              <SectionAccentTitle className="mb-10" accent="Кейсы" />
               <div className="grid md:grid-cols-2 gap-6 mb-10">
                 {productionCases.map(item => <CaseCard key={item.id} item={item} href="/cases" />)}
               </div>
@@ -96,7 +96,7 @@ export default function Production({ cases , seo }) {
           )}
           <div className="grid lg:grid-cols-2 gap-10 items-center p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
             <div>
-              <div className="text-3xl font-black mb-6">Стоимость</div>
+              <SectionAccentTitle className="section-accent-title--compact mb-6" accent="Стоимость" />
               <div className="font-mono-terminal text-5xl font-black mb-6 neon-red">от 125 000 ₽</div>
               <div className="text-zinc-300 text-lg">Создание 8–10 вертикальных видео, публикация, аналитика и контент-сопровождение.</div>
             </div>

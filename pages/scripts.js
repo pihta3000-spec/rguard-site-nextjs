@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
-import { LeadForm, Card, CaptureTitle } from '@/components/ui'
+import { LeadForm, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 
 const STEPS = [
   ['01','Изучаем аудиторию','Разбираемся в продукте, задачах бизнеса, болях клиентов, возражениях и конфликтных точках.'],
@@ -35,15 +35,15 @@ export default function Scripts({ seo }) {
         {/* Проблема + что должен делать */}
         <div className="grid lg:grid-cols-2 gap-10 mb-24">
           <div>
-            <div className="text-4xl font-black mb-8">Почему обычные сценарии не работают</div>
+            <SectionAccentTitle className="mb-8" before="Почему обычные сценарии" accent="не работают" />
             <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
               <p>Большинство сценариев пишутся как литературный текст. Но вирусный ролик — это точный расчёт человеческого внимания.</p>
-              <p>Важно не только что сказать, но и когда, как удержать интерес и что заставит человека переслать ролик коллегам.</p>
+              <p>Важно не только, что сказать, но и когда, как удержать интерес и что заставит человека переслать ролик коллегам.</p>
               <p>Мы проектируем сценарии под бизнес-задачу, а не ради красивых формулировок.</p>
             </div>
           </div>
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
-            <div className="text-3xl font-black mb-8">Что должен делать хороший сценарий</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-8" before="Что должен делать" accent="хороший сценарий" />
             <div className="space-y-4 text-zinc-300 text-lg leading-relaxed">
               {['Зацепить внимание в первые секунды','Удерживать интерес до конца','Вызывать эмоцию и обсуждение','Формировать доверие к бренду','Подталкивать к нужному действию'].map(t => <p key={t}>• {t}</p>)}
             </div>
@@ -54,7 +54,7 @@ export default function Scripts({ seo }) {
         <div className="mb-24 grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
           <div>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// ПРИМЕР РАБОЧЕГО ДОКУМЕНТА</div>
-            <div className="text-4xl font-black mb-6">Рабочая раскадровка до начала съёмок</div>
+            <SectionAccentTitle className="mb-6" before="Рабочая раскадровка" accent="до начала съёмок" />
             <p className="text-zinc-300 text-lg leading-relaxed mb-8">Клиент получает прозрачный рабочий документ, где собраны сценарий, сцены, визуальные ориентиры и логика ролика.</p>
             <a href="https://docs.google.com/spreadsheets/d/1zC_i7OlNglaqsuE-jAOFpRZc7jxqidL9Sbr0w3_ybvc/edit?gid=0#gid=0" target="_blank" rel="noreferrer" className="btn-primary inline-flex">Посмотреть пример раскадровки</a>
           </div>
@@ -65,7 +65,7 @@ export default function Scripts({ seo }) {
 
         {/* Шаги */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-12">Как мы работаем</div>
+          <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map(([num,title,desc]) => (
               <div key={num} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
@@ -78,7 +78,7 @@ export default function Scripts({ seo }) {
 
         {/* Что получает клиент */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Что получает клиент</div>
+          <SectionAccentTitle className="mb-10" before="Что получает" accent="клиент" />
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
             <Card title="Готовый сценарий" text="Полноценный текст для съёмки." />
             <Card title="Раскадровка" text="Пошаговый план производства." />

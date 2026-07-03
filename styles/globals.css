@@ -67,6 +67,82 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
 }
 .glitch-hero { animation: glitch-hero 5s infinite; display: block; }
 
+@keyframes cyber-glitch-y-soft {
+  0%, 76%, 100% {
+    transform: none;
+    text-shadow: 0 0 12px rgba(255,255,255,0.12);
+    opacity: 1;
+  }
+  77% {
+    transform: translateY(-1.5px) skewX(-0.4deg);
+    text-shadow:
+      0 2px rgba(0,240,255,0.36),
+      0 -1px rgba(255,0,60,0.28),
+      0 0 12px rgba(239,68,68,0.22);
+  }
+  78% {
+    transform: translateY(1.5px) skewX(0.4deg);
+    text-shadow:
+      0 -2px rgba(255,0,60,0.36),
+      0 1px rgba(0,240,255,0.28),
+      0 0 14px rgba(239,68,68,0.26);
+  }
+  79% {
+    transform: translateY(-1px);
+    text-shadow: 0 1.5px rgba(0,240,255,0.24), 0 -1px rgba(255,0,60,0.2);
+    opacity: .98;
+  }
+  80% {
+    transform: translateY(.75px);
+    text-shadow: 0 -1.5px rgba(255,0,60,0.24), 0 1px rgba(0,240,255,0.18);
+  }
+  81%, 84% {
+    transform: none;
+    text-shadow: 0 0 16px rgba(239,68,68,0.42);
+    opacity: 1;
+  }
+  85% {
+    transform: translateY(-.75px);
+    text-shadow: 0 1px rgba(0,240,255,0.18), 0 -.75px rgba(255,0,60,0.16);
+  }
+  86% {
+    transform: none;
+    text-shadow: 0 0 12px rgba(255,255,255,0.12);
+  }
+}
+
+.cyber-glitch-y {
+  animation: cyber-glitch-y-soft 8.5s infinite;
+  will-change: transform;
+}
+
+.section-accent-title {
+  display: block;
+  max-width: 1080px;
+  color: #f4f4f5;
+  font-size: 1.875rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.section-accent-title__accent {
+  display: inline-block;
+  color: #fff;
+  white-space: nowrap;
+  text-transform: none !important;
+  text-shadow: 0 0 16px rgba(239,68,68,.42);
+}
+
+.section-accent-title--allow-accent-wrap .section-accent-title__accent {
+  white-space: normal;
+}
+
+.section-accent-title--compact {
+  font-size: 1.875rem;
+  line-height: 1.08;
+}
+
 .hero-title {
   --hero-accent-size: 2.65rem;
   --hero-rest-size: 2.1rem;
@@ -212,6 +288,13 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
   .capture-title {
     --hero-accent-size: 3.35rem;
     --hero-rest-size: 2.85rem;
+  }
+  .section-accent-title {
+    font-size: 3rem;
+    line-height: 1.08;
+  }
+  .section-accent-title--compact {
+    font-size: 2.25rem;
   }
 }
 

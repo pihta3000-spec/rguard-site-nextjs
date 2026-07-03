@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { sendLeadToRguardApp } from '../../lib/rguardAppLeads'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -13,11 +14,22 @@ export default async function handler(req, res) {
   if (!contact) return res.status(400).json({ error: 'Телефон обязателен' })
 
   try {
+    const page = req.headers.referer || ''
+
     fetch(ALBATO_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ form: 'contact', company, contact, message, button, page: req.headers.referer || '' }),
+      body: JSON.stringify({ form: 'contact', company, contact, message, button, page }),
     }).catch(err => console.error('Albato webhook error:', err))
+
+    const appLeadPromise = sendLeadToRguardApp({
+      form: 'contact',
+      company,
+      contact,
+      message,
+      button,
+      page,
+    }).catch(err => console.error('RGUARD app lead webhook error:', err))
 
     await resend.emails.send({
       from: 'RGUARD Сайт <onboarding@resend.dev>',
@@ -36,6 +48,7 @@ export default async function handler(req, res) {
         </div>
       `,
     })
+    await appLeadPromise
     return res.status(200).json({ ok: true })
   } catch (err) {
     console.error(err)

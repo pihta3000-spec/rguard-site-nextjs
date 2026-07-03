@@ -3,7 +3,7 @@ import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, StatBlock, CaseCard } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, SectionAccentTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
 const STEPS = [
@@ -42,7 +42,7 @@ export default function Viral({ cases , seo }) {
         {/* Проблема + Принципы */}
         <div className="grid lg:grid-cols-2 gap-10 items-start mb-24">
           <div>
-            <div className="text-4xl font-black mb-8">Современная реклама сломалась</div>
+            <SectionAccentTitle className="mb-8" before="Современная реклама" accent="сломалась" />
             <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
               <p>Люди научились игнорировать рекламу. Баннерная слепота, adblock, проматывание интеграций и переизбыток контента сделали классическую рекламу менее эффективной.</p>
               <p>Большинство компаний продолжают создавать «контент ради охватов», забывая главный вопрос: <strong className="text-white">а что с продажами?</strong></p>
@@ -50,11 +50,11 @@ export default function Viral({ cases , seo }) {
             </div>
           </div>
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
-            <div className="text-3xl font-black mb-8">Принципы вирусности</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-8" before="Принципы" accent="вирусности" />
             <div className="space-y-5 text-zinc-300 leading-relaxed text-lg">
               <p><strong className="text-white">Контент должен давать больше,</strong> чем зритель платит своим вниманием.</p>
               <p>Преувеличение, контраст, абсурд, storytelling, олицетворение и индустриальный юмор.</p>
-              <p>Не более 10% рекламы. Если ролик ощущается как реклама — зритель его пролистнет.</p>
+              <p>Не более 10% рекламы. Если ролик ощущается как реклама — зритель его пролистнёт.</p>
               <p>Соцсети — лишь точка входа. Настоящее распространение — в мессенджерах и внутри ЦА.</p>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function Viral({ cases , seo }) {
 
         {/* Шаги */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-12">Как мы создаём вирусные ролики</div>
+          <SectionAccentTitle className="mb-12" before="Как мы создаём" accent="вирусные ролики" />
           <div className="space-y-4">
             {STEPS.map((item, i) => (
               <div key={i} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
@@ -75,7 +75,7 @@ export default function Viral({ cases , seo }) {
 
         {/* Почему работает */}
         <div className="mb-24 p-10 md:p-12" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
-          <div className="text-4xl font-black mb-10">Почему это работает в реальном секторе</div>
+          <SectionAccentTitle className="mb-10" before="Почему это работает" accent="в реальном секторе" />
           <div className="grid md:grid-cols-2 gap-10 text-zinc-300 text-lg leading-relaxed">
             <div className="space-y-4">
               <p>• Умеем делать медийными сложные продукты</p>
@@ -96,7 +96,7 @@ export default function Viral({ cases , seo }) {
         <div className="mb-24">
           {viralCases.length > 0 && (
             <>
-              <div className="text-4xl font-black mb-10">Кейсы</div>
+              <SectionAccentTitle className="mb-10" accent="Кейсы" />
               <div className="grid md:grid-cols-2 gap-6 mb-10">
                 {viralCases.map(item => <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />)}
               </div>
@@ -104,7 +104,7 @@ export default function Viral({ cases , seo }) {
           )}
           <div className="grid lg:grid-cols-2 gap-10 items-center p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
             <div>
-              <div className="text-3xl font-black mb-6">Стоимость</div>
+              <SectionAccentTitle className="section-accent-title--compact mb-6" accent="Стоимость" />
               <div className="font-mono-terminal text-5xl font-black mb-6 neon-red">от 150 000 ₽</div>
               <div className="text-zinc-300 text-lg leading-relaxed">Сценарий, съёмка, монтаж, публикация и механики распространения.</div>
             </div>

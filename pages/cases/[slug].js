@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
-import { LeadForm, CaptureTitle } from '@/components/ui'
+import { LeadForm, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, getCase } from '@/lib/db'
 
 const SERVICE_LABELS = {
@@ -72,7 +72,7 @@ export default function CasePage({ item, related = [] }) {
 
         {links.length > 0 && (
           <div className="mb-24">
-            <div className="text-4xl font-black mb-10">Видео кейса</div>
+            <SectionAccentTitle className="mb-10" before="Видео" accent="кейса" />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {links.map((link, i) => (
                 isLocalVideo(link) ? (
@@ -115,14 +115,14 @@ export default function CasePage({ item, related = [] }) {
             {item.task && (
               <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
                 <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// ЗАДАЧА</div>
-                <h2 className="text-3xl md:text-4xl font-black mb-6">Что нужно было решить</h2>
+                <SectionAccentTitle className="section-accent-title--compact mb-6" before="Что нужно было" accent="решить" />
                 <p className="text-zinc-300 text-lg leading-relaxed">{item.task}</p>
               </div>
             )}
             {item.solution && (
               <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(239,68,68,0.04)' }}>
                 <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// РЕШЕНИЕ</div>
-                <h2 className="text-3xl md:text-4xl font-black mb-6">Что мы сделали</h2>
+                <SectionAccentTitle className="section-accent-title--compact mb-6" before="Что мы" accent="сделали" />
                 <p className="text-zinc-300 text-lg leading-relaxed">{item.solution}</p>
               </div>
             )}
@@ -131,7 +131,7 @@ export default function CasePage({ item, related = [] }) {
 
         {worked.length > 0 && (
           <div className="mb-24">
-            <div className="text-4xl font-black mb-10">Что сработало</div>
+            <SectionAccentTitle className="mb-10" before="Что" accent="сработало" />
             <div className="grid md:grid-cols-3 gap-4">
               {worked.map((w, i) => (
                 <div key={i} className="p-7" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
@@ -148,7 +148,7 @@ export default function CasePage({ item, related = [] }) {
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top right,rgba(239,68,68,0.08) 0%,transparent 60%)' }} />
             <div className="relative z-10 max-w-5xl">
               <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// СИЛЬНЫЙ ИНСАЙТ КЕЙСА</div>
-              <h2 className="text-3xl md:text-5xl font-black leading-tight mb-8">{insight.head}</h2>
+              <SectionAccentTitle className="section-accent-title--allow-accent-wrap mb-8" accent={insight.head} />
               {insight.body && <p className="text-zinc-300 text-xl leading-relaxed">{insight.body}</p>}
             </div>
           </div>
@@ -157,7 +157,7 @@ export default function CasePage({ item, related = [] }) {
         {related.length > 0 && (
           <div className="mb-24">
             <div className="flex items-end justify-between gap-4 mb-8">
-              <div className="text-3xl md:text-4xl font-black">Смотрите также</div>
+              <SectionAccentTitle className="section-accent-title--compact" before="Смотрите" accent="также" />
               {serviceHref && <Link href={serviceHref} className="font-mono-terminal text-red-400 hover:text-red-300 text-xs uppercase tracking-[2px] whitespace-nowrap">Все об услуге →</Link>}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

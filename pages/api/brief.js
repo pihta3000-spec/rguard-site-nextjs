@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { STEPS, ROOT_ID, TASK_LABELS } from '../../lib/briefSteps'
+import { sendLeadToRguardApp } from '../../lib/rguardAppLeads'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -35,6 +36,7 @@ export default async function handler(req, res) {
   try {
     const taskLabel = TASK_LABELS[answers[ROOT_ID]] || '—'
     const answerRows = buildAnswersRows(answers)
+    const page = req.headers.referer || ''
 
     fetch(ALBATO_WEBHOOK, {
       method: 'POST',
@@ -48,9 +50,21 @@ export default async function handler(req, res) {
         phone: contacts.phone,
         answers: answerRows,
         answersText: answerRows.map(r => `${r.question}: ${r.answer}`).join('\n'),
-        page: req.headers.referer || '',
+        page,
       }),
     }).catch(err => console.error('Albato webhook error:', err))
+
+    const appLeadPromise = sendLeadToRguardApp({
+      form: 'brief',
+      taskLabel,
+      company: contacts.company || '',
+      city: contacts.city || '',
+      activity: contacts.activity || '',
+      phone: contacts.phone,
+      answers: answerRows,
+      answersText: answerRows.map(r => `${r.question}: ${r.answer}`).join('\n'),
+      page,
+    }).catch(err => console.error('RGUARD app lead webhook error:', err))
 
     const answersHtml = answerRows.map(r => `
       <tr>
@@ -85,6 +99,7 @@ export default async function handler(req, res) {
         </div>
       `,
     })
+    await appLeadPromise
     return res.status(200).json({ ok: true })
   } catch (err) {
     console.error(err)

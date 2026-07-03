@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
-import { LeadForm, Card, CaptureTitle } from '@/components/ui'
+import { LeadForm, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { PhotoGallery, VideoWall } from '@/components/EventMedia'
 
 // 23 фото (фото с детьми убраны, добавлены кадры с корпоратива). Без детей.
@@ -89,14 +89,14 @@ export default function Events({ seo }) {
         <div className="grid lg:grid-cols-2 gap-8 mb-24">
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-5">Частные мероприятия</div>
-            <div className="text-3xl font-black mb-6">Камерные события с вниманием к деталям</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-6" before="Камерные события" accent="с вниманием к деталям" />
             <div className="space-y-3 text-zinc-300 text-lg leading-relaxed">
               {['Дни рождения','Юбилеи','Свадьбы','Корпоративы','Детские мероприятия','Семейные праздники'].map(t => <p key={t}>• {t}</p>)}
             </div>
           </div>
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-5">Масштабные мероприятия</div>
-            <div className="text-3xl font-black mb-6">События для больших аудиторий</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-6" before="События" accent="для больших аудиторий" />
             <div className="space-y-3 text-zinc-300 text-lg leading-relaxed">
               {['Городские праздники','Фестивали','Публичные мероприятия','Открытия объектов','Бренд-активации','Корпоративные большие события'].map(t => <p key={t}>• {t}</p>)}
             </div>
@@ -105,7 +105,7 @@ export default function Events({ seo }) {
 
         {/* Что берём на себя */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Что мы берём на себя</div>
+          <SectionAccentTitle className="mb-10" before="Что мы" accent="берём на себя" />
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {SERVICES.map(([title,text]) => <Card key={title} title={title} text={text} />)}
           </div>
@@ -113,20 +113,20 @@ export default function Events({ seo }) {
 
         {/* Фото галерея */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Фото с мероприятий</div>
+          <SectionAccentTitle className="mb-10" before="Фото" accent="с мероприятий" />
           <PhotoGallery photos={PHOTOS} desktopLayout={DESKTOP_BENTO} />
         </div>
 
         {/* Видео */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-3">Видео с мероприятий</div>
+          <SectionAccentTitle className="mb-3" before="Видео" accent="с мероприятий" />
           <p className="text-zinc-400 mb-10">Нажмите на любой ролик, чтобы посмотреть.</p>
           <VideoWall videos={VIDEOS} />
         </div>
 
         {/* Ведущие */}
         <div className="mb-24 p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
-          <div className="text-4xl font-black mb-10">Наши ведущие</div>
+          <SectionAccentTitle className="mb-10" before="Наши" accent="ведущие" />
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             {[
               ['Дамир Ильгамович','Харизматичный ведущий с сильной медийной подачей.', '/uploads/f6b69defe1f931aa23717971b1ad83522dc5453b-900x1200.jpg'],
@@ -151,7 +151,7 @@ export default function Events({ seo }) {
 
         {/* Форматы работы */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Форматы работы</div>
+          <SectionAccentTitle className="mb-10" before="Форматы" accent="работы" />
           <div className="grid md:grid-cols-3 gap-4">
             <Card title="Под ключ" text="Берём на себя весь цикл организации." />
             <Card title="Частичное подключение" text="Закрываем отдельные блоки мероприятия." />

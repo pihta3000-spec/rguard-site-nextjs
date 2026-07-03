@@ -3,7 +3,7 @@ import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, getBloggers, resolvePageSeo } from '@/lib/db'
 import dynamic from 'next/dynamic'
 
@@ -26,7 +26,7 @@ export default function Home({ cases, bloggers , seo }) {
   return (
     <Layout
       title="Вирусные ролики для промышленности и реального сектора"
-      description="RGUARD — создаём контент, который рабочие пересылают в Telegram. Производства, стройки, карьеры, добыча — наша среда."
+      description="RGUARD — создаём контент, который пересылают и обсуждают внутри индустрии. Производства, стройки, карьеры, добыча — наша среда."
     >
       <Seo seo={seo} />
 
@@ -91,7 +91,11 @@ export default function Home({ cases, bloggers , seo }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// INIT_REQUEST</div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold leading-tight mb-6">Покажем, какие вирусные ролики могут сработать в вашей нише</h2>
+              <CaptureTitle
+                before={['Покажем, какие', 'вирусные ролики']}
+                accent="могут сработать"
+                after="в вашей нише"
+              />
               <p className="text-zinc-400 text-lg leading-relaxed">Разберём вашу аудиторию и предложим идеи роликов под industrial B2B.</p>
             </div>
             <LeadForm button="Получить идеи роликов" />
@@ -102,7 +106,12 @@ export default function Home({ cases, bloggers , seo }) {
         <div className="mb-32">
           <div className="mb-10 relative z-10">
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-3">// SERVICES.LIST</div>
-            <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight mb-4">Строим контент-системы, а не просто снимаем ролики</h2>
+            <SectionAccentTitle
+              className="mb-4"
+              before="Строим"
+              accent="контент-системы"
+              after="а не просто снимаем ролики"
+            />
             <p className="text-zinc-400 text-lg">Выберите направление под вашу задачу.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
@@ -126,10 +135,14 @@ export default function Home({ cases, bloggers , seo }) {
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center mb-12">
             <div>
               <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// ABOUT.RGUARD</div>
-              <h2 className="text-3xl md:text-5xl font-black leading-tight mb-8">
-                Мы не просто снимаем ролики.<br />
-                <span className="neon-red">Мы проектируем распространение внимания.</span>
-              </h2>
+              <HeroTitle
+                as="h2"
+                className="mb-8"
+                before="Мы не просто снимаем ролики."
+                accent="Проектируем"
+                after={['распространение', 'внимания.']}
+                variant="split"
+              />
               <div className="space-y-5 text-zinc-400 text-lg leading-relaxed">
                 <p><span className="text-white font-bold">Красная Гвардия</span> — креативное агентство, основанное в 2014 году. Прошли путь от digital-агентства до команды, специализирующейся на вирусных кампаниях через вертикальный видеоконтент.</p>
                 <p>Собственные методики вирусного контента — не просто на просмотры, а на репосты и органическое распространение внутри целевой аудитории.</p>
@@ -157,7 +170,11 @@ export default function Home({ cases, bloggers , seo }) {
         <div className="mb-32">
           <div className="mb-10 relative z-10">
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-3">// CASES.FEATURED</div>
-            <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight">Проекты, которые показывают наш подход в действии</h2>
+            <SectionAccentTitle
+              before="Проекты, которые показывают"
+              accent="наш подход"
+              after="в действии"
+            />
           </div>
           <div className="grid md:grid-cols-2 gap-6 relative z-10">
             {featured.map(item => (
@@ -173,7 +190,11 @@ export default function Home({ cases, bloggers , seo }) {
         <div className="mb-16">
           <div className="mb-10">
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-3">// BLOGGERS.INDEX</div>
-            <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight mb-4">Люди, через которых индустрия смотрит контент RGUARD</h2>
+            <SectionAccentTitle
+              className="mb-4"
+              before="Люди, через которых индустрия смотрит"
+              accent="контент RGUARD"
+            />
             <p className="text-zinc-400 text-lg">Каждый блогер — отдельный тип подачи и взаимодействия с аудиторией.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">

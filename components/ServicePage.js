@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
-import { LeadForm, StatBlock, CaseCard, Card } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, Card, SectionAccentTitle } from '@/components/ui'
 
 export default function ServicePage({ meta, hero, stats, problem, principles, steps, cases, price, cta }) {
   return (
@@ -33,7 +33,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
           <div className="mt-24 grid lg:grid-cols-2 gap-10 items-start mb-24">
             {problem && (
               <div>
-                <div className="text-4xl font-black mb-8">{problem.title}</div>
+                <SectionAccentTitle className="section-accent-title--allow-accent-wrap mb-8" accent={problem.title} />
                 <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
                   {problem.items.map((t, i) => <div key={i}>{t}</div>)}
                 </div>
@@ -41,7 +41,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
             )}
             {principles && (
               <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
-                <div className="text-3xl font-black mb-8">{principles.title}</div>
+                <SectionAccentTitle className="section-accent-title--compact section-accent-title--allow-accent-wrap mb-8" accent={principles.title} />
                 <div className="space-y-5 text-zinc-300 leading-relaxed text-lg">
                   {principles.items.map((t, i) => <div key={i}>{t}</div>)}
                 </div>
@@ -53,7 +53,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
         {/* Steps */}
         {steps && (
           <div className="mt-24 mb-24">
-            <div className="text-4xl font-black mb-12">{steps.title}</div>
+            <SectionAccentTitle className="section-accent-title--allow-accent-wrap mb-12" accent={steps.title} />
             <div className="space-y-6">
               {steps.items.map((item, i) => (
                 <div key={i} className="p-8 flex gap-6 items-start" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
@@ -71,7 +71,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
         {/* Cases */}
         {cases?.length > 0 && (
           <div className="mt-24 mb-24">
-            <div className="text-4xl font-black mb-10">Кейсы</div>
+            <SectionAccentTitle className="mb-10" accent="Кейсы" />
             <div className="grid md:grid-cols-2 gap-6">
               {cases.map(item => (
                 <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />
@@ -84,7 +84,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
         {price && (
           <div className="p-10 grid lg:grid-cols-2 gap-10 items-center" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(239,68,68,0.04)' }}>
             <div>
-              <div className="text-3xl font-black mb-6">Стоимость</div>
+              <SectionAccentTitle className="section-accent-title--compact mb-6" accent="Стоимость" />
               <div className="font-mono-terminal text-5xl font-black mb-6 neon-red">{price.value}</div>
               <div className="text-zinc-300 text-lg leading-relaxed">{price.desc}</div>
             </div>

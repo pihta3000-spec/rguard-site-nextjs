@@ -26,9 +26,33 @@ export function SectionTitle({ eyebrow, title, text }) {
   return (
     <div className="max-w-4xl mb-14">
       <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-4">// {eyebrow}</div>
-      <h2 className="glitch-hero text-3xl sm:text-5xl font-extrabold leading-tight mb-6">{title}</h2>
+      <SectionAccentTitle className="section-accent-title--allow-accent-wrap mb-6" accent={title} />
       {text && <p className="text-zinc-400 text-lg leading-relaxed">{text}</p>}
     </div>
+  )
+}
+
+export function SectionAccentTitle({ before, accent, after, className = '' }) {
+  const beforeParts = Array.isArray(before) ? before : [before]
+  const afterParts = Array.isArray(after) ? after : [after]
+
+  return (
+    <h2 className={`section-accent-title ${className}`}>
+      {beforeParts.filter(Boolean).map((part, index) => (
+        <React.Fragment key={`before-${index}-${part}`}>
+          {index > 0 ? ' ' : ''}
+          <span>{part}</span>
+        </React.Fragment>
+      ))}
+      {beforeParts.filter(Boolean).length > 0 ? ' ' : ''}
+      <span className="section-accent-title__accent cyber-glitch-y">{accent}</span>
+      {afterParts.filter(Boolean).map((part, index) => (
+        <React.Fragment key={`after-${index}-${part}`}>
+          {' '}
+          <span>{part}</span>
+        </React.Fragment>
+      ))}
+    </h2>
   )
 }
 

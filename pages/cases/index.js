@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useRef } from 'react'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, StatBlock, CaseCard, CaptureTitle } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 import ShipScrollSequence from '@/components/ShipScrollSequence'
 import AstroScrollSequence from '@/components/AstroScrollSequence'
@@ -47,7 +47,7 @@ export default function Cases({ cases , seo }) {
         </div>
 
         <div className="mb-24">
-          <div className="font-mono-terminal text-4xl font-black mb-10">Компании, которые уже работали с нами</div>
+          <SectionAccentTitle className="mb-10" before="Компании, которые уже" accent="работали с нами" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
               { src: '/logos/iscpetro.webp',            alt: 'ISC Petro Engineering' },

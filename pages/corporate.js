@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, CaseCard, Card, CaptureTitle } from '@/components/ui'
+import { LeadForm, CaseCard, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
 const HAS_CORPORATE_HERO_MEDIA = false
@@ -36,13 +36,13 @@ export default function Corporate({ cases , seo }) {
 
         <div className="grid lg:grid-cols-2 gap-10 mb-24">
           <div>
-            <div className="text-4xl font-black mb-8">Проблема стандартных корпоративных фильмов</div>
+            <SectionAccentTitle className="mb-8" before="Проблема стандартных" accent="корпоративных фильмов" />
             <div className="space-y-4 text-zinc-300 text-lg leading-relaxed">
               {['Пафосный дикторский голос','Общие фразы без конкретики','Медленный ритм и шаблонный монтаж','Постановочные кадры без жизни','Видео, которое никто не хочет досматривать'].map(t => <p key={t}>• {t}</p>)}
             </div>
           </div>
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
-            <div className="text-3xl font-black mb-8">Наш подход</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-8" before="Наш" accent="подход" />
             <div className="space-y-5 text-zinc-300 text-lg leading-relaxed">
               <p>Используем принципы вирусного контента даже там, где обычно ожидают скучное корпоративное видео.</p>
               <p>Юмор, драматургия, динамика, неожиданные повороты, персонажи и запоминающиеся образы работают не только в рекламе, но и в корпоративной коммуникации.</p>
@@ -54,7 +54,7 @@ export default function Corporate({ cases , seo }) {
         {/* Кейсы */}
         {corporateCases.length > 0 && (
           <div className="mb-24">
-            <div className="text-4xl font-black mb-12">Примеры нашего подхода</div>
+            <SectionAccentTitle className="mb-12" before="Примеры" accent="нашего подхода" />
             <div className="grid md:grid-cols-2 gap-8">
               {corporateCases.map(item => <CaseCard key={item.id} item={item} href="/cases" />)}
             </div>
@@ -64,7 +64,7 @@ export default function Corporate({ cases , seo }) {
         {/* Типы фильмов */}
         {HAS_CORPORATE_MEDIA_GALLERY && (
           <div className="mb-24">
-            <div className="text-4xl font-black mb-10">Фото и видео материалы</div>
+            <SectionAccentTitle className="mb-10" before="Фото и видео" accent="материалы" />
             <div className="grid md:grid-cols-3 gap-4">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="flex items-center justify-center" style={{aspectRatio:'9/12',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.85)'}}>
@@ -76,7 +76,7 @@ export default function Corporate({ cases , seo }) {
         )}
 
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Какие корпоративные фильмы мы создаём</div>
+          <SectionAccentTitle className="mb-10" before="Какие корпоративные фильмы" accent="мы создаём" />
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {FILM_TYPES.map(t => <Card key={t} title={t} text="Современный формат корпоративной коммуникации." />)}
           </div>
@@ -84,7 +84,7 @@ export default function Corporate({ cases , seo }) {
 
         {/* Почему работает */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Почему это работает</div>
+          <SectionAccentTitle className="mb-10" before="Почему это" accent="работает" />
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card title="Видео досматривают" text="Информация не теряется в скучном формате." />
             <Card title="Смыслы запоминаются" text="За счёт эмоций и образов." />

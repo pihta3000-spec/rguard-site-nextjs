@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
-import { LeadForm, StatBlock, CaseCard, Card, CaptureTitle } from '@/components/ui'
+import { LeadForm, StatBlock, CaseCard, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
 
 const HAS_AI_HERO_MEDIA = false
@@ -44,7 +44,7 @@ export default function AIContent({ cases , seo }) {
         {/* Старое vs новое */}
         <div className="grid lg:grid-cols-2 gap-10 mb-24">
           <div>
-            <div className="text-4xl font-black mb-8">Раньше спорили: идея ничего не стоит</div>
+            <SectionAccentTitle className="mb-8" before="Раньше спорили:" accent="идея ничего не стоит" />
             <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
               <p>В классическом производстве большая часть бюджета уходила на реализацию: технику, свет, локации и специалистов.</p>
               <p>Из-за этого долго бытовал тезис: идея ничего не стоит, стоит только реализация.</p>
@@ -52,7 +52,7 @@ export default function AIContent({ cases , seo }) {
             </div>
           </div>
           <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(239,68,68,0.04)'}}>
-            <div className="text-3xl font-black mb-8">Новая формула</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-8" before="Новая" accent="формула" />
             <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
               <p><strong className="text-white">Было:</strong> идея дешёвая, реализация дорогая.</p>
               <p><strong className="text-white">Стало:</strong> реализация доступная, идея дорогая.</p>
@@ -65,11 +65,11 @@ export default function AIContent({ cases , seo }) {
         <div className="mb-24 grid lg:grid-cols-2 gap-12 items-start p-10 md:p-12" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
           <div>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// ПРОБЛЕМА РЫНКА</div>
-            <div className="text-4xl font-black mb-6">Большинство ИИ-роликов выглядят как демонстрация технологии</div>
+            <SectionAccentTitle className="mb-6" before="Большинство ИИ-роликов выглядят как" accent="демонстрация технологии" />
             <p className="text-zinc-300 text-lg leading-relaxed">Многие специалисты разбираются в связках и технических приёмах. Они могут заставить нейросеть выдать красивую картинку. Но за этим нет смысла, конфликта, юмора и идеи, которую хочется переслать.</p>
           </div>
           <div className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
-            <div className="text-3xl font-black mb-6">Наш подход</div>
+            <SectionAccentTitle className="section-accent-title--compact mb-6" before="Наш" accent="подход" />
             <div className="space-y-4 text-zinc-300 text-lg leading-relaxed">
               {['Сначала идея, потом генерация','Сначала зритель, потом инструмент','Сначала сценарий, потом промпт','Сначала смысл, потом визуальный эффект'].map(t => <p key={t}>• {t}</p>)}
             </div>
@@ -78,7 +78,7 @@ export default function AIContent({ cases , seo }) {
 
         {/* Что создаём */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-10">Что мы создаём</div>
+          <SectionAccentTitle className="mb-10" before="Что мы" accent="создаём" />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card title="ИИ-рекламные ролики" text="Короткие видео с сильной идеей, визуальной метафорой и понятной рекламной задачей." />
             <Card title="ИИ-видео для соцсетей" text="Контент для публикаций, тестов гипотез и вирусного распространения." />
@@ -91,7 +91,7 @@ export default function AIContent({ cases , seo }) {
 
         {/* Шаги */}
         <div className="mb-24">
-          <div className="text-4xl font-black mb-12">Как мы работаем</div>
+          <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map((item, i) => (
               <div key={i} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
@@ -105,7 +105,7 @@ export default function AIContent({ cases , seo }) {
         {/* Кейсы */}
         {aiCases.length > 0 && (
           <div className="mb-24">
-            <div className="text-4xl font-black mb-10">Кейсы ИИ-роликов</div>
+            <SectionAccentTitle className="mb-10" before="Кейсы" accent="ИИ-роликов" />
 
             <div className="grid md:grid-cols-2 gap-6">
               {aiCases.map(item => <CaseCard key={item.id} item={item} href="/cases" />)}
