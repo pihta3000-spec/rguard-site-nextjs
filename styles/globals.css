@@ -259,6 +259,17 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
   line-height: 1;
 }
 
+.about-title {
+  --hero-accent-size: clamp(2.7rem, 4.15vw, 3.55rem);
+  --hero-rest-size: clamp(2rem, 3.2vw, 2.75rem);
+  max-width: 100%;
+}
+
+.about-title .hero-title-main,
+.about-title .hero-title-rest {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 430px) {
   .hero-title {
     --hero-accent-size: clamp(1.5rem, 7.2vw, 1.8rem);

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const TOTAL_FRAMES = 151
+const FRAME_BASE = '/home-sequence'
 const PASSES = 3  // вперёд → назад → вперёд
 
 export default function ScrollAnimation() {
@@ -17,7 +18,7 @@ export default function ScrollAnimation() {
     const frames = new Array(TOTAL_FRAMES).fill(null)
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new window.Image()
-      img.src = `/frames/${String(i).padStart(3, '0')}.webp`
+      img.src = `${FRAME_BASE}/${String(i).padStart(3, '0')}.webp`
       const idx = i - 1
       img.onload  = () => { frames[idx] = img; if (++count === TOTAL_FRAMES) { framesRef.current = frames; setLoaded(true); drawFrame(0) } }
       img.onerror = () => { if (++count === TOTAL_FRAMES) { framesRef.current = frames; setLoaded(true) } }
@@ -106,7 +107,8 @@ export default function ScrollAnimation() {
         style={{
           width: '90%',
           height: 'auto',
-          opacity: loaded ? 0.9 : 0,
+          opacity: loaded ? 0.78 : 0,
+          filter: 'drop-shadow(0 0 28px rgba(239,68,68,0.32))',
           transition: 'opacity 0.3s ease',
         }}
       />

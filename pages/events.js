@@ -29,7 +29,7 @@ const DESKTOP_BENTO = [
   { c: 1, r: 10, cs: 1, rs: 1 }, { c: 2, r: 10, cs: 1, rs: 1 }, { c: 3, r: 10, cs: 1, rs: 1 }, { c: 4, r: 10, cs: 1, rs: 1 },
 ]
 
-const VIDEOS = Array.from({ length: 7 }, (_, i) => ({
+const VIDEOS = Array.from({ length: 8 }, (_, i) => ({
   src: `/events/videos/ev-${i + 1}.mp4`,
   poster: `/events/posters/ev-${i + 1}.jpg`,
 }))

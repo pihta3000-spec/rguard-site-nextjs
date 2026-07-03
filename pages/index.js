@@ -133,11 +133,11 @@ export default function Home({ cases, bloggers , seo }) {
             <img src="/favicon.svg" alt="" style={{ width: '100%' }} />
           </div>
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center mb-12">
-            <div>
+            <div className="min-w-0">
               <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// ABOUT.RGUARD</div>
               <HeroTitle
                 as="h2"
-                className="mb-8"
+                className="about-title mb-8"
                 before="Мы не просто снимаем ролики."
                 accent="Проектируем"
                 after={['распространение', 'внимания.']}
