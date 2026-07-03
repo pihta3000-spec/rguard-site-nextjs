@@ -56,7 +56,7 @@ export default function Corporate({ cases , seo }) {
           <div className="mb-24">
             <SectionAccentTitle className="mb-12" before="Примеры" accent="нашего подхода" />
             <div className="grid md:grid-cols-2 gap-8">
-              {corporateCases.map(item => <CaseCard key={item.id} item={item} href="/cases" />)}
+              {corporateCases.map(item => <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />)}
             </div>
           </div>
         )}

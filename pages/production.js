@@ -94,7 +94,7 @@ export default function Production({ cases , seo }) {
             <>
               <SectionAccentTitle className="mb-10" accent="Кейсы" />
               <div className="grid md:grid-cols-2 gap-6 mb-10">
-                {productionCases.map(item => <CaseCard key={item.id} item={item} href="/cases" />)}
+                {productionCases.map(item => <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />)}
               </div>
             </>
           )}

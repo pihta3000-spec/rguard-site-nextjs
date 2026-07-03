@@ -108,7 +108,7 @@ export default function AIContent({ cases , seo }) {
             <SectionAccentTitle className="mb-10" before="Кейсы" accent="ИИ-роликов" />
 
             <div className="grid md:grid-cols-2 gap-6">
-              {aiCases.map(item => <CaseCard key={item.id} item={item} href="/cases" />)}
+              {aiCases.map(item => <CaseCard key={item.id} item={item} href={`/cases/${item.id}`} />)}
             </div>
           </div>
         )}
