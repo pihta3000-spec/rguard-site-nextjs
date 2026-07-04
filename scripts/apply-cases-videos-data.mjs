@@ -2,17 +2,22 @@
 // Idempotent: updates existing cases by slug and does not create new cases.
 import fs from 'node:fs'
 import path from 'node:path'
+import crypto from 'node:crypto'
 import { adminGetBySlug, adminUpsert } from '../lib/db.js'
 
 const payloadPath = path.join(process.cwd(), 'scripts', 'cases-videos-data.json')
 const markerPath = path.join(process.cwd(), 'data', '.case-videos-20260702-restore-after-fresh-data-applied')
 
-if (fs.existsSync(markerPath) && !process.argv.includes('--force')) {
-  console.log('Case videos already applied. Use --force to reapply.')
+const rawPayload = fs.readFileSync(payloadPath, 'utf8')
+const payloadHash = crypto.createHash('sha256').update(rawPayload).digest('hex')
+const marker = fs.existsSync(markerPath) ? fs.readFileSync(markerPath, 'utf8').trim() : ''
+
+if (marker === payloadHash && !process.argv.includes('--force')) {
+  console.log('Case videos already applied for current payload. Use --force to reapply.')
   process.exit(0)
 }
 
-const cases = JSON.parse(fs.readFileSync(payloadPath, 'utf8'))
+const cases = JSON.parse(rawPayload)
 
 let updated = 0
 let skipped = 0
@@ -37,5 +42,5 @@ for (const item of cases) {
 }
 
 fs.mkdirSync(path.dirname(markerPath), { recursive: true })
-fs.writeFileSync(markerPath, new Date().toISOString())
+fs.writeFileSync(markerPath, payloadHash)
 console.log(`Case videos applied. Updated: ${updated}. Created: 0. Skipped: ${skipped}.`)

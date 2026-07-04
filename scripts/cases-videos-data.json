@@ -155,7 +155,8 @@
     "slug": "ooo-tehnonikol",
     "links": [
       "/cases-videos/ooo-tehnonikol/ooo-tehnonikol-01.mp4",
-      "/cases-videos/ooo-tehnonikol/ooo-tehnonikol-02.mp4"
+      "/cases-videos/ooo-tehnonikol/ooo-tehnonikol-02.mp4",
+      "/cases-videos/ooo-tehnonikol/ooo-tehnonikol-03.mp4"
     ],
     "poster": "/cases-video-frames/ooo-tehnonikol.webp"
   },
@@ -195,7 +196,9 @@
   {
     "slug": "rmk",
     "links": [
-      "/cases-videos/rmk/rmk-01.mp4"
+      "/cases-videos/rmk/rmk-01.mp4",
+      "/cases-videos/rmk/rmk-02.mp4",
+      "/cases-videos/rmk/rmk-03.mp4"
     ],
     "poster": "/cases-video-frames/rmk.webp"
   },
@@ -232,7 +235,8 @@
   {
     "slug": "sibur-nizhnekamskneftehim",
     "links": [
-      "/cases-videos/sibur-nizhnekamskneftehim/sibur-nizhnekamskneftehim-01.mp4"
+      "/cases-videos/sibur-nizhnekamskneftehim/sibur-nizhnekamskneftehim-01.mp4",
+      "/cases-videos/sibur-nizhnekamskneftehim/sibur-nizhnekamskneftehim-02.mp4"
     ],
     "poster": "/cases-video-frames/sibur-nizhnekamskneftehim.webp"
   },
