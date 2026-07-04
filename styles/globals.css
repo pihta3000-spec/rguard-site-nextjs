@@ -267,10 +267,11 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
 
 .about-title .hero-title-main,
 .about-title .hero-title-rest {
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 480px) {
   .hero-title {
     --hero-accent-size: clamp(1.5rem, 7.2vw, 1.8rem);
     --hero-rest-size: 1.55rem;
@@ -288,6 +289,16 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
     padding: 0 .08em .04em;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
+  }
+  .about-title {
+    --hero-accent-size: clamp(2.05rem, 9.6vw, 2.55rem);
+    --hero-rest-size: clamp(1.7rem, 7.3vw, 2.05rem);
+    max-width: 100%;
+  }
+  .about-title .hero-title-main {
+    overflow-wrap: normal;
+    word-break: normal;
+    line-height: .86;
   }
 }
 
