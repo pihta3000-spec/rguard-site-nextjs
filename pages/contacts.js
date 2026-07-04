@@ -1,9 +1,28 @@
-import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import { resolvePageSeo } from '@/lib/db'
-import { LeadForm } from '@/components/ui'
+
+const SOCIAL_LINKS = [
+  {
+    label: 'Telegram',
+    handle: '@redguardmedia',
+    href: 'https://t.me/redguardmedia',
+    code: 'TG',
+  },
+  {
+    label: 'Instagram',
+    handle: '@red.guard_',
+    href: 'https://www.instagram.com/red.guard_',
+    code: 'IG',
+  },
+  {
+    label: 'VK',
+    handle: 'rguardrussia',
+    href: 'https://vk.ru/rguardrussia',
+    code: 'VK',
+  },
+]
 
 export default function Contacts({ seo }) {
   return (
@@ -63,17 +82,44 @@ export default function Contacts({ seo }) {
           </div>
           <div className="p-6 sm:p-8 w-full min-w-0" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-5">Карта офиса</div>
-            <div className="min-h-[280px] sm:min-h-[420px] w-full flex items-center justify-center" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(0,0,0,0.4)' }}>
-              <span className="font-mono-terminal text-zinc-600 uppercase tracking-[3px] text-sm">Interactive Map</span>
+            <div
+              className="relative min-h-[280px] sm:min-h-[420px] w-full overflow-hidden hud-corner"
+              style={{ border: '1px solid rgba(239,68,68,0.26)', background: 'rgba(0,0,0,0.65)' }}
+            >
+              <iframe
+                title="Офис RGUARD на карте"
+                src="https://yandex.ru/map-widget/v1/?text=%D0%A3%D1%84%D0%B0%2C%20%D1%83%D0%BB.%20%D0%9C%D0%B8%D0%BD%D0%B3%D0%B0%D0%B6%D0%B5%D0%B2%D0%B0%20102&z=16"
+                className="absolute inset-0 h-full w-full"
+                style={{ border: 0, filter: 'grayscale(1) invert(0.92) contrast(1.05) brightness(0.72) sepia(0.35) hue-rotate(310deg) saturate(1.65)' }}
+                loading="lazy"
+                allowFullScreen
+              />
+              <div className="pointer-events-none absolute inset-0" style={{ background: 'linear-gradient(180deg,rgba(8,8,16,0.15),rgba(239,68,68,0.08)), repeating-linear-gradient(0deg,rgba(255,255,255,0.035) 0,rgba(255,255,255,0.035) 1px,transparent 1px,transparent 4px)' }} />
+              <div className="pointer-events-none absolute left-4 top-4 font-mono-terminal text-red-400 text-xs uppercase tracking-[3px]">Уфа / Мингажева 102</div>
             </div>
           </div>
         </div>
 
         <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-6">Социальные сети</div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {['Telegram','YouTube','VK','Rutube'].map(s => (
-              <a key={s} href="#" className="cyber-card p-6 text-center font-bold text-lg block">{s}</a>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {SOCIAL_LINKS.map(s => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                className="cyber-card group p-6 sm:p-8 block"
+              >
+                <div className="flex items-start justify-between gap-5">
+                  <div>
+                    <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-4">// {s.code}</div>
+                    <div className="text-2xl sm:text-3xl font-black mb-2 group-hover:text-red-400 transition-colors">{s.label}</div>
+                    <div className="font-mono-terminal text-zinc-500 text-sm tracking-[2px]">{s.handle}</div>
+                  </div>
+                  <div className="font-mono-terminal text-red-500 text-xs uppercase tracking-[3px] opacity-60 group-hover:opacity-100 transition-opacity">open</div>
+                </div>
+              </a>
             ))}
           </div>
         </div>
