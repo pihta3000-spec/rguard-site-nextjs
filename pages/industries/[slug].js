@@ -1,7 +1,7 @@
-import Head from 'next/head'
 import Link from 'next/link'
 import { Pickaxe, HardHat, Factory, Wheat, Flame, Building2 } from 'lucide-react'
 import Layout from '@/components/Layout'
+import SocialMeta from '@/components/SocialMeta'
 import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
 import { getIndustries, getIndustry } from '@/lib/db'
@@ -19,13 +19,7 @@ export default function IndustryPage({ industry }) {
 
   return (
     <Layout title={industry.title} description={seoDesc}>
-      <Head>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDesc} />
-        <meta property="og:title" content={seoTitle} />
-        <meta property="og:description" content={seoDesc} />
-        <link rel="canonical" href={`https://rguard.ru/industries/${industry.slug}`} />
-      </Head>
+      <SocialMeta title={seoTitle} description={seoDesc} url={`/industries/${industry.slug}`} image={industry.coverImage} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <Link href="/industries" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Все отрасли</Link>
 
@@ -39,7 +33,7 @@ export default function IndustryPage({ industry }) {
             {industry.shortDesc && <p className="text-zinc-300 text-xl leading-relaxed">{industry.shortDesc}</p>}
           </div>
           {industry.coverImage && (
-            <img src={industry.coverImage} alt={industry.title} className="w-full aspect-video object-cover" style={{ border: '1px solid rgba(239,68,68,0.15)' }} />
+            <img src={industry.coverImage} alt={industry.title} decoding="async" className="w-full aspect-video object-cover" style={{ border: '1px solid rgba(239,68,68,0.15)' }} />
           )}
         </div>
 

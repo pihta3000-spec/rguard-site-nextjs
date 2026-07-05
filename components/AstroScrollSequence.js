@@ -16,8 +16,20 @@ export default function AstroScrollSequence({ targetRef }) {
   const rafRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
   const [visible, setVisible] = useState(false)
+  const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
+    const media = window.matchMedia('(min-width: 1536px)')
+    const update = () => setEnabled(media.matches)
+    update()
+    media.addEventListener?.('change', update)
+    return () => media.removeEventListener?.('change', update)
+  }, [])
+
+  useEffect(() => {
+    if (!enabled) return
+
+    let cancelled = false
     let count = 0
     const frames = new Array(FRAME_COUNT).fill(null)
     for (let i = 0; i < FRAME_COUNT; i++) {
@@ -25,20 +37,21 @@ export default function AstroScrollSequence({ targetRef }) {
       img.src = frameSrc(i)
       img.onload = () => {
         frames[i] = img
-        if (++count === FRAME_COUNT) {
+        if (!cancelled && ++count === FRAME_COUNT) {
           framesRef.current = frames
           setLoaded(true)
           drawFrame(0)
         }
       }
       img.onerror = () => {
-        if (++count === FRAME_COUNT) {
+        if (!cancelled && ++count === FRAME_COUNT) {
           framesRef.current = frames
           setLoaded(true)
         }
       }
     }
-  }, [])
+    return () => { cancelled = true }
+  }, [enabled])
 
   function drawFrame(idx) {
     const canvas = canvasRef.current
@@ -50,7 +63,7 @@ export default function AstroScrollSequence({ targetRef }) {
   }
 
   useEffect(() => {
-    if (!loaded) return
+    if (!enabled || !loaded) return
 
     const lerp = (a, b, t) => a + (b - a) * t
     const SPEED = 0.12
@@ -65,10 +78,10 @@ export default function AstroScrollSequence({ targetRef }) {
     }
     rafRef.current = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [loaded])
+  }, [enabled, loaded])
 
   useEffect(() => {
-    if (!loaded) return
+    if (!enabled || !loaded) return
     const el = targetRef?.current
     if (!el) return
 
@@ -102,7 +115,9 @@ export default function AstroScrollSequence({ targetRef }) {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onResize)
     }
-  }, [loaded, targetRef])
+  }, [enabled, loaded, targetRef])
+
+  if (!enabled) return null
 
   return (
     <div

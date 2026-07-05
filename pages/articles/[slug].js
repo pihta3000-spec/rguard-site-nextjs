@@ -1,6 +1,6 @@
-import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
+import SocialMeta from '@/components/SocialMeta'
 import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
 import { getPosts, getPost } from '@/lib/db'
@@ -15,17 +15,10 @@ export default function Article({ post }) {
 
   return (
     <Layout title={post.title} description={seoDesc}>
-      <Head>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDesc} />
-        {post.coverImage && <meta property="og:image" content={post.coverImage} />}
-        <meta property="og:title" content={seoTitle} />
-        <meta property="og:description" content={seoDesc} />
-        <link rel="canonical" href={`https://rguard.ru/articles/${post.slug}`} />
-      </Head>
+      <SocialMeta title={seoTitle} description={seoDesc} url={`/articles/${post.slug}`} image={post.coverImage} type="article" />
       <section className="px-4 sm:px-6 py-20 max-w-4xl mx-auto">
         <Link href="/articles" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Все статьи</Link>
-        {post.coverImage && <img src={post.coverImage} alt={post.title} className="w-full aspect-video object-cover mb-10" style={{ border: '1px solid rgba(239,68,68,0.15)' }} />}
+        {post.coverImage && <img src={post.coverImage} alt={post.title} decoding="async" className="w-full aspect-video object-cover mb-10" style={{ border: '1px solid rgba(239,68,68,0.15)' }} />}
         <div className="flex items-center gap-4 mb-6">
           <span className="font-mono-terminal text-red-500 text-xs tracking-[2px] uppercase">{CATEGORIES[post.category] || post.category}</span>
           {post.publishedAt && <span className="font-mono-terminal text-zinc-600 text-xs">{formatDate(post.publishedAt)}</span>}

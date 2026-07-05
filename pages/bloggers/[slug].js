@@ -1,8 +1,8 @@
-import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Pickaxe } from 'lucide-react'
 import Layout from '@/components/Layout'
+import SocialMeta from '@/components/SocialMeta'
 import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
 import { getBloggers, getBlogger } from '@/lib/db'
@@ -25,6 +25,7 @@ function PhotoGallery({ photos = [] }) {
           key={i}
           src={url}
           alt={`Фото ${i + 1}`}
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500"
           style={{ opacity: i === current ? 1 : 0 }}
         />
@@ -51,14 +52,13 @@ function PhotoGallery({ photos = [] }) {
 
 export default function BloggerPage({ blogger }) {
   if (!blogger) return null
+  const seoTitle = `${blogger.name} — блогер RGUARD`
+  const seoDesc = blogger.desc || ''
+  const previewImage = (blogger.photos || [])[0]
 
   return (
-    <Layout title={blogger.name} description={blogger.desc}>
-      <Head>
-        <title>{blogger.name} — блогер RGUARD</title>
-        <meta name="description" content={blogger.desc} />
-        <link rel="canonical" href={`https://rguard.ru/bloggers/${blogger.slug}`} />
-      </Head>
+    <Layout title={blogger.name} description={seoDesc}>
+      <SocialMeta title={seoTitle} description={seoDesc} url={`/bloggers/${blogger.slug}`} image={previewImage} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <Link href="/bloggers" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Все блогеры</Link>
 

@@ -57,7 +57,7 @@ export default function Contacts({ seo }) {
               </div>
             </div>
             <div className="aspect-[4/5] overflow-hidden" style={{ border: '1px solid rgba(239,68,68,0.25)' }}>
-              <img src="/radim.jpg" alt="Усманов Радим" className="w-full h-full object-cover object-top" />
+              <img src="/radim.jpg" alt="Усманов Радим" loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
             </div>
           </div>
         </div>

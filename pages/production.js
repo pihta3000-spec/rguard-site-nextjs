@@ -1,5 +1,5 @@
-import Head from 'next/head'
 import Seo from '@/components/Seo'
+import DesktopOnly from '@/components/DesktopOnly'
 import dynamic from 'next/dynamic'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
@@ -25,7 +25,9 @@ export default function Production({ cases , seo }) {
   return (
     <Layout title="Продюсирование и СММ" description="Системный SMM и видеопродюсирование для B2B-компаний. Контент-стратегия, съёмка, публикации и аналитика под ключ — от 8 роликов в месяц.">
       <Seo seo={seo} />
-      <ProductionScrollAnimation />
+      <DesktopOnly>
+        <ProductionScrollAnimation />
+      </DesktopOnly>
       <section className="relative px-4 sm:px-6 py-20 max-w-7xl mx-auto" style={{ zIndex: 2 }}>
         <div className="max-w-6xl mb-6">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// ПРОДЮСИРОВАНИЕ И СММ</div>

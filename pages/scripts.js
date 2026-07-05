@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
@@ -59,7 +58,7 @@ export default function Scripts({ seo }) {
             <a href="https://docs.google.com/spreadsheets/d/1zC_i7OlNglaqsuE-jAOFpRZc7jxqidL9Sbr0w3_ybvc/edit?gid=0#gid=0" target="_blank" rel="noreferrer" className="btn-primary inline-flex">Посмотреть пример раскадровки</a>
           </div>
           <div className="overflow-hidden" style={{aspectRatio:'16/10',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
-            <img src="/scripts-storyboard.webp" alt="Пример рабочей раскадровки RGUARD" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/scripts-storyboard.webp" alt="Пример рабочей раскадровки RGUARD" className="w-full h-full object-cover" loading="lazy" decoding="async" />
           </div>
         </div>
 

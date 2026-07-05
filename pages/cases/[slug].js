@@ -1,6 +1,6 @@
-import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
+import SocialMeta from '@/components/SocialMeta'
 import { LeadForm, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, getCase } from '@/lib/db'
 
@@ -30,14 +30,12 @@ export default function CasePage({ item, related = [] }) {
   const links = item.links || []
   const worked = item.whatWorked || []
   const isLocalVideo = (link) => /^\/.*\.(mp4|webm|mov)(\?|#|$)/i.test(link)
+  const seoTitle = `Кейс ${item.title} — RGUARD`
+  const seoDesc = item.shortText || `Кейс RGUARD: ${item.title}.`
 
   return (
-    <Layout title={`${item.title} — кейс RGUARD`} description={item.shortText || `Кейс RGUARD: ${item.title}.`}>
-      <Head>
-        <title>{`Кейс ${item.title} — RGUARD`}</title>
-        <meta name="description" content={item.shortText || `Кейс RGUARD: ${item.title}.`} />
-        <link rel="canonical" href={`https://rguard.ru/cases/${item.id}`} />
-      </Head>
+    <Layout title={`${item.title} — кейс RGUARD`} description={seoDesc}>
+      <SocialMeta title={seoTitle} description={seoDesc} url={`/cases/${item.id}`} image={item.coverImage} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <Link href="/cases" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Назад к кейсам</Link>
 
@@ -55,7 +53,7 @@ export default function CasePage({ item, related = [] }) {
 
         {item.coverImage && (
           <div className="mb-24 overflow-hidden" style={{ border: '1px solid rgba(239,68,68,0.2)', clipPath: 'polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))' }}>
-            <img src={item.coverImage} alt={item.title} className="w-full object-cover" style={{ aspectRatio: '16/9' }} />
+            <img src={item.coverImage} alt={item.title} decoding="async" className="w-full object-cover" style={{ aspectRatio: '16/9' }} />
           </div>
         )}
 
@@ -82,7 +80,7 @@ export default function CasePage({ item, related = [] }) {
                     <video
                       src={link}
                       controls
-                      preload="metadata"
+                      preload="none"
                       playsInline
                       className="block w-full aspect-[9/16] object-cover bg-black"
                     />
@@ -165,7 +163,7 @@ export default function CasePage({ item, related = [] }) {
                 <Link key={r.id} href={`/cases/${r.id}`} className="cyber-card block overflow-hidden">
                   <div className="aspect-[16/9] overflow-hidden border-b border-red-950/20">
                     {r.coverImage
-                      ? <img src={r.coverImage} alt={r.title} className="w-full h-full object-cover" loading="lazy" />
+                      ? <img src={r.coverImage} alt={r.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                       : <div className="w-full h-full" style={{ background: 'linear-gradient(135deg,#0d0d1a,#1a0a0e)' }} />}
                   </div>
                   <div className="p-5">

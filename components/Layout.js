@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import BriefModal from './BriefModal'
+import dynamic from 'next/dynamic'
+
+const BriefModal = dynamic(() => import('./BriefModal'), {
+  ssr: false,
+  loading: () => null,
+})
 
 const nav = [
   { href: '/cases', label: 'Кейсы' },

@@ -1,13 +1,15 @@
-import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { useState, useRef } from 'react'
+import dynamic from 'next/dynamic'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
+import DesktopOnly from '@/components/DesktopOnly'
 import { LeadForm, StatBlock, CaseCard, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
-import ShipScrollSequence from '@/components/ShipScrollSequence'
-import AstroScrollSequence from '@/components/AstroScrollSequence'
+
+const ShipScrollSequence = dynamic(() => import('@/components/ShipScrollSequence'), { ssr: false })
+const AstroScrollSequence = dynamic(() => import('@/components/AstroScrollSequence'), { ssr: false })
 
 const FILTERS = [
   { id: 'all', label: 'Все кейсы' },
@@ -26,8 +28,10 @@ export default function Cases({ cases , seo }) {
     <Layout title="Кейсы" description="Реальные результаты: 40+ млн просмотров, корпоративные фильмы, SMM для B2B.">
       <Seo seo={seo} />
 
-      <ShipScrollSequence targetRef={sectionRef} />
-      <AstroScrollSequence targetRef={sectionRef} />
+      <DesktopOnly minWidth={1536}>
+        <ShipScrollSequence targetRef={sectionRef} />
+        <AstroScrollSequence targetRef={sectionRef} />
+      </DesktopOnly>
 
       <section ref={sectionRef} className="relative px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="mb-24">
@@ -64,7 +68,7 @@ export default function Cases({ cases , seo }) {
               { src: '/logos/bashkirskiy-kirpich.webp', alt: 'Башкирский кирпич' },
             ].map((logo) => (
               <div key={logo.alt} className="h-[110px] flex items-center justify-center px-6" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.8)' }}>
-                <img src={logo.src} alt={logo.alt} style={{ maxWidth: '100%', maxHeight: '60px', objectFit: 'contain' }} />
+                <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" style={{ maxWidth: '100%', maxHeight: '60px', objectFit: 'contain' }} />
               </div>
             ))}
           </div>

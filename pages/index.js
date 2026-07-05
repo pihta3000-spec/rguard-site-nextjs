@@ -1,8 +1,9 @@
-import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
+import HeroVideo from '@/components/HeroVideo'
+import DesktopOnly from '@/components/DesktopOnly'
 import { LeadForm, StatBlock, CaseCard, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, getBloggers, resolvePageSeo } from '@/lib/db'
 import dynamic from 'next/dynamic'
@@ -31,7 +32,9 @@ export default function Home({ cases, bloggers , seo }) {
       <Seo seo={seo} />
 
       {/* Scroll animation — фиксированный фон слева */}
-      <ScrollAnimation />
+      <DesktopOnly>
+        <ScrollAnimation />
+      </DesktopOnly>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32 relative" style={{ zIndex: 2 }}>
 
@@ -63,26 +66,7 @@ export default function Home({ cases, bloggers , seo }) {
               ))}
             </div>
           </div>
-          <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-[360px]">
-              <div className="relative aspect-[9/16] overflow-hidden"
-                style={{ background: 'linear-gradient(180deg,#0d0d1a 0%,#0a0a14 100%)', border: '1px solid rgba(239,68,68,0.4)', clipPath: 'polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px))', boxShadow: '0 0 40px rgba(239,68,68,0.2)' }}>
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px)' }} />
-                <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'rgba(239,68,68,0.6)' }} />
-                <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'rgba(239,68,68,0.6)' }} />
-                <div className="absolute top-3 left-3 w-5 h-5" style={{ borderTop: '2px solid #ef4444', borderLeft: '2px solid #ef4444' }} />
-                <div className="absolute top-3 right-3 w-5 h-5" style={{ borderTop: '2px solid #ef4444', borderRight: '2px solid #ef4444' }} />
-                <div className="absolute bottom-3 left-3 w-5 h-5" style={{ borderBottom: '2px solid #ef4444', borderLeft: '2px solid #ef4444' }} />
-                <div className="absolute bottom-3 right-3 w-5 h-5" style={{ borderBottom: '2px solid #ef4444', borderRight: '2px solid #ef4444' }} />
-                <video src="/reel.mp4" autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute bottom-0 left-0 right-0 h-24" style={{ background: 'linear-gradient(transparent,#0a0a14)' }} />
-                <div className="absolute top-6 left-4 right-4 flex items-center justify-between z-10">
-                  <div className="font-mono-terminal text-red-500 text-xs tracking-[3px] flicker">[ REC • LIVE ]</div>
-                  <div className="w-2 h-2 rounded-full bg-red-500 flicker" style={{ boxShadow: '0 0 6px #ef4444' }} />
-                </div>
-              </div>
-            </div>
-          </div>
+          <HeroVideo desktopSrc="/reel.mp4" mobileSrc="/reel-mobile.mp4" poster="/reel-poster.jpg" />
         </div>
 
         {/* LEAD FORM */}
@@ -130,7 +114,7 @@ export default function Home({ cases, bloggers , seo }) {
           <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg,rgba(239,68,68,0.8),transparent)' }} />
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top right,rgba(239,68,68,0.08) 0%,transparent 60%)' }} />
           <div className="absolute -right-8 -bottom-8 overflow-hidden pointer-events-none" style={{ zIndex: 0, width: '380px', opacity: 0.05 }}>
-            <img src="/favicon.svg" alt="" style={{ width: '100%' }} />
+            <img src="/favicon.svg" alt="" loading="lazy" decoding="async" style={{ width: '100%' }} />
           </div>
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center mb-12">
             <div className="min-w-0">
@@ -150,7 +134,7 @@ export default function Home({ cases, bloggers , seo }) {
             </div>
             <div className="space-y-5">
               <div className="p-8 flex items-center justify-center min-h-[200px]" style={{ border: '1px solid rgba(239,68,68,0.25)', background: 'rgba(0,0,0,0.4)' }}>
-                <img src="/logow.svg" alt="Красная Гвардия" className="logo-glitch max-w-[320px] w-full opacity-95" />
+                <img src="/logow.svg" alt="Красная Гвардия" loading="lazy" decoding="async" className="logo-glitch max-w-[320px] w-full opacity-95" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {[['2000+','Снятых роликов'],['2M+','Подписчиков'],['100+','Упоминаний в СМИ'],['50+','Выступлений'],['10+','Специалистов'],['2014','Год основания']].map(([v,l]) => (
@@ -203,7 +187,7 @@ export default function Home({ cases, bloggers , seo }) {
                 <div className="aspect-[4/5] flex items-center justify-center text-center p-6 relative overflow-hidden" style={{ borderBottom: '1px solid rgba(239,68,68,0.12)', background: 'rgba(0,0,0,0.35)' }}>
                   <div className="absolute top-3 left-3 font-mono-terminal text-red-500/30 text-xs z-10">#{String(i+1).padStart(2,'0')}</div>
                   {blogger.photos?.[0] ? (
-                    <img src={blogger.photos[0]} alt={blogger.name} className="absolute inset-0 w-full h-full object-cover object-top" />
+                    <img src={blogger.photos[0]} alt={blogger.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover object-top" />
                   ) : (
                     <div>
                       <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-3 flicker">[ PHOTO ]</div>

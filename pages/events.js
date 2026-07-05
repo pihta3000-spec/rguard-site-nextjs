@@ -1,7 +1,7 @@
-import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
+import HeroVideo from '@/components/HeroVideo'
 import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { PhotoGallery, VideoWall } from '@/components/EventMedia'
@@ -63,26 +63,7 @@ export default function Events({ seo }) {
             <p className="text-zinc-300 text-xl leading-relaxed mb-10">От камерных частных праздников до масштабных городских мероприятий на тысячи гостей. Берём на себя организацию под ключ или подключаемся как отдельная команда.</p>
             <a href="#events-contact" className="btn-primary">Обсудить мероприятие</a>
           </div>
-          <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-[360px]">
-              <div className="relative aspect-[9/16] overflow-hidden"
-                style={{ background: 'linear-gradient(180deg,#0d0d1a 0%,#0a0a14 100%)', border: '1px solid rgba(239,68,68,0.4)', clipPath: 'polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px))', boxShadow: '0 0 40px rgba(239,68,68,0.2)' }}>
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px)' }} />
-                <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'rgba(239,68,68,0.6)' }} />
-                <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'rgba(239,68,68,0.6)' }} />
-                <div className="absolute top-3 left-3 w-5 h-5" style={{ borderTop: '2px solid #ef4444', borderLeft: '2px solid #ef4444' }} />
-                <div className="absolute top-3 right-3 w-5 h-5" style={{ borderTop: '2px solid #ef4444', borderRight: '2px solid #ef4444' }} />
-                <div className="absolute bottom-3 left-3 w-5 h-5" style={{ borderBottom: '2px solid #ef4444', borderLeft: '2px solid #ef4444' }} />
-                <div className="absolute bottom-3 right-3 w-5 h-5" style={{ borderBottom: '2px solid #ef4444', borderRight: '2px solid #ef4444' }} />
-                <video src="/reel-events.mp4" autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute bottom-0 left-0 right-0 h-24" style={{ background: 'linear-gradient(transparent,#0a0a14)' }} />
-                <div className="absolute top-6 left-4 right-4 flex items-center justify-between z-10">
-                  <div className="font-mono-terminal text-red-500 text-xs tracking-[3px] flicker">[ REC • LIVE ]</div>
-                  <div className="w-2 h-2 rounded-full bg-red-500 flicker" style={{ boxShadow: '0 0 6px #ef4444' }} />
-                </div>
-              </div>
-            </div>
-          </div>
+          <HeroVideo desktopSrc="/reel-events.mp4" mobileSrc="/reel-events-mobile.mp4" poster="/reel-events-poster.jpg" />
         </div>
 
         {/* Частные / Масштабные */}
@@ -136,7 +117,7 @@ export default function Events({ seo }) {
               <div key={name} className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
                 <div className="aspect-square flex items-center justify-center mb-6 overflow-hidden" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
                   {photo ? (
-                    <img src={photo} alt={name} className="w-full h-full object-cover object-top" />
+                    <img src={photo} alt={name} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
                   ) : (
                     <span className="font-mono-terminal text-zinc-600 text-xs uppercase tracking-[3px]">Photo</span>
                   )}

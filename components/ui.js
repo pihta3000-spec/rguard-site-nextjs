@@ -189,7 +189,7 @@ export function CaseCard({ item, href }) {
         <div className="aspect-[16/9] border border-red-950/20 mb-8 overflow-hidden relative"
           style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}>
           {item.coverImage
-            ? <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+            ? <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
             : <CaseCoverFallback item={item} />}
         </div>
         <div className="text-2xl sm:text-3xl md:text-4xl font-black mb-5 break-words">{item.title}</div>

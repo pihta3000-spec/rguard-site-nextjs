@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'

@@ -89,6 +89,7 @@ export function PhotoGallery({ photos, desktopLayout }) {
                 src={src}
                 alt={`Фото с мероприятия ${i + 1}`}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </button>
@@ -107,6 +108,7 @@ export function PhotoGallery({ photos, desktopLayout }) {
           <img
             src={photos[index]}
             alt={`Фото с мероприятия ${index + 1}`}
+            decoding="async"
             onClick={(e) => e.stopPropagation()}
             className="max-h-[88vh] max-w-[90vw] object-contain"
             style={{ border: '1px solid rgba(239,68,68,0.25)' }}
@@ -133,7 +135,7 @@ export function VideoWall({ videos }) {
               src={v.src}
               poster={v.poster}
               controls
-              preload="metadata"
+              preload="none"
               playsInline
               className="block w-full aspect-[9/16] object-cover bg-black"
             />

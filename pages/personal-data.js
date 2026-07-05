@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import { resolvePageSeo } from '@/lib/db'

@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Seo from '@/components/Seo'
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
@@ -51,7 +50,7 @@ export default function Articles({ posts , seo }) {
             {filtered.map(post => (
               <Link key={post._id} href={`/articles/${post.slug}`} className="cyber-card overflow-hidden block">
                 {post.coverImage ? (
-                  <img src={post.coverImage} alt={post.title} className="w-full aspect-video object-cover" />
+                  <img src={post.coverImage} alt={post.title} loading="lazy" decoding="async" className="w-full aspect-video object-cover" />
                 ) : (
                   <div className="w-full aspect-video flex items-center justify-center" style={{ background: 'rgba(239,68,68,0.05)', borderBottom: '1px solid rgba(239,68,68,0.12)' }}>
                     <span className="font-mono-terminal text-red-500/30 text-xs tracking-[3px]">NO IMAGE</span>
