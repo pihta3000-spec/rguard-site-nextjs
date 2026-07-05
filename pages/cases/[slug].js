@@ -22,6 +22,12 @@ function splitInsight(insight) {
 
 const SERVICE_ROUTES = ['viral', 'production', 'corporate', 'ai-content']
 
+function localVideoPoster(link) {
+  return link
+    .replace(/^\/cases-videos\//, '/cases-posters/')
+    .replace(/\.(mp4|webm|mov)(\?.*)?$/i, '.jpg')
+}
+
 export default function CasePage({ item, related = [] }) {
   const serviceLabel = (SERVICE_LABELS[item.service] || 'RGUARD').toUpperCase()
   const serviceHref = SERVICE_ROUTES.includes(item.service) ? `/${item.service}` : null
@@ -79,6 +85,7 @@ export default function CasePage({ item, related = [] }) {
                     style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(180deg,#111 0%,black 100%)' }}>
                     <video
                       src={link}
+                      poster={localVideoPoster(link)}
                       controls
                       preload="none"
                       playsInline
