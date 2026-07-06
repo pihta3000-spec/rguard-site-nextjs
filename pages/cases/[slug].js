@@ -28,6 +28,15 @@ function localVideoPoster(link) {
     .replace(/\.(mp4|webm|mov)(\?.*)?$/i, '.jpg')
 }
 
+function toggleVideoPlayback(event) {
+  const video = event.currentTarget
+  if (video.paused) {
+    video.play().catch(() => {})
+  } else {
+    video.pause()
+  }
+}
+
 export default function CasePage({ item, related = [] }) {
   const serviceLabel = (SERVICE_LABELS[item.service] || 'RGUARD').toUpperCase()
   const serviceHref = SERVICE_ROUTES.includes(item.service) ? `/${item.service}` : null
@@ -86,10 +95,11 @@ export default function CasePage({ item, related = [] }) {
                     <video
                       src={link}
                       poster={localVideoPoster(link)}
+                      onClick={toggleVideoPlayback}
                       controls
                       preload="none"
                       playsInline
-                      className="block w-full aspect-[9/16] object-cover bg-black"
+                      className="block w-full aspect-[9/16] object-cover bg-black cursor-pointer"
                     />
                     <div className="pointer-events-none absolute left-3 top-3 font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs bg-black/70 px-2 py-1">
                       Ролик {i + 1}

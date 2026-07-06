@@ -122,6 +122,15 @@ export function PhotoGallery({ photos, desktopLayout }) {
 }
 
 // Стена вертикальных видео.
+function toggleVideoPlayback(event) {
+  const video = event.currentTarget
+  if (video.paused) {
+    video.play().catch(() => {})
+  } else {
+    video.pause()
+  }
+}
+
 export function VideoWall({ videos }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -134,10 +143,11 @@ export function VideoWall({ videos }) {
             <video
               src={v.src}
               poster={v.poster}
+              onClick={toggleVideoPlayback}
               controls
               preload="none"
               playsInline
-              className="block w-full aspect-[9/16] object-cover bg-black"
+              className="block w-full aspect-[9/16] object-cover bg-black cursor-pointer"
             />
           <div className="pointer-events-none absolute left-3 top-3 font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs bg-black/70 px-2 py-1">
             Ролик {i + 1}
