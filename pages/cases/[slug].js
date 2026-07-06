@@ -28,12 +28,15 @@ function localVideoPoster(link) {
     .replace(/\.(mp4|webm|mov)(\?.*)?$/i, '.jpg')
 }
 
-function toggleVideoPlayback(event) {
+function rememberVideoState(event) {
   const video = event.currentTarget
-  if (video.paused) {
+  video.dataset.wasPaused = video.paused ? 'true' : 'false'
+}
+
+function playPausedVideo(event) {
+  const video = event.currentTarget
+  if (video.dataset.wasPaused === 'true' && video.paused) {
     video.play().catch(() => {})
-  } else {
-    video.pause()
   }
 }
 
@@ -95,7 +98,8 @@ export default function CasePage({ item, related = [] }) {
                     <video
                       src={link}
                       poster={localVideoPoster(link)}
-                      onClick={toggleVideoPlayback}
+                      onPointerDown={rememberVideoState}
+                      onClick={playPausedVideo}
                       controls
                       preload="none"
                       playsInline

@@ -122,12 +122,15 @@ export function PhotoGallery({ photos, desktopLayout }) {
 }
 
 // Стена вертикальных видео.
-function toggleVideoPlayback(event) {
+function rememberVideoState(event) {
   const video = event.currentTarget
-  if (video.paused) {
+  video.dataset.wasPaused = video.paused ? 'true' : 'false'
+}
+
+function playPausedVideo(event) {
+  const video = event.currentTarget
+  if (video.dataset.wasPaused === 'true' && video.paused) {
     video.play().catch(() => {})
-  } else {
-    video.pause()
   }
 }
 
@@ -143,7 +146,8 @@ export function VideoWall({ videos }) {
             <video
               src={v.src}
               poster={v.poster}
-              onClick={toggleVideoPlayback}
+              onPointerDown={rememberVideoState}
+              onClick={playPausedVideo}
               controls
               preload="none"
               playsInline
