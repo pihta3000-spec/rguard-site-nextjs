@@ -135,7 +135,8 @@ function SequenceTile({ sequence }) {
         if (event.pointerType === 'mouse') stop()
       }}
       onPointerDown={(event) => {
-        if (event.pointerType !== 'mouse') playOnTap()
+        if (event.pointerType === 'mouse') start()
+        else playOnTap()
       }}
       style={{
         position: 'absolute',
@@ -151,7 +152,7 @@ function SequenceTile({ sequence }) {
         filter: playing
           ? 'brightness(1.32) saturate(1.42) drop-shadow(0 0 42px rgba(239, 68, 68, 0.48))'
           : 'brightness(1.12) saturate(1.22) drop-shadow(0 0 28px rgba(239, 68, 68, 0.32))',
-        zIndex: 1,
+        zIndex: 25,
         WebkitTapHighlightColor: 'transparent',
       }}
     >
@@ -162,10 +163,14 @@ function SequenceTile({ sequence }) {
 
 export default function BriefSequenceBackdrop() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 52% 36%, rgba(239,68,68,0.13), transparent 42%)' }} />
-      {SEQUENCES.map(sequence => <SequenceTile key={sequence.label} sequence={sequence} />)}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(90deg,rgba(10,10,20,0.74),rgba(10,10,20,0.38) 42%,rgba(10,10,20,0.72))' }} />
-    </div>
+    <>
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 52% 36%, rgba(239,68,68,0.13), transparent 42%)' }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(90deg,rgba(10,10,20,0.74),rgba(10,10,20,0.38) 42%,rgba(10,10,20,0.72))' }} />
+      </div>
+      <div className="pointer-events-none fixed inset-0 z-20 overflow-hidden">
+        {SEQUENCES.map(sequence => <SequenceTile key={sequence.label} sequence={sequence} />)}
+      </div>
+    </>
   )
 }
