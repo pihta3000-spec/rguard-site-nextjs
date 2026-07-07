@@ -2,9 +2,13 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import HeroVideo from '@/components/HeroVideo'
+import DesktopOnly from '@/components/DesktopOnly'
+import dynamic from 'next/dynamic'
 import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { PhotoGallery, VideoWall } from '@/components/EventMedia'
+
+const ServiceScrollAnimation = dynamic(() => import('@/components/ServiceScrollAnimation'), { ssr: false })
 
 // 23 фото (фото с детьми убраны, добавлены кадры с корпоратива). Без детей.
 // Порядок = порядок ячеек в DESKTOP_BENTO. Широкие кадры — в крупные ячейки.
@@ -49,7 +53,8 @@ export default function Events({ seo }) {
   return (
     <Layout title="Организация мероприятий" description="Организуем корпоративы, городские праздники, фестивали и бренд-активации. От идеи до финала под ключ — с видеосъёмкой и контентом.">
       <Seo seo={seo} />
-      <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
+      <DesktopOnly><ServiceScrollAnimation variant="events" /></DesktopOnly>
+      <section className="relative px-4 sm:px-6 py-20 max-w-7xl mx-auto" style={{ zIndex: 2 }}>
         {/* HERO: текст слева, вертикальный шоурил справа (по образцу главной) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center mb-24">
           <div>

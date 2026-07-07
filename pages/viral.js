@@ -2,8 +2,12 @@ import Seo from '@/components/Seo'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
+import DesktopOnly from '@/components/DesktopOnly'
+import dynamic from 'next/dynamic'
 import { LeadForm, StatBlock, CaseCard, SectionAccentTitle } from '@/components/ui'
 import { getCases, resolvePageSeo } from '@/lib/db'
+
+const ServiceScrollAnimation = dynamic(() => import('@/components/ServiceScrollAnimation'), { ssr: false })
 
 const STEPS = [
   { title: 'Анализ продукта и бизнес-процессов компании', desc: 'Погружаемся в продукт, внутренние процессы и специфику бизнеса, чтобы контент выглядел как часть индустрии, а не как внешняя реклама.' },
@@ -22,7 +26,8 @@ export default function Viral({ cases , seo }) {
   return (
     <Layout title="Вирусные видеоролики" description="Создаём вирусный контент для industrial-аудитории: производства, стройки, добыча, вахта. Ролики, которые пересылают в Telegram.">
       <Seo seo={seo} />
-      <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
+      <DesktopOnly><ServiceScrollAnimation variant="viral" /></DesktopOnly>
+      <section className="relative px-4 sm:px-6 py-20 max-w-7xl mx-auto" style={{ zIndex: 2 }}>
         <div className="max-w-6xl mb-6">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// ФЛАГМАНСКОЕ НАПРАВЛЕНИЕ RGUARD</div>
           <HeroTitle

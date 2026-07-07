@@ -1,8 +1,12 @@
 import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
+import DesktopOnly from '@/components/DesktopOnly'
+import dynamic from 'next/dynamic'
 import { resolvePageSeo } from '@/lib/db'
 import { LeadForm, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
+
+const ServiceScrollAnimation = dynamic(() => import('@/components/ServiceScrollAnimation'), { ssr: false })
 
 const STEPS = [
   ['01','Изучаем аудиторию','Разбираемся в продукте, задачах бизнеса, болях клиентов, возражениях и конфликтных точках.'],
@@ -18,7 +22,8 @@ export default function Scripts({ seo }) {
   return (
     <Layout title="Написание сценариев" description="Разрабатываем вирусные сценарии для видеороликов: захват внимания, удержание, драматургия и призыв к действию. Раскадровка в комплекте.">
       <Seo seo={seo} />
-      <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
+      <DesktopOnly><ServiceScrollAnimation variant="scripts" /></DesktopOnly>
+      <section className="relative px-4 sm:px-6 py-20 max-w-7xl mx-auto" style={{ zIndex: 2 }}>
         <div className="max-w-6xl mb-20">
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// КРЕАТИВ / НАПИСАНИЕ СЦЕНАРИЕВ</div>
           <HeroTitle
