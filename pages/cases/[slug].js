@@ -28,15 +28,14 @@ function localVideoPoster(link) {
     .replace(/\.(mp4|webm|mov)(\?.*)?$/i, '.jpg')
 }
 
-function rememberVideoState(event) {
-  const video = event.currentTarget
-  video.dataset.wasPaused = video.paused ? 'true' : 'false'
-}
+function toggleVideoFromSurface(event) {
+  const video = event.currentTarget.parentElement?.querySelector('video')
+  if (!video) return
 
-function playPausedVideo(event) {
-  const video = event.currentTarget
-  if (video.dataset.wasPaused === 'true' && video.paused) {
+  if (video.paused) {
     video.play().catch(() => {})
+  } else {
+    video.pause()
   }
 }
 
@@ -98,12 +97,17 @@ export default function CasePage({ item, related = [] }) {
                     <video
                       src={link}
                       poster={localVideoPoster(link)}
-                      onPointerDown={rememberVideoState}
-                      onClick={playPausedVideo}
                       controls
                       preload="none"
                       playsInline
                       className="block w-full aspect-[9/16] object-cover bg-black cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      aria-label="Воспроизвести или поставить видео на паузу"
+                      onClick={toggleVideoFromSurface}
+                      className="absolute inset-x-0 top-0 bottom-14 z-10 cursor-pointer"
+                      style={{ background: 'transparent' }}
                     />
                     <div className="pointer-events-none absolute left-3 top-3 font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs bg-black/70 px-2 py-1">
                       Ролик {i + 1}
