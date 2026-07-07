@@ -61,12 +61,12 @@ function SequenceTile({ sequence }) {
   }
 
   useEffect(() => {
-    loadFrames()
+    if (desktop) loadFrames()
     return () => {
       cancelAnimationFrame(rafRef.current)
       window.clearTimeout(touchTimerRef.current)
     }
-  }, [sequence.base])
+  }, [desktop, sequence.base])
 
   const getFrame = (index) => {
     const rounded = Math.round(index)
@@ -125,6 +125,8 @@ function SequenceTile({ sequence }) {
     touchTimerRef.current = window.setTimeout(stop, 2800)
   }
 
+  if (!desktop) return null
+
   return (
     <div
       className="brief-sequence-tile"
@@ -140,12 +142,12 @@ function SequenceTile({ sequence }) {
       }}
       style={{
         position: 'absolute',
-        left: desktop ? sequence.x : sequence.mobileX,
-        top: desktop ? sequence.y : sequence.mobileY,
-        width: desktop ? sequence.size : sequence.mobileSize,
+        left: sequence.x,
+        top: sequence.y,
+        width: sequence.size,
         pointerEvents: 'auto',
         cursor: 'pointer',
-        opacity: ready ? (playing ? 0.98 : sequence.opacity * (desktop ? 1 : 0.72)) : 0,
+        opacity: ready ? (playing ? 0.98 : sequence.opacity) : 0,
         transform: `rotate(${sequence.rotate}) scale(${playing ? 1.045 : 1})`,
         transformOrigin: 'center',
         transition: 'opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease',
