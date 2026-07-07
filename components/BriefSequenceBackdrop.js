@@ -23,7 +23,7 @@ function drawContain(ctx, img, width, height) {
 function SequenceTile({ sequence }) {
   const canvasRef = useRef(null)
   const framesRef = useRef([])
-  const loadedRef = useRef(false)
+  const loadingRef = useRef(false)
   const activeRef = useRef(false)
   const frameRef = useRef(0)
   const directionRef = useRef(1)
@@ -41,30 +41,42 @@ function SequenceTile({ sequence }) {
     return () => window.removeEventListener('resize', update)
   }, [])
 
-  useEffect(() => {
-    const img = new window.Image()
-    img.src = `${sequence.base}/001.webp`
-    img.onload = () => {
-      framesRef.current[0] = img
-      setReady(true)
-      const canvas = canvasRef.current
-      if (canvas) drawContain(canvas.getContext('2d'), img, canvas.width, canvas.height)
+  const loadFrames = () => {
+    if (loadingRef.current) return
+    loadingRef.current = true
+
+    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+      const img = new window.Image()
+      const idx = i - 1
+      img.src = `${sequence.base}/${String(i).padStart(3, '0')}.webp`
+      img.onload = () => {
+        framesRef.current[idx] = img
+        if (idx === 0) {
+          setReady(true)
+          const canvas = canvasRef.current
+          if (canvas) drawContain(canvas.getContext('2d'), img, canvas.width, canvas.height)
+        }
+      }
     }
+  }
+
+  useEffect(() => {
+    loadFrames()
     return () => {
       cancelAnimationFrame(rafRef.current)
       window.clearTimeout(touchTimerRef.current)
     }
   }, [sequence.base])
 
-  const loadFrames = () => {
-    if (loadedRef.current) return
-    loadedRef.current = true
-    for (let i = 2; i <= TOTAL_FRAMES; i++) {
-      const img = new window.Image()
-      const idx = i - 1
-      img.src = `${sequence.base}/${String(i).padStart(3, '0')}.webp`
-      img.onload = () => { framesRef.current[idx] = img }
+  const getFrame = (index) => {
+    const rounded = Math.round(index)
+    if (framesRef.current[rounded]) return framesRef.current[rounded]
+
+    for (let i = rounded - 1; i >= 0; i--) {
+      if (framesRef.current[i]) return framesRef.current[i]
     }
+
+    return framesRef.current[0]
   }
 
   const animate = (time) => {
@@ -77,7 +89,7 @@ function SequenceTile({ sequence }) {
       const next = frameRef.current + directionRef.current
       if (next >= maxFrame || next <= 0) directionRef.current *= -1
       frameRef.current = Math.max(0, Math.min(maxFrame, next))
-      const frame = framesRef.current[Math.round(frameRef.current)] || framesRef.current[0]
+      const frame = getFrame(frameRef.current)
       drawContain(canvas.getContext('2d'), frame, canvas.width, canvas.height)
     }
 
@@ -88,7 +100,7 @@ function SequenceTile({ sequence }) {
 
     if (frameRef.current > 0) {
       frameRef.current = Math.max(0, frameRef.current - 3)
-      const frame = framesRef.current[Math.round(frameRef.current)] || framesRef.current[0]
+      const frame = getFrame(frameRef.current)
       drawContain(canvas.getContext('2d'), frame, canvas.width, canvas.height)
       rafRef.current = requestAnimationFrame(animate)
     }
@@ -97,8 +109,8 @@ function SequenceTile({ sequence }) {
   const start = () => {
     activeRef.current = true
     setPlaying(true)
-    loadFrames()
     cancelAnimationFrame(rafRef.current)
+    lastTickRef.current = 0
     rafRef.current = requestAnimationFrame(animate)
   }
 
