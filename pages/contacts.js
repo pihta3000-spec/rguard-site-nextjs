@@ -11,12 +11,6 @@ const SOCIAL_LINKS = [
     code: 'TG',
   },
   {
-    label: 'Instagram',
-    handle: '@red.guard_',
-    href: 'https://www.instagram.com/red.guard_',
-    code: 'IG',
-  },
-  {
     label: 'VK',
     handle: 'rguardrussia',
     href: 'https://vk.ru/rguardrussia',
@@ -102,7 +96,7 @@ export default function Contacts({ seo }) {
 
         <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-6">Социальные сети</div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 gap-5">
             {SOCIAL_LINKS.map(s => (
               <a
                 key={s.label}
