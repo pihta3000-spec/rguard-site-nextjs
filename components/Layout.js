@@ -42,6 +42,7 @@ export default function Layout({ children, title, description }) {
   const [menu, setMenu] = useState(false)
   const [briefOpen, setBriefOpen] = useState(false)
   const [showBrief, setShowBrief] = useState(false)
+  const isBriefPage = router.pathname === '/brief'
 
   // Плавающая кнопка «Заполнить бриф» появляется после прокрутки одного экрана
   useEffect(() => {
@@ -156,6 +157,8 @@ export default function Layout({ children, title, description }) {
         </div>
       </footer>
 
+      {!isBriefPage && (
+        <>
       <button
         onClick={() => setBriefOpen(true)}
         aria-hidden={!showBrief}
@@ -173,6 +176,8 @@ export default function Layout({ children, title, description }) {
       </button>
 
       <BriefModal open={briefOpen} onClose={() => setBriefOpen(false)} />
+        </>
+      )}
     </div>
   )
 }
