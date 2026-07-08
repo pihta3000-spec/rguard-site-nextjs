@@ -22,6 +22,7 @@ jobs:
             npm ci --production=false
             node scripts/apply-fresh-cases-data.mjs
             node scripts/apply-cases-videos-data.mjs
+            node scripts/apply-articles-data.mjs
             npm run build
             pm2 restart rguard
             echo "Deploy done at $(date)"

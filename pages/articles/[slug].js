@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import SocialMeta from '@/components/SocialMeta'
@@ -16,6 +17,17 @@ export default function Article({ post }) {
   return (
     <Layout title={post.title} description={seoDesc}>
       <SocialMeta title={seoTitle} description={seoDesc} url={`/articles/${post.slug}`} image={post.coverImage} type="article" />
+      {post.seo?.jsonLd?.length > 0 && (
+        <Head>
+          {post.seo.jsonLd.map((item, index) => (
+            <script
+              key={index}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
+            />
+          ))}
+        </Head>
+      )}
       <section className="px-4 sm:px-6 py-20 max-w-4xl mx-auto">
         <Link href="/articles" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Все статьи</Link>
         {post.coverImage && <img src={post.coverImage} alt={post.title} decoding="async" className="w-full aspect-video object-cover mb-10" style={{ border: '1px solid rgba(239,68,68,0.15)' }} />}

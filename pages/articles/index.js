@@ -5,16 +5,12 @@ import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
 import { getPosts, resolvePageSeo } from '@/lib/db'
 
-const CATEGORIES = [
-  { id: 'all', label: 'Все статьи' },
-  { id: 'viral', label: 'Вирусный контент' },
-  { id: 'cases', label: 'Кейсы' },
-  { id: 'tools', label: 'Инструменты' },
-  { id: 'trends', label: 'Тренды' },
-]
-
 export default function Articles({ posts , seo }) {
   const [filter, setFilter] = useState('all')
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set((posts || []).map(p => p.category).filter(Boolean)))
+    return [{ id: 'all', label: 'Все статьи' }, ...unique.map(category => ({ id: category, label: category }))]
+  }, [posts])
   const filtered = useMemo(() => filter === 'all' ? posts : posts.filter(p => p.category === filter), [posts, filter])
   const formatDate = iso => iso ? new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : ''
 
@@ -32,7 +28,7 @@ export default function Articles({ posts , seo }) {
           <p className="text-zinc-400 text-xl">Экспертный контент о вирусном маркетинге, industrial-аудитории и реальных кейсах.</p>
         </div>
         <div className="flex flex-wrap gap-3 mb-12">
-          {CATEGORIES.map(cat => (
+          {categories.map(cat => (
             <button key={cat.id} onClick={() => setFilter(cat.id)}
               className={`font-mono-terminal text-xs uppercase tracking-[2px] px-5 py-3 transition-all cursor-pointer ${filter === cat.id ? 'text-white' : 'text-zinc-500 hover:text-red-400'}`}
               style={filter === cat.id ? { border: '1px solid rgba(239,68,68,0.8)', background: 'rgba(239,68,68,0.15)' } : { border: '1px solid rgba(239,68,68,0.2)', background: 'transparent' }}>
@@ -58,7 +54,7 @@ export default function Articles({ posts , seo }) {
                 )}
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="font-mono-terminal text-red-500 text-xs tracking-[2px] uppercase">{CATEGORIES.find(c => c.id === post.category)?.label || post.category}</span>
+                    <span className="font-mono-terminal text-red-500 text-xs tracking-[2px] uppercase">{post.category}</span>
                     {post.publishedAt && <span className="font-mono-terminal text-zinc-600 text-xs">{formatDate(post.publishedAt)}</span>}
                   </div>
                   <h2 className="text-xl font-black mb-3 leading-tight">{post.title}</h2>
@@ -76,5 +72,14 @@ export default function Articles({ posts , seo }) {
 
 export async function getStaticProps() {
   const posts = await getPosts()
-  return { props: { seo: resolvePageSeo('/articles'), posts: posts || [] }, revalidate: 60 }
+  const summaries = (posts || []).map(({ _id, title, slug, category, publishedAt, excerpt, coverImage }) => ({
+    _id,
+    title,
+    slug,
+    category,
+    publishedAt,
+    excerpt,
+    coverImage,
+  }))
+  return { props: { seo: resolvePageSeo('/articles'), posts: summaries }, revalidate: 60 }
 }

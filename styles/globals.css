@@ -374,6 +374,15 @@ a[href^="mailto:"], a[href^="tel:"] { word-break: break-all; }
 .rich-content li { margin-bottom: .5rem; }
 .rich-content blockquote { margin: 2rem 0; padding: 1rem 0 1rem 1.5rem; border-left: 3px solid rgba(239,68,68,0.6); background: rgba(239,68,68,0.04); }
 .rich-content blockquote p { color: #e4e4e7; font-style: italic; margin: 0; }
+.rich-content .eyebrow { font-family: var(--font-mono, monospace); color: #ef4444; font-size: .75rem; line-height: 1.4; letter-spacing: .18em; text-transform: uppercase; }
+.rich-content .expertise-box,
+.rich-content .cta-box,
+.rich-content .faq-block { margin: 2.5rem 0; padding: 1.5rem; border: 1px solid rgba(239,68,68,0.18); background: rgba(239,68,68,0.04); }
+.rich-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; color: #d4d4d8; font-size: 1rem; line-height: 1.55; display: block; overflow-x: auto; }
+.rich-content th,
+.rich-content td { border: 1px solid rgba(239,68,68,0.18); padding: .85rem 1rem; vertical-align: top; }
+.rich-content th { color: #fff; background: rgba(239,68,68,0.09); font-weight: 800; text-align: left; }
+.rich-content td { background: rgba(10,10,20,0.45); }
 .rich-content figure { margin: 2.5rem 0; }
 .rich-content img { width: 100%; border: 1px solid rgba(239,68,68,0.15); }
 .rich-content figcaption { font-family: var(--font-mono, monospace); color: #71717a; font-size: .75rem; margin-top: .75rem; text-align: center; }
