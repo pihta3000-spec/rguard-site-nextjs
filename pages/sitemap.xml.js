@@ -14,7 +14,8 @@ export async function getServerSideProps({ res }) {
   const urls = [
     ...staticPaths,
     ...(cases || []).map(c => `/cases/${c.id}`),
-    ...(posts || []).map(p => `/articles/${p.slug}`),
+    ...Array.from(new Set((posts || []).map(p => p.categoryUrl).filter(Boolean))),
+    ...(posts || []).map(p => p.urlPath || `/articles/${p.slug}`),
     ...(industries || []).map(i => `/industries/${i.slug}`),
     ...(bloggers || []).map(b => `/bloggers/${b.slug}`),
   ].filter(Boolean)

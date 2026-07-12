@@ -4,11 +4,11 @@ import Layout from '@/components/Layout'
 import SocialMeta from '@/components/SocialMeta'
 import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
-import { getPosts, getPost } from '@/lib/db'
 
-const CATEGORIES = { viral: 'Вирусный контент', cases: 'Кейсы', tools: 'Инструменты', trends: 'Тренды' }
+const articleHref = post => post?.urlPath || `/articles/${post?.slug || ''}`
+const categoryHref = post => post?.categoryUrl || (post?.categorySlug ? `/articles/${post.categorySlug}/` : '/articles')
 
-export default function Article({ post }) {
+export default function ArticleDetail({ post }) {
   if (!post) return null
   const seoTitle = post.seo?.metaTitle || `${post.title} — RGUARD`
   const seoDesc = post.seo?.metaDescription || post.excerpt || ''
@@ -16,7 +16,7 @@ export default function Article({ post }) {
 
   return (
     <Layout title={post.title} description={seoDesc}>
-      <SocialMeta title={seoTitle} description={seoDesc} url={`/articles/${post.slug}`} image={post.coverImage} type="article" />
+      <SocialMeta title={seoTitle} description={seoDesc} url={articleHref(post)} image={post.coverImage} type="article" />
       {post.seo?.jsonLd?.length > 0 && (
         <Head>
           {post.seo.jsonLd.map((item, index) => (
@@ -29,10 +29,21 @@ export default function Article({ post }) {
         </Head>
       )}
       <section className="px-4 sm:px-6 py-20 max-w-4xl mx-auto">
-        <Link href="/articles" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Все статьи</Link>
+        <nav className="mb-10 flex flex-wrap items-center gap-2 font-mono-terminal text-xs uppercase tracking-[2px] text-zinc-600">
+          <Link href="/articles" className="hover:text-red-400">Статьи</Link>
+          {post.category && (
+            <>
+              <span>/</span>
+              <Link href={categoryHref(post)} className="hover:text-red-400">{post.category}</Link>
+            </>
+          )}
+          <span>/</span>
+          <span className="text-zinc-500">{post.title}</span>
+        </nav>
+
         {post.coverImage && <img src={post.coverImage} alt={post.title} decoding="async" className="w-full aspect-video object-cover mb-10" style={{ border: '1px solid rgba(239,68,68,0.15)' }} />}
-        <div className="flex items-center gap-4 mb-6">
-          <span className="font-mono-terminal text-red-500 text-xs tracking-[2px] uppercase">{CATEGORIES[post.category] || post.category}</span>
+        <div className="flex flex-wrap items-center gap-4 mb-6">
+          {post.category && <span className="font-mono-terminal text-red-500 text-xs tracking-[2px] uppercase">{post.category}</span>}
           {post.publishedAt && <span className="font-mono-terminal text-zinc-600 text-xs">{formatDate(post.publishedAt)}</span>}
         </div>
         <h1 className="glitch-hero text-4xl md:text-6xl font-black leading-tight mb-8">{post.title}</h1>
@@ -41,11 +52,11 @@ export default function Article({ post }) {
 
         {post.relatedPosts?.length > 0 && (
           <div className="mt-20 pt-12" style={{ borderTop: '1px solid rgba(239,68,68,0.15)' }}>
-            <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-8">// ПОХОЖИЕ СТАТЬИ</div>
+            <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-8">{'// Похожие статьи'}</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {post.relatedPosts.map(p => (
-                <Link key={p._id} href={`/articles/${p.slug}`} className="cyber-card p-6 block">
-                  <div className="font-mono-terminal text-red-500 text-xs tracking-[2px] uppercase mb-3">{CATEGORIES[p.category] || p.category}</div>
+                <Link key={p._id} href={articleHref(p)} className="cyber-card p-6 block">
+                  {p.category && <div className="font-mono-terminal text-red-500 text-xs tracking-[2px] uppercase mb-3">{p.category}</div>}
                   <div className="text-lg font-bold leading-tight mb-2">{p.title}</div>
                   {p.excerpt && <p className="text-zinc-500 text-sm leading-relaxed line-clamp-2">{p.excerpt}</p>}
                 </Link>
@@ -55,7 +66,7 @@ export default function Article({ post }) {
         )}
 
         <div className="mt-16 pt-12" style={{ borderTop: '1px solid rgba(239,68,68,0.15)' }}>
-          <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">// ЧЕМ МЫ ПОЛЕЗНЫ</div>
+          <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-6">{'// Чем мы полезны'}</div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Link href="/viral" className="cyber-card p-6 block">
               <div className="text-lg font-black mb-2">Вирусные видеоролики</div>
@@ -84,15 +95,4 @@ export default function Article({ post }) {
       </section>
     </Layout>
   )
-}
-
-export async function getStaticPaths() {
-  const posts = await getPosts()
-  return { paths: (posts || []).map(p => ({ params: { slug: p.slug } })), fallback: 'blocking' }
-}
-
-export async function getStaticProps({ params }) {
-  const post = await getPost(params.slug)
-  if (!post) return { notFound: true }
-  return { props: { post }, revalidate: 60 }
 }

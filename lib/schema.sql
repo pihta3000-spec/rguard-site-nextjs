@@ -25,6 +25,10 @@ CREATE TABLE IF NOT EXISTS posts (
   title        TEXT,
   slug         TEXT UNIQUE,
   category     TEXT,
+  materialType  TEXT,
+  categorySlug TEXT,
+  categoryUrl  TEXT,
+  urlPath      TEXT,
   publishedAt  TEXT,
   coverImage   TEXT,          -- URL
   excerpt      TEXT,

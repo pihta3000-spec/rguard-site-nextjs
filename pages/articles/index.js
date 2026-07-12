@@ -8,10 +8,14 @@ import { getPosts, resolvePageSeo } from '@/lib/db'
 export default function Articles({ posts , seo }) {
   const [filter, setFilter] = useState('all')
   const categories = useMemo(() => {
-    const unique = Array.from(new Set((posts || []).map(p => p.category).filter(Boolean)))
-    return [{ id: 'all', label: 'Все статьи' }, ...unique.map(category => ({ id: category, label: category }))]
+    const bySlug = new Map()
+    for (const post of posts || []) {
+      const id = post.categorySlug || post.category
+      if (id && !bySlug.has(id)) bySlug.set(id, { id, label: post.category })
+    }
+    return [{ id: 'all', label: 'Все статьи' }, ...Array.from(bySlug.values())]
   }, [posts])
-  const filtered = useMemo(() => filter === 'all' ? posts : posts.filter(p => p.category === filter), [posts, filter])
+  const filtered = useMemo(() => filter === 'all' ? posts : posts.filter(p => (p.categorySlug || p.category) === filter), [posts, filter])
   const formatDate = iso => iso ? new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : ''
 
   return (
@@ -19,7 +23,7 @@ export default function Articles({ posts , seo }) {
       <Seo seo={seo} />
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <div className="max-w-5xl mb-16">
-          <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">// ARTICLES</div>
+          <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">{'// ARTICLES'}</div>
           <HeroTitle
             className="mb-6"
             accent="Статьи"
@@ -38,13 +42,13 @@ export default function Articles({ posts , seo }) {
         </div>
         {filtered.length === 0 ? (
           <div className="text-center py-24" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.8)' }}>
-            <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-4">// EMPTY</div>
+            <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-4">{'// EMPTY'}</div>
             <div className="text-2xl font-black mb-4">Статьи появятся здесь</div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(post => (
-              <Link key={post._id} href={`/articles/${post.slug}`} className="cyber-card overflow-hidden block">
+              <Link key={post._id} href={post.urlPath || `/articles/${post.slug}`} className="cyber-card overflow-hidden block">
                 {post.coverImage ? (
                   <img src={post.coverImage} alt={post.title} loading="lazy" decoding="async" className="w-full aspect-video object-cover" />
                 ) : (
@@ -72,11 +76,15 @@ export default function Articles({ posts , seo }) {
 
 export async function getStaticProps() {
   const posts = await getPosts()
-  const summaries = (posts || []).map(({ _id, title, slug, category, publishedAt, excerpt, coverImage }) => ({
+  const summaries = (posts || []).map(({ _id, title, slug, category, materialType, categorySlug, categoryUrl, urlPath, publishedAt, excerpt, coverImage }) => ({
     _id,
     title,
     slug,
     category,
+    materialType,
+    categorySlug,
+    categoryUrl,
+    urlPath,
     publishedAt,
     excerpt,
     coverImage,
