@@ -1,21 +1,25 @@
 import Seo from '@/components/Seo'
 import Link from 'next/link'
-import { useState, useMemo } from 'react'
 import Layout from '@/components/Layout'
 import HeroTitle from '@/components/HeroTitle'
 import { getPosts, resolvePageSeo } from '@/lib/db'
 
 export default function Articles({ posts , seo }) {
-  const [filter, setFilter] = useState('all')
-  const categories = useMemo(() => {
-    const bySlug = new Map()
-    for (const post of posts || []) {
-      const id = post.categorySlug || post.category
-      if (id && !bySlug.has(id)) bySlug.set(id, { id, label: post.category })
+  const categoryMap = new Map()
+  for (const post of posts || []) {
+    const id = post.categorySlug || post.category
+    if (!id) continue
+    if (!categoryMap.has(id)) {
+      categoryMap.set(id, {
+        id,
+        label: post.category,
+        href: post.categoryUrl || (post.categorySlug ? `/articles/${post.categorySlug}/` : '/articles'),
+        count: 0,
+      })
     }
-    return [{ id: 'all', label: 'Все статьи' }, ...Array.from(bySlug.values())]
-  }, [posts])
-  const filtered = useMemo(() => filter === 'all' ? posts : posts.filter(p => (p.categorySlug || p.category) === filter), [posts, filter])
+    categoryMap.get(id).count += 1
+  }
+  const categories = Array.from(categoryMap.values())
   const formatDate = iso => iso ? new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : ''
 
   return (
@@ -31,23 +35,30 @@ export default function Articles({ posts , seo }) {
           />
           <p className="text-zinc-400 text-xl">Экспертный контент о вирусном маркетинге, industrial-аудитории и реальных кейсах.</p>
         </div>
-        <div className="flex flex-wrap gap-3 mb-12">
-          {categories.map(cat => (
-            <button key={cat.id} onClick={() => setFilter(cat.id)}
-              className={`font-mono-terminal text-xs uppercase tracking-[2px] px-5 py-3 transition-all cursor-pointer ${filter === cat.id ? 'text-white' : 'text-zinc-500 hover:text-red-400'}`}
-              style={filter === cat.id ? { border: '1px solid rgba(239,68,68,0.8)', background: 'rgba(239,68,68,0.15)' } : { border: '1px solid rgba(239,68,68,0.2)', background: 'transparent' }}>
-              {cat.label}
-            </button>
-          ))}
+        <div className="mb-12">
+          <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] uppercase mb-4">{'// CATEGORIES'}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {categories.map(cat => (
+              <Link
+                key={cat.id}
+                href={cat.href}
+                className="group flex items-center justify-between gap-4 px-5 py-4 transition-all"
+                style={{ border: '1px solid rgba(239,68,68,0.2)', background: 'rgba(10,10,20,0.55)' }}
+              >
+                <span className="font-mono-terminal text-xs uppercase tracking-[2px] text-zinc-400 group-hover:text-red-400 transition-colors">{cat.label}</span>
+                <span className="font-mono-terminal text-xs text-zinc-600 group-hover:text-zinc-400 transition-colors">{cat.count}</span>
+              </Link>
+            ))}
+          </div>
         </div>
-        {filtered.length === 0 ? (
+        {(posts || []).length === 0 ? (
           <div className="text-center py-24" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.8)' }}>
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-4">{'// EMPTY'}</div>
             <div className="text-2xl font-black mb-4">Статьи появятся здесь</div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map(post => (
+            {(posts || []).map(post => (
               <Link key={post._id} href={post.urlPath || `/articles/${post.slug}`} className="cyber-card overflow-hidden block">
                 {post.coverImage ? (
                   <img src={post.coverImage} alt={post.title} loading="lazy" decoding="async" className="w-full aspect-video object-cover" />
