@@ -22,7 +22,6 @@ const BG = '#0a0a14'
 const WHITE = '#f8fafc'
 const ZINC = '#a1a1aa'
 const CYAN = '#00f0ff'
-const MAGENTA = '#ff003c'
 const OUT = path.join(process.cwd(), 'public', 'article-covers')
 const DATA_PATH = path.join(process.cwd(), 'scripts', 'articles-data.json')
 
@@ -56,37 +55,6 @@ function seeded(seed) {
   }
 }
 
-function wrap(text, fontSize, maxWidth, maxLines = 4) {
-  const words = String(text || '').split(/\s+/).filter(Boolean)
-  const charWidth = fontSize * 0.54
-  const lines = []
-  let current = ''
-
-  for (const word of words) {
-    const next = current ? `${current} ${word}` : word
-    if (next.length * charWidth > maxWidth && current) {
-      lines.push(current)
-      current = word
-    } else {
-      current = next
-    }
-  }
-  if (current) lines.push(current)
-
-  if (lines.length <= maxLines) return lines
-  const visible = lines.slice(0, maxLines)
-  visible[maxLines - 1] = `${visible[maxLines - 1].replace(/[,.!?;:]+$/, '')}...`
-  return visible
-}
-
-function titleLines(title) {
-  for (const size of [52, 49, 46, 43, 40]) {
-    const lines = wrap(title, size, 590, 5)
-    if (lines.length <= 5 && (lines.length < 5 || lines[4].length <= 28)) return { size, lines }
-  }
-  return { size: 40, lines: wrap(title, 40, 590, 5) }
-}
-
 function categoryCode(article) {
   const source = article.categorySlug || article.category || 'article'
   return source.toUpperCase().replace(/[^A-ZА-ЯЁ0-9]+/gi, '_').replace(/^_+|_+$/g, '')
@@ -98,60 +66,49 @@ function geometricField(seed, category) {
   const categoryHue = (seed % 5)
   const secondary = categoryHue === 0 ? CYAN : categoryHue === 1 ? '#f97316' : categoryHue === 2 ? '#f43f5e' : categoryHue === 3 ? '#22d3ee' : '#fb7185'
 
-  for (let i = 0; i < 11; i++) {
-    const x = 770 + rnd() * 360
-    const y = 95 + rnd() * 440
-    const r = 18 + rnd() * 96
-    const opacity = 0.08 + rnd() * 0.18
+  for (let i = 0; i < 7; i++) {
+    const x = 360 + rnd() * 480
+    const y = 122 + rnd() * 330
+    const r = 34 + rnd() * 134
+    const opacity = 0.06 + rnd() * 0.12
     shapes.push(`<circle cx='${x.toFixed(1)}' cy='${y.toFixed(1)}' r='${r.toFixed(1)}' fill='none' stroke='${i % 3 === 0 ? secondary : RED}' stroke-width='${i % 2 ? 2 : 1}' opacity='${opacity.toFixed(2)}'/>`)
   }
 
-  const circuit = Array.from({ length: 10 }, (_, i) => {
-    const x1 = 790 + rnd() * 310
-    const y1 = 125 + rnd() * 380
-    const x2 = x1 + (rnd() - 0.5) * 180
-    const y2 = y1 + (rnd() - 0.5) * 120
+  const circuit = Array.from({ length: 6 }, (_, i) => {
+    const x1 = 420 + rnd() * 340
+    const y1 = 180 + rnd() * 240
+    const x2 = x1 + (rnd() - 0.5) * 160
+    const y2 = y1 + (rnd() - 0.5) * 110
     return `<path d='M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}' fill='none' stroke='${i % 2 ? RED : secondary}' stroke-width='2' opacity='.18'/>`
   }).join('')
 
   return `
     <g filter='url(#softGlow)'>
-      <path d='M790 130H1108V500H790Z' fill='rgba(10,10,20,.42)' stroke='rgba(239,68,68,.18)'/>
       ${shapes.join('')}
       ${circuit}
-      <path d='M844 188H1058L1118 248V442L1058 502H844L784 442V248Z' fill='rgba(239,68,68,.03)' stroke='rgba(239,68,68,.38)' stroke-width='2'/>
-      <path d='M892 236H1010L1054 280V410L1010 454H892L848 410V280Z' fill='rgba(0,0,0,.2)' stroke='${secondary}' stroke-width='2' opacity='.45'/>
-      <text x='950' y='338' text-anchor='middle' font-family='Share Tech Mono, Consolas, monospace' font-size='20' font-weight='700' fill='${RED}' letter-spacing='4'>${esc(category.slice(0, 18))}</text>
-      <text x='950' y='372' text-anchor='middle' font-family='Share Tech Mono, Consolas, monospace' font-size='72' font-weight='900' fill='rgba(239,68,68,.20)' letter-spacing='-2'>RG</text>
+      <path d='M452 130H748L826 208V422L748 500H452L374 422V208Z' fill='rgba(239,68,68,.025)' stroke='rgba(239,68,68,.34)' stroke-width='2'/>
+      <path d='M510 186H690L746 242V388L690 444H510L454 388V242Z' fill='rgba(0,0,0,.2)' stroke='${secondary}' stroke-width='2' opacity='.42'/>
+      <text x='600' y='302' text-anchor='middle' font-family='Arial Black, Arial, sans-serif' font-size='118' font-weight='900' fill='rgba(255,255,255,.09)' letter-spacing='-5'>RG</text>
+      <text x='600' y='338' text-anchor='middle' font-family='Share Tech Mono, Consolas, monospace' font-size='18' font-weight='700' fill='${RED}' letter-spacing='5'>${esc(category.slice(0, 22))}</text>
     </g>`
 }
 
 function renderCover(article, index) {
   const seed = hash(`${article.slug}:${article.categorySlug}`)
-  const { size, lines } = titleLines(article.title)
   const tag = `// ${categoryCode(article)}`
   const material = article.materialType || 'Статья'
   const date = article.publishedAt ? new Date(article.publishedAt).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'RGUARD'
-  const titleSvg = lines.map((line, i) => {
-    const y = 190 + i * (size * 1.02)
-    const fill = i === 1 ? RED : WHITE
-    const glow = i === 1 ? " filter='url(#redGlow)'" : ''
-    return `
-      <text x='76' y='${y}' font-family='Arial Black, Arial, sans-serif' font-size='${size}' font-weight='900' fill='${CYAN}' opacity='.35' transform='translate(4,-2)'>${esc(line)}</text>
-      <text x='66' y='${y}' font-family='Arial Black, Arial, sans-serif' font-size='${size}' font-weight='900' fill='${MAGENTA}' opacity='.32' transform='translate(-3,2)'>${esc(line)}</text>
-      <text x='70' y='${y}' font-family='Arial Black, Arial, sans-serif' font-size='${size}' font-weight='900' fill='${fill}'${glow}>${esc(line)}</text>`
-  }).join('')
 
   return `<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}'>
     <defs>
       <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
         <stop offset='0' stop-color='${BG}'/>
-        <stop offset='.52' stop-color='#12070d'/>
+        <stop offset='.56' stop-color='#10060a'/>
         <stop offset='1' stop-color='#040407'/>
       </linearGradient>
-      <radialGradient id='pulse' cx='.78' cy='.45' r='.55'>
-        <stop offset='0' stop-color='rgba(239,68,68,.38)'/>
-        <stop offset='.42' stop-color='rgba(239,68,68,.08)'/>
+      <radialGradient id='pulse' cx='.50' cy='.45' r='.55'>
+        <stop offset='0' stop-color='rgba(239,68,68,.24)'/>
+        <stop offset='.42' stop-color='rgba(239,68,68,.06)'/>
         <stop offset='1' stop-color='rgba(239,68,68,0)'/>
       </radialGradient>
       <pattern id='grid' width='38' height='38' patternUnits='userSpaceOnUse'>
@@ -163,9 +120,9 @@ function renderCover(article, index) {
       <filter id='redGlow'><feGaussianBlur stdDeviation='4' result='b'/><feMerge><feMergeNode in='b'/><feMergeNode in='SourceGraphic'/></feMerge></filter>
       <filter id='softGlow'><feGaussianBlur stdDeviation='1.2' result='b'/><feMerge><feMergeNode in='b'/><feMergeNode in='SourceGraphic'/></feMerge></filter>
       <linearGradient id='fade' x1='0' y1='0' x2='1' y2='0'>
-        <stop offset='0' stop-color='rgba(10,10,20,.0)'/>
-        <stop offset='.55' stop-color='rgba(10,10,20,.08)'/>
-        <stop offset='1' stop-color='rgba(10,10,20,.76)'/>
+        <stop offset='0' stop-color='rgba(10,10,20,.12)'/>
+        <stop offset='.55' stop-color='rgba(10,10,20,.02)'/>
+        <stop offset='1' stop-color='rgba(10,10,20,.12)'/>
       </linearGradient>
     </defs>
 
@@ -175,23 +132,21 @@ function renderCover(article, index) {
     <rect width='${W}' height='${H}' fill='url(#scan)'/>
     <rect x='0' y='0' width='${W}' height='${H}' fill='url(#fade)'/>
 
-    <path d='M0 0H${W}V5H0Z' fill='${RED}' opacity='.84'/>
-    <path d='M0 ${H - 5}H${W}V${H}H0Z' fill='${RED}' opacity='.36'/>
-    <path d='M42 44H178V82H42Z' fill='rgba(10,10,20,.82)' stroke='${RED}' stroke-width='2'/>
-    <text x='62' y='69' font-family='Share Tech Mono, Consolas, monospace' font-size='21' font-weight='700' fill='${WHITE}' letter-spacing='3' filter='url(#redGlow)'>RGUARD</text>
-    <text x='156' y='69' font-family='Share Tech Mono, Consolas, monospace' font-size='14' font-weight='700' fill='${RED}'>.RU</text>
-    <text x='218' y='68' font-family='Share Tech Mono, Consolas, monospace' font-size='18' font-weight='700' fill='${RED}' letter-spacing='4'>${esc(tag)}</text>
-    <text x='1138' y='68' text-anchor='end' font-family='Share Tech Mono, Consolas, monospace' font-size='16' font-weight='700' fill='${ZINC}' letter-spacing='4'>ARTICLE.${String(index + 1).padStart(2, '0')}</text>
+    <path d='M0 0H${W}V4H0Z' fill='${RED}' opacity='.78'/>
+    <path d='M0 ${H - 4}H${W}V${H}H0Z' fill='${RED}' opacity='.28'/>
+    <path d='M62 54H190V90H62Z' fill='rgba(10,10,20,.78)' stroke='rgba(239,68,68,.72)' stroke-width='2'/>
+    <text x='80' y='78' font-family='Share Tech Mono, Consolas, monospace' font-size='19' font-weight='700' fill='${WHITE}' letter-spacing='3' filter='url(#redGlow)'>RGUARD</text>
+    <text x='166' y='78' font-family='Share Tech Mono, Consolas, monospace' font-size='13' font-weight='700' fill='${RED}'>.RU</text>
+    <text x='238' y='78' font-family='Share Tech Mono, Consolas, monospace' font-size='15' font-weight='700' fill='${RED}' letter-spacing='4'>${esc(tag)}</text>
+    <text x='1130' y='78' text-anchor='end' font-family='Share Tech Mono, Consolas, monospace' font-size='15' font-weight='700' fill='${ZINC}' letter-spacing='4'>ARTICLE.${String(index + 1).padStart(2, '0')}</text>
 
-    <path d='M52 126H112M52 126V186M52 566H112M52 566V506M730 126H670M730 126V186M730 566H670M730 566V506' stroke='${RED}' stroke-width='2' opacity='.82'/>
-    <path d='M70 150V520' stroke='${RED}' stroke-width='3' opacity='.84'/>
-    <text x='96' y='142' font-family='Share Tech Mono, Consolas, monospace' font-size='17' font-weight='700' fill='${RED}' letter-spacing='4'>${esc(material.toUpperCase())}</text>
-    ${titleSvg}
+    <path d='M74 128H148M74 128V202M74 502V428M74 502H148M1126 128H1052M1126 128V202M1126 502V428M1126 502H1052' stroke='${RED}' stroke-width='2' opacity='.62'/>
+    <text x='600' y='146' text-anchor='middle' font-family='Share Tech Mono, Consolas, monospace' font-size='15' font-weight='700' fill='rgba(239,68,68,.92)' letter-spacing='6'>${esc(material.toUpperCase())}</text>
+    <text x='600' y='484' text-anchor='middle' font-family='Share Tech Mono, Consolas, monospace' font-size='15' font-weight='700' fill='rgba(161,161,170,.85)' letter-spacing='4'>${esc(article.category || 'Статьи')} / ${esc(date)}</text>
 
     <g>
-      <path d='M88 524H642L678 560V594H88Z' fill='rgba(10,10,20,.68)' stroke='rgba(239,68,68,.36)'/>
-      <path d='M88 524H270' stroke='${RED}' stroke-width='4'/>
-      <text x='112' y='566' font-family='Share Tech Mono, Consolas, monospace' font-size='18' font-weight='700' fill='${ZINC}' letter-spacing='3'>${esc(article.category || 'Статьи')} / ${esc(date)}</text>
+      <path d='M458 530H742L772 560L742 590H458L428 560Z' fill='rgba(10,10,20,.62)' stroke='rgba(239,68,68,.28)'/>
+      <text x='600' y='568' text-anchor='middle' font-family='Share Tech Mono, Consolas, monospace' font-size='20' font-weight='700' fill='rgba(248,250,252,.78)' letter-spacing='7'>RGUARD JOURNAL</text>
     </g>
 
     ${geometricField(seed, categoryCode(article))}
