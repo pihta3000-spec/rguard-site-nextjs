@@ -47,10 +47,24 @@ function normalizeText(text) {
     .replace(/\bb2b\b/g, 'B2B')
     .replace(/hybrid production/g, 'гибридный продакшн')
     .replace(/industrial video/g, 'industrial-видео')
+    .replace(/\bProduction(?=[-\s])/g, 'Продакшн')
     .replace(/production(?=[-\s])/g, 'продакшн')
+    .replace(/real sector/g, 'реальный сектор')
     .replace(/\s+([,.;:!?])/g, '$1')
     .replace(/,\./g, '.')
     .replace(/\s+-\s+/g, ' — ')
+}
+
+function normalizeArticleJsonLd(value, description) {
+  if (Array.isArray(value)) return value.map(item => normalizeArticleJsonLd(item, description))
+  if (value && typeof value === 'object') {
+    const next = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, normalizeArticleJsonLd(item, description)]))
+    if (next['@type'] === 'Article') {
+      next.description = description
+    }
+    return next
+  }
+  return typeof value === 'string' ? normalizeText(value) : value
 }
 
 let articleCount = 0
@@ -62,7 +76,7 @@ for (const [slug, description] of Object.entries(articleDescriptions)) {
   const seo = doc.seo ? walk(doc.seo, normalizeText) : {}
   seo.metaDescription = description
   if (Array.isArray(seo.jsonLd)) {
-    seo.jsonLd = walk(seo.jsonLd, value => normalizeText(value === doc.excerpt ? description : value))
+    seo.jsonLd = normalizeArticleJsonLd(seo.jsonLd, description)
   }
 
   adminUpsert('posts', {
