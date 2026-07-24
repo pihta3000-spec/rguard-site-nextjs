@@ -1,14 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 
 export default function CookieBanner() {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    if (!localStorage.getItem('cookie_accepted')) {
-      setVisible(true)
-    }
-  }, [])
+  const [visible, setVisible] = useState(() => typeof window !== 'undefined' && !localStorage.getItem('cookie_accepted'))
 
   const accept = () => {
     localStorage.setItem('cookie_accepted', '1')
@@ -38,8 +32,7 @@ export default function CookieBanner() {
         Продолжая использовать сайт, вы соглашаетесь с нашей{' '}
         <Link href="/privacy" target="_blank" className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors">
           Политикой конфиденциальности
-        </Link>
-        .
+        </Link>.
       </p>
       <button
         onClick={accept}

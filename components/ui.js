@@ -25,7 +25,7 @@ export function Card({ title, text }) {
 export function SectionTitle({ eyebrow, title, text }) {
   return (
     <div className="max-w-4xl mb-14">
-      <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-4">// {eyebrow}</div>
+      <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-4">{'// '}{eyebrow}</div>
       <SectionAccentTitle className="section-accent-title--allow-accent-wrap mb-6" accent={title} />
       {text && <p className="text-zinc-400 text-lg leading-relaxed">{text}</p>}
     </div>
@@ -126,8 +126,7 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
           Даю согласие на{' '}
           <a href="/personal-data" target="_blank" rel="noreferrer"
             className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
-            onClick={e => e.stopPropagation()}>обработку персональных данных</a>
-          , согласно действующей{' '}
+            onClick={e => e.stopPropagation()}>обработку персональных данных</a>,{' '} согласно действующей{' '}
           <a href="/privacy" target="_blank" rel="noreferrer"
             className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
             onClick={e => e.stopPropagation()}>Политике конфиденциальности</a>
@@ -164,7 +163,7 @@ function CaseCoverFallback({ item }) {
     <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#0d0d1a 0%,#1a0a0e 100%)' }}>
       <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(239,68,68,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(239,68,68,0.06) 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
       <div className="absolute top-0 left-0 right-0" style={{ height: 3, background: '#ef4444' }} />
-      {tag && <div className="absolute top-3 left-3 font-mono-terminal text-red-500 uppercase border border-red-500/50 px-2 py-1" style={{ fontSize: 10, letterSpacing: 1.5 }}>// {tag}</div>}
+      {tag && <div className="absolute top-3 left-3 font-mono-terminal text-red-500 uppercase border border-red-500/50 px-2 py-1" style={{ fontSize: 10, letterSpacing: 1.5 }}>{'// '}{tag}</div>}
       <div className="absolute top-3 right-3 font-mono-terminal text-red-500 font-black" style={{ fontSize: 10, letterSpacing: 1 }}>RGUARD.RU</div>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
         {metric

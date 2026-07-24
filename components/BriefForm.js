@@ -51,6 +51,8 @@ export default function BriefForm({ onCancel, onSubmitted }) {
   const step = STEPS[stepId]
 
   React.useEffect(() => {
+    // Keep draft text in sync when the user moves between brief steps.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTextVal(answers[stepId] || '')
   }, [answers, stepId])
 
@@ -187,7 +189,7 @@ export default function BriefForm({ onCancel, onSubmitted }) {
       {step.type === 'contacts' && (
         <form onSubmit={submitContacts} className="space-y-3">
           <h3 className="text-xl sm:text-2xl font-extrabold mb-1 leading-snug">{step.question}</h3>
-          <div className="font-mono-terminal text-zinc-500 text-xs uppercase tracking-[2px] mb-6">// Финальный шаг — {TASK_LABELS[answers[ROOT_ID]] || ''}</div>
+          <div className="font-mono-terminal text-zinc-500 text-xs uppercase tracking-[2px] mb-6">{'// Финальный шаг — '}{TASK_LABELS[answers[ROOT_ID]] || ''}</div>
           {step.fields.map(f => f.kind === 'long' ? (
             <textarea
               key={f.name}
@@ -219,8 +221,7 @@ export default function BriefForm({ onCancel, onSubmitted }) {
               Даю согласие на{' '}
               <a href="/personal-data" target="_blank" rel="noreferrer" className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors">
                 обработку персональных данных
-              </a>
-              , согласно действующей{' '}
+              </a>,{' '} согласно действующей{' '}
               <a href="/privacy" target="_blank" rel="noreferrer" className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors">
                 Политике конфиденциальности
               </a>

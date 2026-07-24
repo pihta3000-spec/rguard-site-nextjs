@@ -24,6 +24,7 @@ jobs:
             node scripts/apply-cases-videos-data.mjs
             node scripts/apply-articles-data.mjs
             node scripts/apply-rais-blogger-data.mjs
+            node scripts/apply-copy-fixes.mjs
             npm run build
             pm2 restart rguard
             echo "Deploy done at $(date)"
