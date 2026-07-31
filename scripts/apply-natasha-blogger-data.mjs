@@ -27,6 +27,10 @@ adminUpsert('bloggers', {
   photos: [
     '/bloggers/natasha/natasha-01.jpg',
     '/bloggers/natasha/natasha-02.jpg',
+    '/bloggers/natasha/natasha-03.jpg',
+    '/bloggers/natasha/natasha-04.jpg',
+    '/bloggers/natasha/natasha-05.jpg',
+    '/bloggers/natasha/natasha-06.jpg',
   ],
   showreel: existing?.showreel || '',
   metrics: [
