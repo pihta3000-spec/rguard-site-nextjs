@@ -21,6 +21,7 @@ const nav = [
     { href: '/concepts', label: 'Концепции рекламных кампаний' },
   ]},
   { href: '/events', label: 'Мероприятия' },
+  { href: '/bloggers', label: 'Блогеры' },
   { href: '/articles', label: 'Статьи' },
   { href: '/industries', label: 'Решения' },
   { href: '/contacts', label: 'Контакты' },
@@ -71,7 +72,7 @@ export default function Layout({ children, title, description }) {
 
           <a href="tel:+79273412252" className="lg:hidden font-mono-terminal text-xs font-bold tracking-tight text-red-500 hover:text-red-400 transition-all">+7 927 341-22-52</a>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-8">
             {nav.map((item) => (
               <div key={item.label || item.href} className="relative group flex items-center">
                 {item.children ? (
