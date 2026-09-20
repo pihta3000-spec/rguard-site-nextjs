@@ -1,0 +1,63 @@
+[
+  {
+    "_id": "blogger-denis-sundukov",
+    "slug": "denis-sundukov",
+    "name": "Денис Сундуков",
+    "desc": "Актёр и блогер: юмористические видео, рыбалка и истории из жизни. Короткие ролики и интеграции с комедийной подачей.",
+    "bio": "<p><strong>Денис Сундуков</strong> — актёр и блогер, который объединяет юмор и увлечение рыбалкой. В его контенте соседствуют комедийные видео, повседневные истории и выезды на природу.</p><h2>Форматы сотрудничества</h2><p>Рекламные интеграции в YouTube-видео, короткие ролики для Shorts, Reels, TikTok и ВК Клипов, Stories и публикации в Telegram.</p><h2>Идеи для брендов</h2><p>Юмористический сюжет о продукте, история о работе команды или интеграция на тему рыбалки и отдыха на природе. Сценарий и площадку подбираем под задачу проекта.</p>",
+    "socials": [
+      { "label": "YouTube — Про Сундука", "url": "https://youtube.com/@prosunduk" },
+      { "label": "ВКонтакте", "url": "https://vk.com/club231416560" },
+      { "label": "Instagram", "url": "https://www.instagram.com/denis_sundukov" },
+      { "label": "Telegram", "url": "https://t.me/sunduk91" },
+      { "label": "TikTok", "url": "https://www.tiktok.com/@sunduk91" }
+    ],
+    "specializations": ["Юмор", "Актёрская подача", "Рыбалка", "Короткие видео", "Интеграции"]
+  },
+  {
+    "_id": "blogger-semen-molokanov",
+    "slug": "semen-molokanov",
+    "name": "Семён Молоканов",
+    "desc": "Актёр и юмористический блогер. Комедийная подача для коротких видео, рекламных сюжетов и публикаций в социальных сетях.",
+    "bio": "<p><strong>Семён Молоканов</strong> — актёр и блогер, работающий в юмористическом жанре. Его направление — развлекательный видеоконтент с актёрской подачей.</p><h2>Форматы сотрудничества</h2><p>Reels, Stories, TikTok, Shorts на канале «Про Сундука», а также видеопосты, кружки и текстовые публикации в Telegram.</p><h2>Идеи для брендов</h2><p>Комедийная сценка, диалог персонажей или короткий сюжет, в котором продукт становится частью истории. Концепцию и формат размещения согласуем под конкретную задачу.</p>",
+    "socials": [
+      { "label": "YouTube — Про Сундука", "url": "https://youtube.com/@prosunduk" },
+      { "label": "Instagram", "url": "https://www.instagram.com/semamolokanov" },
+      { "label": "Telegram", "url": "https://t.me/semamolokanov_pfm" },
+      { "label": "TikTok", "url": "https://www.tiktok.com/@semamolokanov_pfm" }
+    ],
+    "specializations": ["Юмор", "Актёрская подача", "Reels", "Shorts", "TikTok"]
+  },
+  {
+    "_id": "blogger-maxim-nazarov",
+    "slug": "maxim-nazarov",
+    "name": "Максим Назаров",
+    "desc": "«Тот самый Начальник» — актёр, комик и кулинарный блогер. Юмористические сюжеты и отдельное направление о приготовлении еды.",
+    "bio": "<p><strong>Максим Назаров</strong> — актёр, комик и блогер, известный под названием «Тот самый Начальник». Развивает два направления: юмористический контент и кулинарию.</p><h2>Форматы сотрудничества</h2><p>Интеграции в юмористические и кулинарные YouTube-видео, Shorts, Reels, ВК Клипы, TikTok, Stories и публикации в Telegram.</p><h2>Идеи для брендов</h2><p>Комедийный сюжет о рабочих ситуациях или кулинарная история с продуктом в кадре. Два направления позволяют выбрать подходящий контекст: юмор либо приготовление еды.</p>",
+    "socials": [
+      { "label": "YouTube — юмор", "url": "https://youtube.com/@mmaximnazarov" },
+      { "label": "YouTube — кулинария", "url": "https://youtube.com/@mmmaximnazarov" },
+      { "label": "ВКонтакте — Тот самый Начальник", "url": "https://vk.com/mmmaximnazarov" },
+      { "label": "ВКонтакте — Максим Назаров", "url": "https://vk.com/maximnnazarov" },
+      { "label": "Instagram", "url": "https://www.instagram.com/mmaximnazarov" },
+      { "label": "Telegram", "url": "https://t.me/mmaximnazarov" },
+      { "label": "TikTok", "url": "https://www.tiktok.com/@mmaximnazarov" }
+    ],
+    "specializations": ["Юмор", "Актёрская подача", "Кулинария", "Короткие видео", "Интеграции"]
+  },
+  {
+    "_id": "blogger-egor-artamonov",
+    "slug": "egor-artamonov",
+    "name": "Егор Артамонов",
+    "desc": "Актёр и блогер: юмор, рыбалка и кулинария. Развлекательные ролики и интеграции на пересечении увлечений и повседневной жизни.",
+    "bio": "<p><strong>Егор Артамонов</strong> — актёр и блогер, чьи направления объединяют юмор, рыбалку и кулинарию.</p><h2>Форматы сотрудничества</h2><p>YouTube-интеграции и Shorts, ВК Клипы, Reels, Stories, TikTok, видеопосты, кружки и публикации в Telegram.</p><h2>Идеи для брендов</h2><p>Рекламный сюжет с юмором, интеграция в историю о рыбалке или кулинарный ролик. Тематика подходит для обсуждения проектов о продуктах, приготовлении еды и отдыхе на природе.</p>",
+    "socials": [
+      { "label": "YouTube", "url": "https://youtube.com/@egor_artamonov58" },
+      { "label": "ВКонтакте", "url": "https://vk.com/egor_moskvich" },
+      { "label": "Instagram", "url": "https://www.instagram.com/egor_artamonov58" },
+      { "label": "Telegram", "url": "https://t.me/Moskvlch58" },
+      { "label": "TikTok", "url": "https://www.tiktok.com/@moskvich58" }
+    ],
+    "specializations": ["Юмор", "Актёрская подача", "Рыбалка", "Кулинария", "Короткие видео"]
+  }
+]
