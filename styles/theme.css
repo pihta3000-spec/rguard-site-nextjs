@@ -49,8 +49,6 @@ html[data-theme="light"] .rich-content a:hover { color: #991b1b; }
 html[data-theme="light"] .rich-content figcaption { color: var(--muted-ink); }
 html[data-theme="light"] :is(.neon-red,.section-accent-title__accent,.hero-title-main,.hero-title-rest) { text-shadow: none; }
 html[data-theme="light"] .scanlines::after { display: none; }
-html[data-theme="light"] .scroll-decoration { opacity: .18; }
-html[data-theme="light"] .brief-sequence-tile canvas { opacity: .25; }
 @media (max-width: 359px) {
   header a[href^="tel:"] { display: none; }
 }

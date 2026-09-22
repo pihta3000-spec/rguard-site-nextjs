@@ -7,6 +7,7 @@ import DesktopOnly from '@/components/DesktopOnly'
 import { LeadForm, StatBlock, CaseCard, Card, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, getBloggers, resolvePageSeo } from '@/lib/db'
 import dynamic from 'next/dynamic'
+import { homeData } from '@/lib/homeData'
 
 const ScrollAnimation = dynamic(() => import('@/components/ScrollAnimation'), { ssr: false })
 
@@ -226,5 +227,5 @@ export default function Home({ cases, bloggers , seo }) {
 
 export async function getStaticProps() {
   const [cases, bloggers] = await Promise.all([getCases(), getBloggers()])
-  return { props: { seo: resolvePageSeo('/'), cases: cases || [], bloggers: bloggers || [] }, revalidate: 60 }
+  return { props: { seo: resolvePageSeo('/'), ...homeData(cases || [], bloggers || []) }, revalidate: 60 }
 }
