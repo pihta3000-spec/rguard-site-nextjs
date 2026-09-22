@@ -22,7 +22,7 @@ export default function CookieBanner() {
         maxWidth: '860px',
         zIndex: 9998,
         border: '1px solid rgba(239,68,68,0.35)',
-        background: 'rgba(10,10,20,0.97)',
+        background: 'rgba(var(--surface-rgb),0.97)',
         backdropFilter: 'blur(12px)',
       }}
       className="px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4"

@@ -38,7 +38,7 @@ export default function Contacts({ seo }) {
           <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg,transparent,rgba(239,68,68,0.8),transparent)' }} />
           <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
             <div>
-              <div className="inline-flex px-4 py-2 rounded-full mb-6 font-mono-terminal text-red-400 text-xs tracking-[3px]" style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(0,0,0,0.4)' }}>Приоритетный способ связи</div>
+              <div className="inline-flex px-4 py-2 rounded-full mb-6 font-mono-terminal text-red-400 text-xs tracking-[3px]" style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(var(--inset-rgb),0.4)' }}>Приоритетный способ связи</div>
               <div className="text-4xl md:text-5xl font-black mb-4">Усманов Радим</div>
               <div className="text-zinc-400 text-xl mb-8">Коммерческий директор</div>
               <div className="space-y-5 mb-10">
@@ -57,7 +57,7 @@ export default function Contacts({ seo }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8 mb-20">
-          <div className="p-6 sm:p-10 w-full min-w-0" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+          <div className="p-6 sm:p-10 w-full min-w-0" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-5">Общие контакты</div>
             <div className="space-y-8">
               <div>
@@ -74,11 +74,11 @@ export default function Contacts({ seo }) {
               </div>
             </div>
           </div>
-          <div className="p-6 sm:p-8 w-full min-w-0" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+          <div className="p-6 sm:p-8 w-full min-w-0" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-5">Карта офиса</div>
             <div
               className="relative min-h-[280px] sm:min-h-[420px] w-full overflow-hidden hud-corner"
-              style={{ border: '1px solid rgba(239,68,68,0.26)', background: 'rgba(0,0,0,0.65)' }}
+              style={{ border: '1px solid rgba(239,68,68,0.26)', background: 'rgba(var(--inset-rgb),0.65)' }}
             >
               <iframe
                 title="Офис RGUARD на карте"
@@ -94,7 +94,7 @@ export default function Contacts({ seo }) {
           </div>
         </div>
 
-        <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+        <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-6">Социальные сети</div>
           <div className="grid sm:grid-cols-2 gap-5">
             {SOCIAL_LINKS.map(s => (

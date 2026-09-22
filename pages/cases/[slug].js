@@ -77,7 +77,7 @@ export default function CasePage({ item, related = [] }) {
         {metrics.length > 0 && (
           <div className="flex flex-wrap gap-4 mb-24">
             {metrics.map((m, i) => (
-              <div key={i} className="flex-1 min-w-[140px] p-8 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+              <div key={i} className="flex-1 min-w-[140px] p-8 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                 <div className="font-mono-terminal text-3xl font-black neon-red mb-2">{m.value}</div>
                 <div className="font-mono-terminal text-zinc-500 text-xs uppercase leading-relaxed" style={{ letterSpacing: '0.05em' }}>{m.label}</div>
               </div>
@@ -92,7 +92,7 @@ export default function CasePage({ item, related = [] }) {
               {links.map((link, i) => (
                 isLocalVideo(link) ? (
                   <div key={i}
-                    className="relative overflow-hidden transition-all hover:border-red-500"
+                    className="media-dark relative overflow-hidden transition-all hover:border-red-500"
                     style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(180deg,#111 0%,black 100%)' }}>
                     <video
                       src={link}
@@ -115,7 +115,7 @@ export default function CasePage({ item, related = [] }) {
                   </div>
                 ) : (
                   <a key={i} href={link} target="_blank" rel="noreferrer"
-                    className="relative aspect-[9/16] flex items-center justify-center text-center p-5 transition-all hover:border-red-500"
+                    className="media-dark relative aspect-[9/16] flex items-center justify-center text-center p-5 transition-all hover:border-red-500"
                     style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(180deg,#111 0%,black 100%)' }}>
                     <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top,rgba(239,68,68,0.16),transparent 40%)' }} />
                     <div className="relative z-10">
@@ -136,7 +136,7 @@ export default function CasePage({ item, related = [] }) {
         {(item.task || item.solution) && (
           <div className="grid lg:grid-cols-2 gap-10 mb-24">
             {item.task && (
-              <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+              <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                 <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// ЗАДАЧА</div>
                 <SectionAccentTitle className="section-accent-title--compact mb-6" before="Что нужно было" accent="решить" />
                 <p className="text-zinc-300 text-lg leading-relaxed">{item.task}</p>
@@ -157,7 +157,7 @@ export default function CasePage({ item, related = [] }) {
             <SectionAccentTitle className="mb-10" before="Что" accent="сработало" />
             <div className="grid md:grid-cols-3 gap-4">
               {worked.map((w, i) => (
-                <div key={i} className="p-7" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+                <div key={i} className="p-7" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                   <div className="font-mono-terminal text-red-500 text-xs mb-3">0{i + 1}</div>
                   <div className="text-xl font-black leading-tight">{w}</div>
                 </div>
@@ -167,7 +167,7 @@ export default function CasePage({ item, related = [] }) {
         )}
 
         {insight && (
-          <div className="mb-24 relative overflow-hidden p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.2)', background: 'rgba(10,10,20,0.9)' }}>
+          <div className="mb-24 relative overflow-hidden p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.2)', background: 'rgba(var(--surface-rgb),0.9)' }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top right,rgba(239,68,68,0.08) 0%,transparent 60%)' }} />
             <div className="relative z-10 max-w-5xl">
               <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// СИЛЬНЫЙ ИНСАЙТ КЕЙСА</div>
@@ -201,7 +201,7 @@ export default function CasePage({ item, related = [] }) {
           </div>
         )}
 
-        <div className="p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+        <div className="p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <CaptureTitle before="Хотите" accent="похожий результат" after="для своей компании?" />

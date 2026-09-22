@@ -1,6 +1,10 @@
 import "@/styles/globals.css";
+import "@/styles/theme.css";
 import dynamic from "next/dynamic";
 import Script from "next/script";
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { applyTheme, THEME_KEY } from '@/lib/theme'
 
 const CookieBanner = dynamic(() => import("@/components/CookieBanner"), {
   ssr: false,
@@ -8,6 +12,17 @@ const CookieBanner = dynamic(() => import("@/components/CookieBanner"), {
 });
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter()
+  useEffect(() => {
+    const sync = () => {
+      let theme = document.documentElement.dataset.theme
+      try { theme = localStorage.getItem(THEME_KEY) || 'dark' } catch {}
+      applyTheme(router.pathname.startsWith('/panel-rg7x') ? 'dark' : theme)
+    }
+    sync()
+    window.addEventListener('storage', sync)
+    return () => window.removeEventListener('storage', sync)
+  }, [router.pathname])
   return (
     <>
       <Component {...pageProps} />

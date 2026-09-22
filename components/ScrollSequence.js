@@ -129,6 +129,7 @@ export default function ScrollSequence({
   return (
     <div
       aria-hidden="true"
+      className="scroll-decoration"
       style={{
         position: 'fixed',
         zIndex: 0,

@@ -100,7 +100,7 @@ export function PhotoGallery({ photos, desktopLayout }) {
       {open && (
         <div
           onClick={close}
-          className="fixed inset-0 z-[100] flex items-center justify-center"
+          className="media-dark fixed inset-0 z-[100] flex items-center justify-center"
           style={{ background: 'rgba(3,3,8,0.94)', backdropFilter: 'blur(4px)' }}
         >
           <button onClick={close} className="absolute top-5 right-6 text-zinc-300 hover:text-white" style={{ fontSize: 32, lineHeight: 1 }} aria-label="Закрыть">x</button>

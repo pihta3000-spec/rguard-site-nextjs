@@ -65,7 +65,7 @@ export default function Production({ cases , seo }) {
           <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map((item, i) => (
-              <div key={i} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+              <div key={i} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
                 <div className="font-mono-terminal text-2xl font-black text-red-500 min-w-[56px]" style={{textShadow:'0 0 10px rgba(239,68,68,0.6)'}}>0{i+1}</div>
                 <div><div className="text-2xl font-bold mb-2">{item.title}</div><div className="text-zinc-400 leading-relaxed">{item.desc}</div></div>
               </div>
@@ -73,7 +73,7 @@ export default function Production({ cases , seo }) {
           </div>
         </div>
 
-        <div className="mb-24 p-10 md:p-12" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+        <div className="mb-24 p-10 md:p-12" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
           <SectionAccentTitle className="mb-10" before="Принципы" accent="нашей работы" />
           <div className="grid md:grid-cols-2 gap-10 text-zinc-300 text-lg leading-relaxed">
             <div className="space-y-4">

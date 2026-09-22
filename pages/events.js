@@ -73,14 +73,14 @@ export default function Events({ seo }) {
 
         {/* Частные / Масштабные */}
         <div className="grid lg:grid-cols-2 gap-8 mb-24">
-          <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+          <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-5">Частные мероприятия</div>
             <SectionAccentTitle className="section-accent-title--compact mb-6" before="Камерные события" accent="с вниманием к деталям" />
             <div className="space-y-3 text-zinc-300 text-lg leading-relaxed">
               {['Дни рождения','Юбилеи','Свадьбы','Корпоративы','Детские мероприятия','Семейные праздники'].map(t => <p key={t}>• {t}</p>)}
             </div>
           </div>
-          <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+          <div className="p-10" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-5">Масштабные мероприятия</div>
             <SectionAccentTitle className="section-accent-title--compact mb-6" before="События" accent="для больших аудиторий" />
             <div className="space-y-3 text-zinc-300 text-lg leading-relaxed">
@@ -119,8 +119,8 @@ export default function Events({ seo }) {
               ['Рамиль Ахтареев','Уверенная подача и контакт с аудиторией.', '/uploads/de8bacf08f394ee19774cfa1f62851a1bff3ba15-900x1200.jpg'],
               ['Дима Хрисанов','Энергичная работа с аудиторией и динамичная подача.', '/uploads/af78c328f9829e6e81b9966abf8ac4dea82da77a-900x1200.jpg'],
             ].map(([name,desc,photo]) => (
-              <div key={name} className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
-                <div className="aspect-square flex items-center justify-center mb-6 overflow-hidden" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.8)'}}>
+              <div key={name} className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(var(--inset-rgb),0.4)'}}>
+                <div className="aspect-square flex items-center justify-center mb-6 overflow-hidden" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(var(--surface-rgb),0.8)'}}>
                   {photo ? (
                     <img src={photo} alt={name} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
                   ) : (
@@ -146,7 +146,7 @@ export default function Events({ seo }) {
         </div>
 
         {/* CTA */}
-        <div id="events-contact" className="grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14 scroll-mt-24" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+        <div id="events-contact" className="grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14 scroll-mt-24" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
           <div>
             <CaptureTitle before="Обсудим" accent="ваше мероприятие" />
             <p className="text-zinc-300 text-xl">Расскажите о формате, масштабе и задачах — предложим оптимальный вариант организации.</p>

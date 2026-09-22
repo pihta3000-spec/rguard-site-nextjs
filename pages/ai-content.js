@@ -35,7 +35,7 @@ export default function AIContent({ cases , seo }) {
 
         {/* Hero placeholder */}
         {HAS_AI_HERO_MEDIA && (
-          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
             <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ AI Video Placeholder ]</span>
           </div>
         )}
@@ -61,13 +61,13 @@ export default function AIContent({ cases , seo }) {
         </div>
 
         {/* Проблема рынка */}
-        <div className="mb-24 grid lg:grid-cols-2 gap-12 items-start p-10 md:p-12" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+        <div className="mb-24 grid lg:grid-cols-2 gap-12 items-start p-10 md:p-12" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
           <div>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// ПРОБЛЕМА РЫНКА</div>
             <SectionAccentTitle className="mb-6" before="Большинство ИИ-роликов выглядят как" accent="демонстрация технологии" />
             <p className="text-zinc-300 text-lg leading-relaxed">Многие специалисты разбираются в связках и технических приёмах. Они могут заставить нейросеть выдать красивую картинку. Но за этим нет смысла, конфликта, юмора и идеи, которую хочется переслать.</p>
           </div>
-          <div className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
+          <div className="p-8" style={{border:'1px solid rgba(239,68,68,0.15)',background:'rgba(var(--inset-rgb),0.4)'}}>
             <SectionAccentTitle className="section-accent-title--compact mb-6" before="Наш" accent="подход" />
             <div className="space-y-4 text-zinc-300 text-lg leading-relaxed">
               {['Сначала идея, потом генерация','Сначала зритель, потом инструмент','Сначала сценарий, потом промпт','Сначала смысл, потом визуальный эффект'].map(t => <p key={t}>• {t}</p>)}
@@ -93,7 +93,7 @@ export default function AIContent({ cases , seo }) {
           <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map((item, i) => (
-              <div key={i} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+              <div key={i} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
                 <div className="font-mono-terminal text-2xl font-black text-red-500 min-w-[56px]" style={{textShadow:'0 0 10px rgba(239,68,68,0.6)'}}>0{i+1}</div>
                 <div><div className="text-2xl font-bold mb-2">{item.title}</div><div className="text-zinc-400 leading-relaxed">{item.desc}</div></div>
               </div>

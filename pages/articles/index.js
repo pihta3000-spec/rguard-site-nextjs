@@ -43,7 +43,7 @@ export default function Articles({ posts , seo }) {
                 key={cat.id}
                 href={cat.href}
                 className="group flex items-center justify-between gap-4 px-5 py-4 transition-all"
-                style={{ border: '1px solid rgba(239,68,68,0.2)', background: 'rgba(10,10,20,0.55)' }}
+                style={{ border: '1px solid rgba(239,68,68,0.2)', background: 'rgba(var(--surface-rgb),0.55)' }}
               >
                 <span className="font-mono-terminal text-xs uppercase tracking-[2px] text-zinc-400 group-hover:text-red-400 transition-colors">{cat.label}</span>
                 <span className="font-mono-terminal text-xs text-zinc-600 group-hover:text-zinc-400 transition-colors">{cat.count}</span>
@@ -52,7 +52,7 @@ export default function Articles({ posts , seo }) {
           </div>
         </div>
         {(posts || []).length === 0 ? (
-          <div className="text-center py-24" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.8)' }}>
+          <div className="text-center py-24" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(var(--surface-rgb),0.8)' }}>
             <div className="font-mono-terminal text-red-500 text-xs tracking-[4px] mb-4">{'// EMPTY'}</div>
             <div className="text-2xl font-black mb-4">Статьи появятся здесь</div>
           </div>

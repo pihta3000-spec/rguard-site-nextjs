@@ -110,7 +110,7 @@ export default function Home({ cases, bloggers , seo }) {
         </div>
 
         {/* О КОМПАНИИ */}
-        <div className="mb-32 relative overflow-hidden p-8 md:p-14" style={{ background: 'rgba(10,10,20,0.9)', border: '1px solid rgba(239,68,68,0.2)' }}>
+        <div className="mb-32 relative overflow-hidden p-8 md:p-14" style={{ background: 'rgba(var(--surface-rgb),0.9)', border: '1px solid rgba(239,68,68,0.2)' }}>
           <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg,rgba(239,68,68,0.8),transparent)' }} />
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top right,rgba(239,68,68,0.08) 0%,transparent 60%)' }} />
           <div className="absolute -right-8 -bottom-8 overflow-hidden pointer-events-none" style={{ zIndex: 0, width: '380px', opacity: 0.05 }}>
@@ -133,7 +133,7 @@ export default function Home({ cases, bloggers , seo }) {
               </div>
             </div>
             <div className="space-y-5">
-              <div className="p-8 flex items-center justify-center min-h-[200px]" style={{ border: '1px solid rgba(239,68,68,0.25)', background: 'rgba(0,0,0,0.4)' }}>
+              <div className="media-dark p-8 flex items-center justify-center min-h-[200px]" style={{ border: '1px solid rgba(239,68,68,0.25)', background: 'rgb(var(--surface-rgb))' }}>
                 <img src="/logow.svg" alt="Красная Гвардия" loading="lazy" decoding="async" className="logo-glitch max-w-[320px] w-full opacity-95" />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -184,7 +184,7 @@ export default function Home({ cases, bloggers , seo }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
             {(bloggers || []).slice(0, 3).map((blogger, i) => (
               <Link key={blogger.slug} href={`/bloggers/${blogger.slug}`} className="cyber-card overflow-hidden block">
-                <div className="aspect-[4/5] flex items-center justify-center text-center p-6 relative overflow-hidden" style={{ borderBottom: '1px solid rgba(239,68,68,0.12)', background: 'rgba(0,0,0,0.35)' }}>
+                <div className="aspect-[4/5] flex items-center justify-center text-center p-6 relative overflow-hidden" style={{ borderBottom: '1px solid rgba(239,68,68,0.12)', background: 'rgba(var(--inset-rgb),0.35)' }}>
                   <div className="absolute top-3 left-3 font-mono-terminal text-red-500/30 text-xs z-10">#{String(i+1).padStart(2,'0')}</div>
                   {blogger.photos?.[0] ? (
                     <img src={blogger.photos[0]} alt={blogger.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover object-top" />
@@ -202,7 +202,7 @@ export default function Home({ cases, bloggers , seo }) {
                     {(blogger.metrics || []).map((m) => {
                       const v = m.value || m[0]; const l = m.label || m[1];
                       return (
-                        <div key={l} className="px-3 py-2 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.85)' }}>
+                        <div key={l} className="px-3 py-2 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                           <div className="font-mono-terminal text-sm font-black neon-red">{v}</div>
                           <div className="font-mono-terminal text-zinc-600 text-xs">{l}</div>
                         </div>

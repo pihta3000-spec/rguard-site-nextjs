@@ -28,7 +28,7 @@ export default function Corporate({ cases , seo }) {
 
         {/* Проблема + подход */}
         {HAS_CORPORATE_HERO_MEDIA && (
-          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
             <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ Corporate Film Hero ]</span>
           </div>
         )}
@@ -66,7 +66,7 @@ export default function Corporate({ cases , seo }) {
             <SectionAccentTitle className="mb-10" before="Фото и видео" accent="материалы" />
             <div className="grid md:grid-cols-3 gap-4">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="flex items-center justify-center" style={{aspectRatio:'9/12',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(10,10,20,0.85)'}}>
+                <div key={i} className="flex items-center justify-center" style={{aspectRatio:'9/12',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(var(--surface-rgb),0.85)'}}>
                   <span className="font-mono-terminal text-zinc-700 uppercase tracking-[3px] text-xs">Media {i + 1}</span>
                 </div>
               ))}

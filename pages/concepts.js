@@ -40,7 +40,7 @@ export default function Concepts({ seo }) {
 
         {/* Hero placeholder */}
         {HAS_CONCEPTS_HERO_MEDIA && (
-          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+          <div className="mb-24 flex items-center justify-center" style={{aspectRatio:'16/8',border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
             <span className="font-mono-terminal text-zinc-600 uppercase tracking-[4px] text-sm">[ Campaign Visual Placeholder ]</span>
           </div>
         )}
@@ -64,7 +64,7 @@ export default function Concepts({ seo }) {
         </div>
 
         {/* Наш принцип */}
-        <div className="mb-24 relative overflow-hidden p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.2)',background:'rgba(10,10,20,0.9)'}}>
+        <div className="mb-24 relative overflow-hidden p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.2)',background:'rgba(var(--surface-rgb),0.9)'}}>
           <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(circle at top right,rgba(239,68,68,0.08) 0%,transparent 60%)'}} />
           <div className="relative z-10 max-w-5xl">
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-6">// НАШ ПРИНЦИП</div>
@@ -78,7 +78,7 @@ export default function Concepts({ seo }) {
           <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map(([num,title,desc]) => (
-              <div key={num} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+              <div key={num} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
                 <div className="font-mono-terminal text-2xl font-black text-red-500 min-w-[56px]" style={{textShadow:'0 0 10px rgba(239,68,68,0.6)'}}>{num}</div>
                 <div><div className="text-2xl font-bold mb-2">{title}</div><div className="text-zinc-400 leading-relaxed">{desc}</div></div>
               </div>
@@ -95,7 +95,7 @@ export default function Concepts({ seo }) {
         </div>
 
         {/* Наше мышление */}
-        <div className="mb-24 p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+        <div className="mb-24 p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
           <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// НАШЕ МЫШЛЕНИЕ</div>
           <SectionAccentTitle className="mb-8" before="Мы не спрашиваем" accent="«как сделать красивую рекламу?»" />
           <p className="text-zinc-300 text-2xl leading-relaxed max-w-5xl">Мы спрашиваем: как сделать так, чтобы люди сами стали распространителями этой идеи?</p>

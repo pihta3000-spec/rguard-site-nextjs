@@ -30,6 +30,7 @@ jobs:
             node scripts/apply-copy-fixes.mjs
             node scripts/apply-bloggers-20260920.mjs || exit 1
             node scripts/apply-experts-20260922.mjs || exit 1
+            node scripts/apply-blogger-order-20260922.mjs || exit 1
             npm run build
             pm2 restart rguard
             echo "Deploy done at $(date)"

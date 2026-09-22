@@ -20,7 +20,7 @@ export default function Privacy({ seo }) {
 
           <div>
             <h2 className="text-2xl font-bold text-white mb-4">2. Оператор персональных данных</h2>
-            <div className="p-6" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+            <div className="p-6" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
               <p><strong className="text-white">Наименование:</strong> ООО «Красная Гвардия»</p>
               <p className="mt-2"><strong className="text-white">Адрес:</strong> г. Уфа, ул. Мингажева 102</p>
               <p className="mt-2"><strong className="text-white">Email:</strong> propala@rguard.ru</p>

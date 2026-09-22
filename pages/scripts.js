@@ -55,14 +55,14 @@ export default function Scripts({ seo }) {
         </div>
 
         {/* Раскадровка */}
-        <div className="mb-24 grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+        <div className="mb-24 grid lg:grid-cols-2 gap-12 items-center p-10 md:p-14" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
           <div>
             <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs font-bold mb-5">// ПРИМЕР РАБОЧЕГО ДОКУМЕНТА</div>
             <SectionAccentTitle className="mb-6" before="Рабочая раскадровка" accent="до начала съёмок" />
             <p className="text-zinc-300 text-lg leading-relaxed mb-8">Клиент получает прозрачный рабочий документ, где собраны сценарий, сцены, визуальные ориентиры и логика ролика.</p>
             <a href="https://docs.google.com/spreadsheets/d/1zC_i7OlNglaqsuE-jAOFpRZc7jxqidL9Sbr0w3_ybvc/edit?gid=0#gid=0" target="_blank" rel="noreferrer" className="btn-primary inline-flex">Посмотреть пример раскадровки</a>
           </div>
-          <div className="overflow-hidden" style={{aspectRatio:'16/10',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(0,0,0,0.4)'}}>
+          <div className="overflow-hidden" style={{aspectRatio:'16/10',border:'1px solid rgba(239,68,68,0.15)',background:'rgba(var(--inset-rgb),0.4)'}}>
             <img src="/scripts-storyboard.webp" alt="Пример рабочей раскадровки RGUARD" className="w-full h-full object-cover" loading="lazy" decoding="async" />
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function Scripts({ seo }) {
           <SectionAccentTitle className="mb-12" before="Как мы" accent="работаем" />
           <div className="space-y-4">
             {STEPS.map(([num,title,desc]) => (
-              <div key={num} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(10,10,20,0.85)'}}>
+              <div key={num} className="p-8 flex gap-6 items-start" style={{border:'1px solid rgba(239,68,68,0.18)',background:'rgba(var(--surface-rgb),0.85)'}}>
                 <div className="font-mono-terminal text-2xl font-black text-red-500 min-w-[56px]" style={{textShadow:'0 0 10px rgba(239,68,68,0.6)'}}>{num}</div>
                 <div><div className="text-2xl font-bold mb-2">{title}</div><div className="text-zinc-400 leading-relaxed">{desc}</div></div>
               </div>

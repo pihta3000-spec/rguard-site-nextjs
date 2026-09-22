@@ -168,7 +168,7 @@ export default function BriefSequenceBackdrop() {
     <>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 52% 36%, rgba(239,68,68,0.13), transparent 42%)' }} />
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(90deg,rgba(10,10,20,0.74),rgba(10,10,20,0.38) 42%,rgba(10,10,20,0.72))' }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(90deg,rgba(var(--surface-rgb),0.74),rgba(var(--surface-rgb),0.38) 42%,rgba(var(--surface-rgb),0.72))' }} />
       </div>
       <div className="pointer-events-none fixed inset-0 z-20 overflow-hidden">
         {SEQUENCES.map(sequence => <SequenceTile key={sequence.label} sequence={sequence} />)}

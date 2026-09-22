@@ -31,8 +31,8 @@ export default function RetroGrid() {
         .retro__vignette {
           position: absolute; inset: 0;
           background:
-            radial-gradient(ellipse 55% 50% at 50% 50%, rgba(10,10,20,0.62), transparent 72%),
-            radial-gradient(ellipse at center, transparent 35%, rgba(10,10,20,0.55) 100%);
+            radial-gradient(ellipse 55% 50% at 50% 50%, rgba(var(--surface-rgb),0.62), transparent 72%),
+            radial-gradient(ellipse at center, transparent 35%, rgba(var(--surface-rgb),0.55) 100%);
         }
         @media (prefers-reduced-motion: reduce) {
           .floor, .ceil { animation: none; }

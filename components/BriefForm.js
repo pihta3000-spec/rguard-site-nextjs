@@ -27,8 +27,8 @@ function OptionButton({ active, onClick, children }) {
       className="w-full text-left px-5 py-4 font-mono-terminal text-sm transition-all cursor-pointer"
       style={{
         border: `1px solid ${active ? '#ef4444' : 'rgba(239,68,68,0.25)'}`,
-        background: active ? 'rgba(239,68,68,0.12)' : 'rgba(0,0,0,0.6)',
-        color: active ? '#fca5a5' : '#e2e8f0',
+        background: active ? 'rgba(239,68,68,0.12)' : 'rgba(var(--inset-rgb),0.6)',
+        color: active ? 'var(--link-ink)' : 'var(--ink)',
       }}
     >
       {active ? '[x] ' : '[ ] '}{children}
@@ -160,7 +160,7 @@ export default function BriefForm({ onCancel, onSubmitted }) {
             ))}
           </div>
           {errMsg && <p className="font-mono-terminal text-red-400 text-xs mt-4">{errMsg}</p>}
-          <div className="flex items-center justify-between mt-8">
+          <div className="flex flex-wrap gap-3 items-center justify-between mt-8">
             <button onClick={history.length ? goBack : cancel} className="btn-secondary">{history.length ? 'Назад' : 'Отмена'}</button>
             {step.type === 'multi' && <button onClick={submitMulti} className="btn-primary">Далее</button>}
           </div>
@@ -176,10 +176,10 @@ export default function BriefForm({ onCancel, onSubmitted }) {
             onChange={e => setTextVal(e.target.value)}
             placeholder={step.placeholder}
             className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm"
-            style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
+            style={{ background: 'rgba(var(--inset-rgb),0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
           />
           {errMsg && <p className="font-mono-terminal text-red-400 text-xs mt-4">{errMsg}</p>}
-          <div className="flex items-center justify-between mt-8">
+          <div className="flex flex-wrap gap-3 items-center justify-between mt-8">
             <button onClick={goBack} className="btn-secondary">Назад</button>
             <button onClick={submitText} className="btn-primary">Далее</button>
           </div>
@@ -197,7 +197,7 @@ export default function BriefForm({ onCancel, onSubmitted }) {
               onChange={e => setContacts(c => ({ ...c, [f.name]: e.target.value }))}
               placeholder={f.label + (f.required ? ' *' : '')}
               className="w-full h-24 px-5 py-4 outline-none resize-none text-white placeholder-zinc-600 font-mono-terminal text-sm"
-              style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
+              style={{ background: 'rgba(var(--inset-rgb),0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
             />
           ) : (
             <input
@@ -206,7 +206,7 @@ export default function BriefForm({ onCancel, onSubmitted }) {
               onChange={e => setContacts(c => ({ ...c, [f.name]: e.target.value }))}
               placeholder={f.label + (f.required ? ' *' : '')}
               className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm"
-              style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
+              style={{ background: 'rgba(var(--inset-rgb),0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
             />
           ))}
           <label className="flex items-start gap-3 cursor-pointer group pt-1">
@@ -228,7 +228,7 @@ export default function BriefForm({ onCancel, onSubmitted }) {
             </span>
           </label>
           {errMsg && <p className="font-mono-terminal text-red-400 text-xs">{errMsg}</p>}
-          <div className="flex items-center justify-between pt-2">
+          <div className="flex flex-wrap gap-3 items-center justify-between pt-2">
             <button type="button" onClick={goBack} className="btn-secondary">Назад</button>
             <button
               type="submit"

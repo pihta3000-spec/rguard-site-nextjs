@@ -40,7 +40,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
               </div>
             )}
             {principles && (
-              <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+              <div className="p-10" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                 <SectionAccentTitle className="section-accent-title--compact section-accent-title--allow-accent-wrap mb-8" accent={principles.title} />
                 <div className="space-y-5 text-zinc-300 leading-relaxed text-lg">
                   {principles.items.map((t, i) => <div key={i}>{t}</div>)}
@@ -56,7 +56,7 @@ export default function ServicePage({ meta, hero, stats, problem, principles, st
             <SectionAccentTitle className="section-accent-title--allow-accent-wrap mb-12" accent={steps.title} />
             <div className="space-y-6">
               {steps.items.map((item, i) => (
-                <div key={i} className="p-8 flex gap-6 items-start" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+                <div key={i} className="p-8 flex gap-6 items-start" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                   <div className="font-mono-terminal text-2xl font-black neon-red min-w-[56px]" style={{ textShadow: '0 0 10px rgba(239,68,68,0.6)' }}>0{i+1}</div>
                   <div>
                     <div className="text-2xl font-bold mb-2">{item.title}</div>

@@ -23,7 +23,7 @@ export default function Bloggers({ bloggers , seo }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {bloggers.map((blogger, i) => (
             <Link key={blogger._id} href={`/bloggers/${blogger.slug}`} className="cyber-card overflow-hidden block">
-              <div className="aspect-[4/5] flex items-center justify-center text-center p-6 relative overflow-hidden" style={{ borderBottom: '1px solid rgba(239,68,68,0.12)', background: 'rgba(0,0,0,0.35)' }}>
+              <div className="aspect-[4/5] flex items-center justify-center text-center p-6 relative overflow-hidden" style={{ borderBottom: '1px solid rgba(239,68,68,0.12)', background: 'rgba(var(--inset-rgb),0.35)' }}>
                 <div className="absolute top-3 left-3 font-mono-terminal text-red-500/30 text-xs z-10">#{String(i+1).padStart(2,'0')}</div>
                 {blogger.photos?.[0] ? (
                   <img src={blogger.photos[0]} alt={blogger.name} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 w-full h-full object-cover object-top" />
@@ -41,7 +41,7 @@ export default function Bloggers({ bloggers , seo }) {
                   {(blogger.metrics || []).map((m) => {
                     const v = m.value || m[0]; const l = m.label || m[1];
                     return (
-                      <div key={l} className="px-3 py-2 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.85)' }}>
+                      <div key={l} className="px-3 py-2 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                         <div className="font-mono-terminal text-sm font-black neon-red">{v}</div>
                         <div className="font-mono-terminal text-zinc-600 text-xs">{l}</div>
                       </div>

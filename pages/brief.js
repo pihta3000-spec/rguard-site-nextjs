@@ -28,7 +28,7 @@ export default function BriefPage({ seo }) {
             </p>
             <div className="mt-8 grid grid-cols-2 gap-3 max-w-lg">
               {['3-5 минут', 'Без лишних полей', 'Сразу в работу', 'Свяжемся лично'].map(item => (
-                <div key={item} className="font-mono-terminal text-zinc-400 text-xs uppercase tracking-[2px] px-4 py-3" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.62)' }}>
+                <div key={item} className="font-mono-terminal text-zinc-400 text-xs uppercase tracking-[2px] px-4 py-3" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.62)' }}>
                   {item}
                 </div>
               ))}
@@ -37,7 +37,7 @@ export default function BriefPage({ seo }) {
 
           <div className="relative">
             <div className="absolute -inset-4 pointer-events-none" style={{ border: '1px solid rgba(239,68,68,0.12)', background: 'rgba(239,68,68,0.035)' }} />
-            <div className="relative p-5 sm:p-8" style={{ border: '1px solid rgba(239,68,68,0.32)', background: 'rgba(10,10,20,0.94)', backdropFilter: 'blur(8px)' }}>
+            <div className="relative p-5 sm:p-8" style={{ border: '1px solid rgba(239,68,68,0.32)', background: 'rgba(var(--surface-rgb),0.94)', backdropFilter: 'blur(8px)' }}>
               <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(239,68,68,0.75), transparent)' }} />
               <div className="font-mono-terminal text-red-500 uppercase tracking-[4px] text-xs mb-8">// Бриф на сотрудничество</div>
               <BriefForm />

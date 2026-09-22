@@ -59,7 +59,7 @@ export default function IndustryPage({ industry }) {
           </div>
         )}
 
-        <div className="p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+        <div className="p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <CaptureTitle before="Нужен контент" accent={`для ${industry.title.toLowerCase()}?`} />

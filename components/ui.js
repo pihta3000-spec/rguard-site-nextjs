@@ -14,7 +14,7 @@ const SERVICE_LABELS = {
 
 export function Card({ title, text }) {
   return (
-    <div className="p-6" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+    <div className="p-6" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
       <div className="font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs mb-4">RGUARD</div>
       <h3 className="text-xl font-extrabold mb-3 leading-tight">{title}</h3>
       <p className="text-zinc-500 text-sm leading-relaxed">{text}</p>
@@ -103,7 +103,7 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
         value={company} onChange={e => setCompany(e.target.value)}
         placeholder="Название компании"
         className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm"
-        style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
+        style={{ background: 'rgba(var(--inset-rgb),0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
       />
       <input
         type="tel"
@@ -111,13 +111,13 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
         placeholder="Номер телефона *"
         required
         className="w-full px-5 py-4 outline-none text-white placeholder-zinc-600 font-mono-terminal text-sm"
-        style={{ background: 'rgba(0,0,0,0.6)', border: `1px solid ${errMsg && !contact ? 'rgba(239,68,68,0.8)' : 'rgba(239,68,68,0.25)'}`, color: 'inherit' }}
+        style={{ background: 'rgba(var(--inset-rgb),0.6)', border: `1px solid ${errMsg && !contact ? 'rgba(239,68,68,0.8)' : 'rgba(239,68,68,0.25)'}`, color: 'inherit' }}
       />
       <textarea
         value={message} onChange={e => setMessage(e.target.value)}
         placeholder={textarea}
         className="w-full h-28 px-5 py-4 outline-none resize-none text-white placeholder-zinc-600 font-mono-terminal text-sm"
-        style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
+        style={{ background: 'rgba(var(--inset-rgb),0.6)', border: '1px solid rgba(239,68,68,0.25)', color: 'inherit' }}
       />
       <label className="flex items-start gap-3 cursor-pointer group">
         <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)}
@@ -147,7 +147,7 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
 
 export function StatBlock({ value, label }) {
   return (
-    <div className="p-6 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+    <div className="p-6 hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
       <div className="font-mono-terminal text-3xl font-black neon-red mb-2">{value}</div>
       <div className="font-mono-terminal text-zinc-500 text-xs uppercase leading-relaxed" style={{ wordBreak: 'normal', overflowWrap: 'normal', letterSpacing: '0.05em' }}>{label}</div>
     </div>
@@ -160,7 +160,7 @@ function CaseCoverFallback({ item }) {
   const metric = (item.metrics || []).find(m => m && (m.value || m.label))
   const tag = item.accent || SERVICE_LABELS[item.service] || item.service || ''
   return (
-    <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#0d0d1a 0%,#1a0a0e 100%)' }}>
+    <div className="media-dark absolute inset-0" style={{ background: 'linear-gradient(135deg,#0d0d1a 0%,#1a0a0e 100%)' }}>
       <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(239,68,68,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(239,68,68,0.06) 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
       <div className="absolute top-0 left-0 right-0" style={{ height: 3, background: '#ef4444' }} />
       {tag && <div className="absolute top-3 left-3 font-mono-terminal text-red-500 uppercase border border-red-500/50 px-2 py-1" style={{ fontSize: 10, letterSpacing: 1.5 }}>{'// '}{tag}</div>}

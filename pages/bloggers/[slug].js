@@ -18,7 +18,7 @@ function PhotoGallery({ photos = [] }) {
   )
 
   return (
-    <div className="relative aspect-[3/4] bg-black overflow-hidden select-none" style={{ border: '1px solid rgba(239,68,68,0.4)' }}>
+    <div className="media-dark relative aspect-[3/4] bg-black overflow-hidden select-none" style={{ border: '1px solid rgba(239,68,68,0.4)' }}>
       {/* Фото */}
       {photos.map((url, i) => (
         <img
@@ -31,15 +31,15 @@ function PhotoGallery({ photos = [] }) {
         />
       ))}
       {/* Оверлей снизу */}
-      <div className="absolute inset-x-0 bottom-0 h-24 z-10" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }} />
+      <div className="absolute inset-x-0 bottom-0 h-24 z-10" style={{ background: 'linear-gradient(to top, rgba(var(--inset-rgb),0.7), transparent)' }} />
       {/* Счётчик */}
-      <div className="absolute top-4 right-4 z-20 font-mono-terminal text-red-400 text-xs tracking-[3px] px-3 py-1" style={{ background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(239,68,68,0.3)' }}>
+      <div className="absolute top-4 right-4 z-20 font-mono-terminal text-red-400 text-xs tracking-[3px] px-3 py-1" style={{ background: 'rgba(var(--inset-rgb),0.7)', border: '1px solid rgba(239,68,68,0.3)' }}>
         {current + 1} / {count}
       </div>
       {/* Навигация */}
       {count > 1 && <>
-        <button onClick={() => setCurrent(i => (i - 1 + count) % count)} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg hover:text-red-400 transition-colors" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(0,0,0,0.7)' }}>‹</button>
-        <button onClick={() => setCurrent(i => (i + 1) % count)} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg hover:text-red-400 transition-colors" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(0,0,0,0.7)' }}>›</button>
+        <button onClick={() => setCurrent(i => (i - 1 + count) % count)} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg hover:text-red-400 transition-colors" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(var(--inset-rgb),0.7)' }}>‹</button>
+        <button onClick={() => setCurrent(i => (i + 1) % count)} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-white text-lg hover:text-red-400 transition-colors" style={{ border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(var(--inset-rgb),0.7)' }}>›</button>
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
           {photos.map((_, i) => (
             <button key={i} onClick={() => setCurrent(i)} className={`h-1.5 rounded-full transition-all ${i === current ? 'bg-red-500 w-6' : 'bg-white/40 w-1.5'}`} />
@@ -72,7 +72,7 @@ export default function BloggerPage({ blogger }) {
               {(blogger.metrics || []).map((m) => {
                 const v = m.value || m[0]; const l = m.label || m[1];
                 return (
-                  <div key={l} className="p-5 text-center hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+                  <div key={l} className="p-5 text-center hud-corner" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
                     <div className="font-mono-terminal text-3xl font-black neon-red mb-2">{v}</div>
                     <div className="font-mono-terminal text-zinc-500 text-xs uppercase leading-relaxed" style={{ wordBreak: 'normal', overflowWrap: 'normal', letterSpacing: '0.05em' }}>{l}</div>
                   </div>
@@ -91,7 +91,7 @@ export default function BloggerPage({ blogger }) {
         </div>
 
         {(blogger.specializations?.length > 0) && (
-          <div className="mb-24 p-10 md:p-12" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+          <div className="mb-24 p-10 md:p-12" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
             <div className="font-mono-terminal text-zinc-500 text-xs uppercase tracking-[3px] mb-6">Специализации</div>
             <div className="flex flex-wrap gap-3">
               {blogger.specializations.map(spec => (

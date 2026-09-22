@@ -67,7 +67,7 @@ export default function Cases({ cases , seo }) {
               { src: '/logos/wasserjet.webp',           alt: 'Wasserjet' },
               { src: '/logos/bashkirskiy-kirpich.webp', alt: 'Башкирский кирпич' },
             ].map((logo) => (
-              <div key={logo.alt} className="h-[110px] flex items-center justify-center px-6" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.8)' }}>
+              <div key={logo.alt} className="media-dark h-[110px] flex items-center justify-center px-6" style={{ border: '1px solid rgba(239,68,68,0.15)', background: 'rgb(var(--surface-rgb))' }}>
                 <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" style={{ maxWidth: '100%', maxHeight: '60px', objectFit: 'contain' }} />
               </div>
             ))}
@@ -91,7 +91,7 @@ export default function Cases({ cases , seo }) {
           </div>
         </div>
 
-        <div className="mt-24 p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(10,10,20,0.85)' }}>
+        <div className="mt-24 p-10 md:p-14" style={{ border: '1px solid rgba(239,68,68,0.18)', background: 'rgba(var(--surface-rgb),0.85)' }}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <CaptureTitle before="Хотите" accent="такой же эффект" after="для своей компании?" />

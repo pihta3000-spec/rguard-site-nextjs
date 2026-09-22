@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import ThemeToggle from './ThemeToggle'
 
 const BriefModal = dynamic(() => import('./BriefModal'), {
   ssr: false,
@@ -57,14 +58,14 @@ export default function Layout({ children, title, description }) {
   const siteDesc = description || 'Вирусные видеоролики, продюсирование и контент-стратегии для компаний реального сектора.'
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden font-sans relative scanlines" style={{ background: '#0a0a14', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="min-h-screen text-white overflow-x-hidden font-sans relative scanlines" style={{ background: 'var(--page-bg)', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Grid background */}
       <div className="pointer-events-none fixed inset-0 z-0" style={{
         backgroundImage: 'linear-gradient(rgba(239,68,68,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(239,68,68,0.04) 1px, transparent 1px)',
         backgroundSize: '60px 60px',
       }} />
 
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl" style={{ borderBottom: '1px solid rgba(239,68,68,0.2)', background: 'rgba(10,10,20,0.92)' }}>
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl" style={{ borderBottom: '1px solid rgba(239,68,68,0.2)', background: 'rgba(var(--surface-rgb),0.92)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
           <Link href="/" className="font-mono-terminal text-2xl font-black tracking-tight neon-red cursor-pointer flicker">
             RGUARD<span className="text-red-500/60 text-sm">.RU</span>
@@ -72,7 +73,7 @@ export default function Layout({ children, title, description }) {
 
           <a href="tel:+79273412252" className="lg:hidden font-mono-terminal text-xs font-bold tracking-tight text-red-500 hover:text-red-400 transition-all">+7 927 341-22-52</a>
 
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-8">
+          <nav className="hidden xl:flex items-center gap-4">
             {nav.map((item) => (
               <div key={item.label || item.href} className="relative group flex items-center">
                 {item.children ? (
@@ -81,7 +82,7 @@ export default function Layout({ children, title, description }) {
                       {item.label}<span className="text-[10px] leading-none mt-px">▾</span>
                     </button>
                     <div className="absolute top-full left-0 pt-4 hidden group-hover:block z-50">
-                      <div className="w-[320px] p-2" style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(10,10,20,0.98)' }}>
+                      <div className="w-[320px] p-2" style={{ border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(var(--surface-rgb),0.98)' }}>
                         {item.children.map((child) => (
                           <Link key={child.href} href={child.href}
                             className="block w-full text-left px-4 py-3 font-mono-terminal text-xs uppercase tracking-[2px] text-zinc-400 hover:text-red-400 hover:bg-red-950/20 transition-all break-words">
@@ -101,11 +102,12 @@ export default function Layout({ children, title, description }) {
             ))}
           </nav>
 
-          <button onClick={() => setMenu(v => !v)} className="lg:hidden w-12 h-12 flex items-center justify-center font-mono-terminal text-red-500 cursor-pointer" style={{ border: '1px solid rgba(239,68,68,0.3)' }}>☰</button>
+          <div className="flex items-center gap-2"><ThemeToggle />
+          <button onClick={() => setMenu(v => !v)} aria-label="Меню" aria-expanded={menu} className="xl:hidden w-12 h-12 flex items-center justify-center font-mono-terminal text-red-500 cursor-pointer" style={{ border: '1px solid rgba(239,68,68,0.3)' }}>☰</button></div>
         </div>
 
         {menu && (
-          <div className="lg:hidden px-4 py-4 flex flex-col gap-1 max-h-[80vh] overflow-y-auto" style={{ borderTop: '1px solid rgba(239,68,68,0.15)', background: 'rgba(10,10,20,0.98)' }}>
+          <div className="xl:hidden px-4 py-4 flex flex-col gap-1 max-h-[80vh] overflow-y-auto" style={{ borderTop: '1px solid rgba(239,68,68,0.15)', background: 'rgba(var(--surface-rgb),0.98)' }}>
             {nav.map((item) => (
               <div key={item.label || item.href}>
                 {item.children ? (
@@ -143,7 +145,7 @@ export default function Layout({ children, title, description }) {
         </section>
       )}
 
-      <footer className="py-10 relative z-10" style={{ borderTop: '1px solid rgba(239,68,68,0.2)', background: 'rgba(5,5,12,0.98)' }}>
+      <footer className="py-10 relative z-10" style={{ borderTop: '1px solid rgba(239,68,68,0.2)', background: 'rgba(var(--footer-rgb),0.98)' }}>
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(239,68,68,0.6), transparent)' }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div>
