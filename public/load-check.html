@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Проверка загрузки RGUARD</title>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;margin:0;padding:20px;background:#fff;color:#151515;max-width:850px}button,select{font:inherit;padding:12px;margin:4px 0;min-height:48px}button{background:#b91c1c;color:white;border:0;border-radius:5px}button:disabled{opacity:.6}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f1f1;padding:12px;font-size:13px}iframe{width:100%;height:420px;border:1px solid #888;box-sizing:border-box}h1{font-size:24px}#status{font-weight:600}
+</style>
+</head>
+<body>
+<h1>Проверка загрузки сайта</h1>
+<p>Откройте на телефоне, где сайт тормозит. Нажмите кнопку и подождите до минуты. Затем пришлите скриншот результатов из серого блока.</p>
+<p>Отчёт остаётся на экране: отдельной отправки и сохранения нет. Внизу откроется настоящий сайт, включая его обычные счётчики. Заявки не отправляются.</p>
+<label for="page">Что проверить:</label>
+<select id="page"><option value="/">Главная</option><option value="/brief">Бриф</option></select>
+<button id="start" type="button">Начать проверку</button>
+<p id="status" role="status">Готово к запуску</p>
+<pre id="output" aria-label="Результаты">Результаты появятся здесь.</pre>
+<div id="preview"></div>
+<noscript>JavaScript отключён. Для проверки запуска сайта его нужно разрешить.</noscript>
+<script>
+(function(){
+  'use strict';
+  var output=document.getElementById('output'), button=document.getElementById('start'), status=document.getElementById('status');
+  function ms(n){return Math.round(n||0)+' мс'}
+  function line(s){output.textContent+='\n'+s}
+  function wait(n){return new Promise(function(r){setTimeout(r,n)})}
+  async function request(path){
+    var controller=new AbortController(), start=performance.now(), timer=setTimeout(function(){controller.abort()},8000);
+    try{
+      var response=await fetch(path,{cache:'no-store',signal:controller.signal});
+      var first=performance.now()-start, text=await response.text();
+      return {status:response.status,text:text,first:first,total:performance.now()-start};
+    }catch(e){return {error:e.name==='AbortError'?'Таймаут 8 секунд':'Ошибка сети',total:performance.now()-start}}
+    finally{clearTimeout(timer)}
+  }
+  button.onclick=async function(){
+    button.disabled=true;
+    var path=document.getElementById('page').value, frame;
+    output.textContent='RGUARD / диагностика v1\nСтраница: '+path+'\nЭкран: '+innerWidth+' × '+innerHeight;
+    var nav=performance.getEntriesByType('navigation')[0];
+    if(nav)line('Сама диагностика: первый ответ '+ms(nav.responseStart)+'; HTML '+ms(nav.responseEnd)+'; протокол '+nav.nextHopProtocol);
+    try{
+      status.textContent='1/2. Проверяем запуск страницы — 25 секунд…';
+      frame=document.createElement('iframe');frame.title='Проверяемая страница';
+      frame.src=path;document.getElementById('preview').replaceChildren(frame);
+      var began=performance.now(), loaded=false, hydrated=false;
+      frame.onload=function(){loaded=true};
+      for(var i=0;i<25;i++){
+        await wait(1000);
+        try{
+          var win=frame.contentWindow;
+          if(win.location.href==='about:blank')continue;
+          var marks=win.performance.getEntriesByName('rguard-hydrated');
+          if(marks.length&&!hydrated){hydrated=true;line('React запущен: '+ms(marks[0].startTime))}
+          if(i===4||i===14||i===24)line('Через '+Math.round((performance.now()-began)/1000)+' с: HTML '+win.document.readyState+'; React '+(hydrated?'работает':'ещё не запущен')+'; load '+(loaded?'да':'нет'));
+        }catch(e){line('Не удалось прочитать состояние встроенной страницы');break}
+      }
+      try{
+        var perf=frame.contentWindow.performance, n=perf.getEntriesByType('navigation')[0];
+        if(n)line('Страница: DNS '+ms(n.domainLookupEnd-n.domainLookupStart)+'; подключение '+ms(n.connectEnd-n.connectStart)+'; первый ответ '+ms(n.responseStart)+'; DOM '+ms(n.domContentLoadedEventEnd)+'; load '+ms(n.loadEventEnd));
+        var resources=perf.getEntriesByType('resource');
+        line('Завершено ресурсов: '+resources.length+'; самые долгие (не включает зависшие запросы):');
+        resources.sort(function(a,b){return b.duration-a.duration}).slice(0,10).forEach(function(r){
+          var u=new URL(r.name);line(ms(r.duration)+' '+(u.origin===location.origin?u.pathname:u.hostname+' [внешний]'));
+        });
+      }catch(e){line('Тайминги встроенной страницы недоступны')}
+      // Stop page activity before isolated network probes. These probes use a warmed connection.
+      frame.remove();frame=null;
+      status.textContent='2/2. Проверяем файлы отдельно…';
+      var result=await request(path);
+      if(result.error){line('HTML: '+result.error);return}
+      line('HTML повторно: HTTP '+result.status+'; первый ответ '+ms(result.first)+'; полностью '+ms(result.total));
+      var doc=new DOMParser().parseFromString(result.text,'text/html');
+      var urls=Array.from(doc.querySelectorAll('script[src],link[rel="stylesheet"]')).map(function(el){return new URL(el.getAttribute('src')||el.getAttribute('href'),location.origin)}).filter(function(u){return u.origin===location.origin});
+      var queue=Array.from(new Set(urls.map(function(u){return u.pathname}))).slice(0,16);
+      async function worker(){while(queue.length){var url=queue.shift(),r=await request(url);line((r.error||'HTTP '+r.status)+' '+ms(r.total)+' '+url)}}
+      await Promise.all([worker(),worker(),worker()]);
+      line('Проверка закончена. Результаты iframe — ориентир, не полная замена прямому открытию страницы.');
+    }catch(e){line('Проверка прервана: '+e.name)}
+    finally{if(frame)frame.remove();button.disabled=false;status.textContent='Готово. Пришлите скриншот серого блока.'}
+  };
+})();
+</script>
+</body></html>

@@ -14,6 +14,10 @@ const CookieBanner = dynamic(() => import("@/components/CookieBanner"), {
 export default function App({ Component, pageProps }) {
   const router = useRouter()
   useEffect(() => {
+    // Local-only timing marker for the temporary mobile diagnostic page.
+    performance.mark('rguard-hydrated')
+  }, [])
+  useEffect(() => {
     const sync = () => {
       let theme = document.documentElement.dataset.theme
       try { theme = localStorage.getItem(THEME_KEY) || 'dark' } catch {}
