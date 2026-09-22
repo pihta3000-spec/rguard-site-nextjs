@@ -13,7 +13,7 @@ export default function EmployeeProfile({ employee, posts }) {
     <SocialMeta title={title} description={description} url={employeePath(employee.slug)} image={employee.photo} />
     <Head><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(profileSchema(employee, posts)) }} /></Head>
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
-      <Link href="/сотрудники" className="text-red-400 underline underline-offset-4">Все сотрудники</Link>
+      <Link href="/team" className="text-red-400 underline underline-offset-4">Все сотрудники</Link>
       <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-10 mt-10">
         <img src={employee.photo} alt={employee.name} className="w-full aspect-[3/4] object-cover object-top" />
         <div className="min-w-0">

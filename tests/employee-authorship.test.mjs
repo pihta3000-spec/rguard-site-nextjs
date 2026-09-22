@@ -24,6 +24,12 @@ const employee = { _id: 'employee-test', name: 'Тестовый автор', sl
 test('migration, publication, relations, import, schema and safe legacy writes', async () => {
   assert.equal((await db.getPost('old-post')).body, '<p>Original</p>')
   assert.equal((await db.getPost('old-post')).author, null)
+  db.getDb().prepare('UPDATE posts SET body = ? WHERE _id = ?').run('<p>Before</p><section class="expertise-box"><h2>// EXPERTISE</h2><p>Old boilerplate</p></section><section><h2>Keep</h2></section>', 'old-post')
+  const filteredBody = (await db.getPost('old-post')).body
+  assert.ok(!filteredBody.includes('EXPERTISE'))
+  assert.ok(!filteredBody.includes('Old boilerplate'))
+  assert.ok(filteredBody.includes('<p>Before</p>'))
+  assert.ok(filteredBody.includes('<h2>Keep</h2>'))
   db.adminUpsert('employees', employee)
   assert.equal(db.getEmployee('test-author'), null)
   assert.deepEqual(db.getEmployees(), [])
@@ -42,6 +48,7 @@ test('migration, publication, relations, import, schema and safe legacy writes',
   assert.equal(post.author.slug, 'renamed-author')
   const graph = profileSchema(post.author, db.getPostsByAuthor(employee._id))
   assert.equal(graph.mainEntity['@id'], articleSchema(post).author['@id'])
+  assert.equal(new URL(graph.url).pathname, '/team/renamed-author')
   assert.equal(graph.hasPart.length, 2)
   const interview = profileSchema({ ...post.author, publications: [{ title: 'Interview', url: 'https://example.com/interview', relation: 'about' }] }, [])
   assert.equal(interview.hasPart[0].author, undefined)

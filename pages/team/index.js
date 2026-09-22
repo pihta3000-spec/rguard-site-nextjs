@@ -7,7 +7,7 @@ import { employeePath } from '@/lib/authorSchema'
 
 export default function Employees({ employees }) {
   return <Layout title="Сотрудники и авторы" description="Команда RGUARD: профессиональный опыт и публикации авторов.">
-    <SocialMeta title="Сотрудники и авторы — RGUARD" description="Команда RGUARD: профессиональный опыт и публикации авторов." url="/сотрудники" />
+    <SocialMeta title="Сотрудники и авторы — RGUARD" description="Команда RGUARD: профессиональный опыт и публикации авторов." url="/team" />
     {!employees.length && <Head><meta name="robots" content="noindex,follow" /></Head>}
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl md:text-6xl font-black mb-10">Сотрудники и авторы</h1>

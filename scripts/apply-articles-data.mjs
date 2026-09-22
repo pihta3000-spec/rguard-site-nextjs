@@ -2,6 +2,16 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { adminDelete, adminGetBySlug, adminUpsert, getDb } from '../lib/db.js'
 
+// This legacy import deletes/recreates posts. Never rerun after author migration:
+// preserve production article IDs, editorial changes and author relationships.
+const db = getDb()
+if (db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'content_migrations'").get()
+    && db.prepare('SELECT 1 FROM content_migrations WHERE id = ?').get('experts-20260922')) {
+  console.log('Legacy article seed skipped: expert migration already applied.')
+  db.close()
+  process.exit(0)
+}
+
 const DATA_PATH = path.join(process.cwd(), 'scripts', 'articles-data.json')
 const MANAGED_PATH = path.join(process.cwd(), 'scripts', 'articles-managed-slugs.json')
 const articles = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'))

@@ -13,7 +13,7 @@ export async function getServerSideProps({ res }) {
   ])
 
   const urls = [
-    ...(getEmployees().length ? ['/сотрудники', ...getEmployees().map(employee => employeePath(employee.slug))] : []),
+    ...(getEmployees().length ? ['/team', ...getEmployees().map(employee => employeePath(employee.slug))] : []),
     ...staticPaths,
     ...(cases || []).map(c => `/cases/${c.id}`),
     ...Array.from(new Set((posts || []).map(p => p.categoryUrl).filter(Boolean))),
