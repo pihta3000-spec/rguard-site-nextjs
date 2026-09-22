@@ -41,7 +41,6 @@ const SERVICE_PAGES = [
 
 export default function Layout({ children, title, description }) {
   const router = useRouter()
-  const [menu, setMenu] = useState(false)
   const [briefOpen, setBriefOpen] = useState(false)
   const [showBrief, setShowBrief] = useState(false)
   const isBriefPage = router.pathname === '/brief'
@@ -103,33 +102,32 @@ export default function Layout({ children, title, description }) {
           </nav>
 
           <div className="flex items-center gap-2"><ThemeToggle />
-          <button onClick={() => setMenu(v => !v)} aria-label="Меню" aria-expanded={menu} className="xl:hidden w-12 h-12 flex items-center justify-center font-mono-terminal text-red-500 cursor-pointer" style={{ border: '1px solid rgba(239,68,68,0.3)' }}>☰</button></div>
-        </div>
-
-        {menu && (
-          <div className="xl:hidden px-4 py-4 flex flex-col gap-1 max-h-[80vh] overflow-y-auto" style={{ borderTop: '1px solid rgba(239,68,68,0.15)', background: 'rgba(var(--surface-rgb),0.98)' }}>
+          <details className="mobile-menu xl:hidden">
+            <summary aria-label="Меню" className="w-12 h-12 flex items-center justify-center font-mono-terminal text-red-500 cursor-pointer" style={{ border: '1px solid rgba(239,68,68,0.3)' }}>☰</summary>
+          <div className="absolute top-full left-0 right-0 px-4 py-4 flex flex-col gap-1 max-h-[80vh] overflow-y-auto" style={{ borderTop: '1px solid rgba(239,68,68,0.15)', background: 'rgba(var(--surface-rgb),0.98)' }}>
             {nav.map((item) => (
               <div key={item.label || item.href}>
                 {item.children ? (
                   <div>
                     <div className="px-4 pt-3 pb-1 font-mono-terminal text-red-500 uppercase tracking-[3px] text-xs">{item.label}</div>
                     {item.children.map((child) => (
-                      <Link key={child.href} href={child.href} onClick={() => setMenu(false)}
+                      <a key={child.href} href={child.href}
                         className="block w-full text-left px-6 py-3 font-mono-terminal text-xs uppercase tracking-[2px] text-zinc-400 hover:text-red-400 transition-all">
                         {child.label}
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 ) : (
-                  <Link href={item.href} onClick={() => setMenu(false)}
+                  <a href={item.href}
                     className="block w-full text-left px-4 py-3 font-mono-terminal text-xs uppercase tracking-[2px] text-zinc-400 hover:text-red-400 transition-all">
                     {item.label}
-                  </Link>
+                  </a>
                 )}
               </div>
             ))}
           </div>
-        )}
+          </details></div>
+        </div>
       </header>
 
       <main className="pt-20 relative z-10">{children}</main>
@@ -178,7 +176,7 @@ export default function Layout({ children, title, description }) {
         Заполнить бриф
       </button>
 
-      <BriefModal open={briefOpen} onClose={() => setBriefOpen(false)} />
+      {briefOpen && !isBriefPage && <BriefModal open onClose={() => setBriefOpen(false)} />}
         </>
       )}
     </div>

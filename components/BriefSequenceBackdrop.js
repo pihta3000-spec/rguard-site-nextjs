@@ -24,6 +24,7 @@ function SequenceTile({ sequence }) {
   const canvasRef = useRef(null)
   const framesRef = useRef([])
   const loadingRef = useRef(false)
+  const mountedRef = useRef(false)
   const activeRef = useRef(false)
   const frameRef = useRef(0)
   const directionRef = useRef(1)
@@ -45,24 +46,43 @@ function SequenceTile({ sequence }) {
     if (loadingRef.current) return
     loadingRef.current = true
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    // Four requests at a time, only after interaction with this decoration.
+    let next = 2
+    const loadNext = () => {
+      if (!mountedRef.current || next > TOTAL_FRAMES) return
+      const i = next++
       const img = new window.Image()
       const idx = i - 1
-      img.src = `${sequence.base}/${String(i).padStart(3, '0')}.webp`
+      img.fetchPriority = 'low'
       img.onload = () => {
+        if (!mountedRef.current) return
         framesRef.current[idx] = img
-        if (idx === 0) {
-          setReady(true)
-          const canvas = canvasRef.current
-          if (canvas) drawContain(canvas.getContext('2d'), img, canvas.width, canvas.height)
-        }
+        loadNext()
       }
+      img.onerror = loadNext
+      img.src = `${sequence.base}/${String(i).padStart(3, '0')}.webp`
     }
+    for (let i = 0; i < 4; i++) loadNext()
   }
 
   useEffect(() => {
-    if (desktop) loadFrames()
+    mountedRef.current = true
+    // First paint needs only one still per tile, not all 906 frames.
+    const img = new window.Image()
+    if (desktop) {
+      img.fetchPriority = 'low'
+      img.onload = () => {
+        framesRef.current[0] = img
+        setReady(true)
+        const canvas = canvasRef.current
+        if (canvas) drawContain(canvas.getContext('2d'), img, canvas.width, canvas.height)
+      }
+      img.src = `${sequence.base}/001.webp`
+    }
     return () => {
+      mountedRef.current = false
+      loadingRef.current = false
+      img.onload = null
       cancelAnimationFrame(rafRef.current)
       window.clearTimeout(touchTimerRef.current)
     }
@@ -107,6 +127,7 @@ function SequenceTile({ sequence }) {
   }
 
   const start = () => {
+    loadFrames()
     activeRef.current = true
     setPlaying(true)
     cancelAnimationFrame(rafRef.current)

@@ -28,6 +28,9 @@ html[data-theme="light"] {
 }
 .theme-toggle:hover { border-color: var(--link-ink); color: var(--link-ink); }
 .theme-to-dark { display: none; }
+.mobile-menu summary { list-style: none; }
+.mobile-menu summary::-webkit-details-marker { display: none; }
+.mobile-menu:not([open]) > div { display: none; }
 html[data-theme="light"] .theme-to-dark { display: inline-flex; }
 html[data-theme="light"] .theme-to-light { display: none; }
 :where(a, button, input, textarea, select):focus-visible {

@@ -3,6 +3,7 @@ import Layout from '@/components/Layout'
 import Seo from '@/components/Seo'
 import HeroTitle from '@/components/HeroTitle'
 import BriefForm from '@/components/BriefForm'
+import DesktopOnly from '@/components/DesktopOnly'
 import { resolvePageSeo } from '@/lib/db'
 
 const BriefSequenceBackdrop = dynamic(() => import('@/components/BriefSequenceBackdrop'), { ssr: false })
@@ -11,7 +12,7 @@ export default function BriefPage({ seo }) {
   return (
     <Layout title="Бриф" description="Заполните бриф RGUARD: расскажите о задаче, аудитории и контактах, чтобы мы предложили подход к вирусному контенту.">
       <Seo seo={seo} />
-      <BriefSequenceBackdrop />
+      <DesktopOnly minWidth={1024}><BriefSequenceBackdrop /></DesktopOnly>
       <section className="relative z-10 px-4 sm:px-6 py-14 md:py-20 min-h-[calc(100vh-80px)] flex items-center">
         <div className="w-full max-w-5xl mx-auto grid lg:grid-cols-[0.82fr_1fr] gap-8 xl:gap-10 items-start">
           <div className="pt-4 lg:sticky lg:top-28">

@@ -1,5 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import { themeBootstrap } from '@/lib/theme'
+import { themeBootstrap, themeInteraction } from '@/lib/theme'
 
 export default function Document() {
   return (
@@ -8,7 +8,7 @@ export default function Document() {
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="theme-color" content="#0a0a14" />
-        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap + ';' + themeInteraction }} />
       </Head>
       <body>
         <noscript>

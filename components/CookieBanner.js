@@ -1,11 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 export default function CookieBanner() {
-  const [visible, setVisible] = useState(() => typeof window !== 'undefined' && !localStorage.getItem('cookie_accepted'))
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    try { setVisible(!localStorage.getItem('cookie_accepted')) }
+    catch { setVisible(true) }
+  }, [])
 
   const accept = () => {
-    localStorage.setItem('cookie_accepted', '1')
+    try { localStorage.setItem('cookie_accepted', '1') } catch {}
     setVisible(false)
   }
 
