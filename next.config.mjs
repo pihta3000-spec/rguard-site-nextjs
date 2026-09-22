@@ -4,6 +4,15 @@ const nextConfig = {
   reactStrictMode: true,
   // Нативный модуль better-sqlite3 не бандлим — грузим из node_modules в рантайме
   serverExternalPackages: ['better-sqlite3'],
+  async rewrites() {
+    return [
+      { source: `/${encodeURIComponent('сотрудники')}/:path*`, destination: '/team/:path*' },
+      { source: '/сотрудники/:path*', destination: '/team/:path*' },
+    ]
+  },
+  async redirects() {
+    return [{ source: '/team/:path*', destination: `/${encodeURIComponent('сотрудники')}/:path*`, permanent: true }]
+  },
   async headers() {
     return [
       {

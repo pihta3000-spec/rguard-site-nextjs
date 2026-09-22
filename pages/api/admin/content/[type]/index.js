@@ -16,7 +16,9 @@ export default async function handler(req, res) {
     const doc = req.body || {}
     if (!doc.slug) return res.status(400).json({ error: 'Укажите slug' })
     if (slugTaken(type, doc.slug, doc._id)) return res.status(409).json({ error: 'Такой slug уже занят' })
-    const id = adminUpsert(type, doc)
+    let id
+    try { id = adminUpsert(type, doc) }
+    catch (error) { return res.status(400).json({ error: error.message }) }
     await revalidatePaths(res, type, doc.slug)
     return res.status(200).json({ ok: true, _id: id })
   }

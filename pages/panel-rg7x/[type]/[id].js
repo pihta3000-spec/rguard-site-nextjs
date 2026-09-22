@@ -43,7 +43,7 @@ export default function EditPage({ type, id, initialDoc }) {
     if (!window.confirm('Удалить запись? Действие необратимо.')) return
     const r = await fetch(`/api/admin/content/${type}/${id}`, { method: 'DELETE' })
     if (r.ok) router.push(`${ADMIN_PATH}/${type}`)
-    else alert('Не удалось удалить')
+    else { const data = await r.json().catch(() => ({})); alert(data.error || 'Не удалось удалить') }
   }
 
   return (

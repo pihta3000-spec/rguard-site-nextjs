@@ -4,6 +4,7 @@ import { ADMIN_PATH, LOGIN_PATH, requireAdmin } from '@/lib/auth'
 import { getDb } from '@/lib/db'
 
 const TYPES = [
+  { key: 'employees', label: 'Сотрудники', href: `${ADMIN_PATH}/employees` },
   { key: 'cases', label: 'Кейсы', href: `${ADMIN_PATH}/cases` },
   { key: 'posts', label: 'Статьи', href: `${ADMIN_PATH}/posts` },
   { key: 'industries', label: 'Отрасли', href: `${ADMIN_PATH}/industries` },
@@ -58,6 +59,7 @@ export async function getServerSideProps(context) {
   const count = (t) => db.prepare(`SELECT COUNT(*) n FROM ${t}`).get().n
   return { props: { counts: {
     cases: count('cases'), posts: count('posts'),
+    employees: count('employees'),
     industries: count('industries'), bloggers: count('bloggers'),
   } } }
 }

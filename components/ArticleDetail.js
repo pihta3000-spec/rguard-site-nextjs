@@ -4,6 +4,7 @@ import Layout from '@/components/Layout'
 import SocialMeta from '@/components/SocialMeta'
 import { LeadForm, CaptureTitle } from '@/components/ui'
 import RichText from '@/components/RichText'
+import { articleSchema, employeePath, jsonLdText, withoutArticleSchema } from '@/lib/authorSchema'
 
 const articleHref = post => post?.urlPath || `/articles/${post?.slug || ''}`
 const categoryHref = post => post?.categoryUrl || (post?.categorySlug ? `/articles/${post.categorySlug}/` : '/articles')
@@ -17,13 +18,13 @@ export default function ArticleDetail({ post }) {
   return (
     <Layout title={post.title} description={seoDesc}>
       <SocialMeta title={seoTitle} description={seoDesc} url={articleHref(post)} image={post.coverImage} type="article" />
-      {post.seo?.jsonLd?.length > 0 && (
+      {(
         <Head>
-          {post.seo.jsonLd.map((item, index) => (
+          {[articleSchema(post), ...withoutArticleSchema(post.seo?.jsonLd)].map((item, index) => (
             <script
               key={index}
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
+              dangerouslySetInnerHTML={{ __html: jsonLdText(item) }}
             />
           ))}
         </Head>
@@ -47,6 +48,13 @@ export default function ArticleDetail({ post }) {
           {post.publishedAt && <span className="font-mono-terminal text-zinc-600 text-xs">{formatDate(post.publishedAt)}</span>}
         </div>
         <h1 className="glitch-hero text-4xl md:text-6xl font-black leading-tight mb-8">{post.title}</h1>
+        {post.author && <div className="flex items-center gap-4 mb-8">
+          {post.author.photo && <img src={post.author.photo} alt="" width={56} height={56} className="w-14 h-14 object-cover object-top" />}
+          <div><p className="text-sm text-zinc-300">Автор статьи</p>
+            <Link href={employeePath(post.author.slug)} className="text-red-400 underline underline-offset-4">{post.author.name}</Link>
+            {post.author.jobTitle && <p className="text-sm text-zinc-300">{post.author.jobTitle}</p>}
+          </div>
+        </div>}
         {post.excerpt && <p className="text-zinc-300 text-xl leading-relaxed mb-12 pb-12" style={{ borderBottom: '1px solid rgba(239,68,68,0.15)' }}>{post.excerpt}</p>}
         <RichText html={post.body} />
 

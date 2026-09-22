@@ -1,7 +1,8 @@
-import { getCases, getPosts, getIndustries, getBloggers } from '@/lib/db'
+import { getCases, getPosts, getIndustries, getBloggers, getEmployees } from '@/lib/db'
+import { employeePath } from '@/lib/authorSchema'
 import { PAGE_DEFAULTS, SITE_ORIGIN } from '@/lib/pageSeo'
 
-const loc = (p) => `${SITE_ORIGIN}${p === '/' ? '/' : p}`
+const loc = (p) => new URL(p, SITE_ORIGIN).href.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 export async function getServerSideProps({ res }) {
   // Статические страницы (кроме noindex — privacy/personal-data)
@@ -12,6 +13,7 @@ export async function getServerSideProps({ res }) {
   ])
 
   const urls = [
+    ...(getEmployees().length ? ['/сотрудники', ...getEmployees().map(employee => employeePath(employee.slug))] : []),
     ...staticPaths,
     ...(cases || []).map(c => `/cases/${c.id}`),
     ...Array.from(new Set((posts || []).map(p => p.categoryUrl).filter(Boolean))),

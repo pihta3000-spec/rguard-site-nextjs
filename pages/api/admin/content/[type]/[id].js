@@ -15,17 +15,23 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'PUT') {
-    const doc = { ...(req.body || {}), _id: id }
+    const existing = adminGet(type, id)
+    if (!existing) return res.status(404).json({ error: 'Не найдено' })
+    const doc = { ...existing, ...(req.body || {}), _id: id }
     if (!doc.slug) return res.status(400).json({ error: 'Укажите slug' })
     if (slugTaken(type, doc.slug, id)) return res.status(409).json({ error: 'Такой slug уже занят' })
-    adminUpsert(type, doc)
+    try { adminUpsert(type, doc) }
+    catch (error) { return res.status(400).json({ error: error.message }) }
+    if (existing.slug !== doc.slug) await revalidatePaths(res, type, existing.slug)
     await revalidatePaths(res, type, doc.slug)
     return res.status(200).json({ ok: true, _id: id })
   }
 
   if (req.method === 'DELETE') {
     const existing = adminGet(type, id)
-    const ok = adminDelete(type, id)
+    let ok
+    try { ok = adminDelete(type, id) }
+    catch (error) { return res.status(409).json({ error: error.message }) }
     if (existing) await revalidatePaths(res, type, existing.slug)
     return res.status(200).json({ ok })
   }

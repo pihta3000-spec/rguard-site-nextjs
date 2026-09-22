@@ -18,6 +18,29 @@ async function uploadFile(file) {
 }
 
 // ── Загрузка одной картинки ──────────────────────────────────────────────────
+function ReferenceInput({ value, onChange, refType }) {
+  const [items, setItems] = useState([])
+  const [error, setError] = useState('')
+  useEffect(() => {
+    let active = true
+    fetch(`/api/admin/content/${refType}`).then(async response => {
+      if (!response.ok) throw new Error('Не удалось загрузить сотрудников')
+      return response.json()
+    }).then(data => { if (active) setItems(data.items || []) })
+      .catch(err => { if (active) setError(err.message) })
+    return () => { active = false }
+  }, [refType])
+  return <div>
+    <select aria-label="Автор статьи" style={inp} value={value || ''} onChange={e => onChange(e.target.value)}>
+      <option value="">Автор пока не назначен</option>
+      {value && !items.some(item => item._id === value) && <option value={value}>Текущий автор (загрузка…)</option>}
+      {items.map(item => <option key={item._id} value={item._id}>{item.title}</option>)}
+    </select>
+    <p style={{ color: '#cbd5e1', fontSize: 13, marginTop: 8 }}>Указывайте фактического автора. Ссылка появится после публикации его профиля.</p>
+    {error && <p role="alert">{error}</p>}
+  </div>
+}
+
 function ImageInput({ value, onChange }) {
   const [busy, setBusy] = useState(false)
   const pick = () => {
@@ -242,6 +265,8 @@ export default function FieldInput({ field, value, onChange, doc, currentId }) {
       return <SeoInput value={value} onChange={onChange} doc={doc} />
     case 'refList':
       return <RefList value={value} onChange={onChange} refType={field.refType} currentId={currentId} />
+    case 'ref':
+      return <ReferenceInput value={value} onChange={onChange} refType={field.refType} />
     case 'url':
       return <UrlInput value={value} onChange={onChange} />
     case 'text':

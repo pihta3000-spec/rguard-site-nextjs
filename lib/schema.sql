@@ -1,4 +1,20 @@
 -- Схема контента RGUARD. Единый источник для lib/db.js и scripts/migrate-from-sanity.mjs.
+CREATE TABLE IF NOT EXISTS employees (
+  _id TEXT PRIMARY KEY,
+  name TEXT,
+  slug TEXT UNIQUE,
+  jobTitle TEXT,
+  photo TEXT,
+  description TEXT,
+  bio TEXT,
+  expertise TEXT,
+  credentials TEXT,
+  sameAs TEXT,
+  publications TEXT,
+  published INTEGER DEFAULT 0,
+  "order" INTEGER,
+  seo TEXT
+);
 -- Имена полей совпадают со схемами Sanity, чтобы импорт Google-таблицы не ломался.
 -- Массивы/объекты — JSON в TEXT. Rich-text (body/bio) — HTML. Картинки — строка-URL.
 
