@@ -1,8 +1,10 @@
 import Link from 'next/link'
+import Head from 'next/head'
 import Layout from '@/components/Layout'
 import SocialMeta from '@/components/SocialMeta'
 import { LeadForm, CaptureTitle, SectionAccentTitle } from '@/components/ui'
 import { getCases, getCase } from '@/lib/db'
+import { caseSchema, employeePath, jsonLdText } from '@/lib/authorSchema'
 
 const SERVICE_LABELS = {
   viral: 'Вирусные видеоролики',
@@ -53,6 +55,7 @@ export default function CasePage({ item, related = [] }) {
   return (
     <Layout title={`${item.title} — кейс RGUARD`} description={seoDesc}>
       <SocialMeta title={seoTitle} description={seoDesc} url={`/cases/${item.id}`} image={item.coverImage} />
+      <Head><script key="case-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(caseSchema(item)) }} /></Head>
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <Link href="/cases" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Назад к кейсам</Link>
 
@@ -66,6 +69,15 @@ export default function CasePage({ item, related = [] }) {
           </div>
           <h1 className="glitch-hero text-5xl md:text-7xl font-black leading-none mb-8">{item.title}</h1>
           {item.shortText && <p className="text-zinc-300 text-xl leading-relaxed max-w-4xl">{item.shortText}</p>}
+          {item.expert && <div className="flex items-start gap-4 mt-8">
+            {item.expert.photo && <img src={item.expert.photo} alt="" width={56} height={56} loading="lazy" decoding="async" className="w-14 h-14 shrink-0 object-cover object-top" />}
+            <div className="min-w-0">
+              <p className="text-sm text-zinc-300">Эксперт кейса</p>
+              <Link href={employeePath(item.expert.slug)} className="text-red-400 underline underline-offset-4">{item.expert.name}</Link>
+              {item.expert.jobTitle && <p className="text-sm text-zinc-300">{item.expert.jobTitle}</p>}
+              {item.expert.description && <p className="text-sm text-zinc-300 mt-2 max-w-2xl">{item.expert.description}</p>}
+            </div>
+          </div>}
         </div>
 
         {item.coverImage && (
