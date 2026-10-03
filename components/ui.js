@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import HeroTitle from './HeroTitle'
+import SmartCaptcha from './SmartCaptcha'
 
 // Общие компоненты
 
@@ -70,6 +71,8 @@ export function CaptureTitle({ before, accent, after, className = '' }) {
 }
 
 export function LeadForm({ button = 'Отправить заявку', textarea = 'Опишите задачу' }) {
+  const [captchaToken, setCaptchaToken] = React.useState('')
+  const [captchaVersion, setCaptchaVersion] = React.useState(0)
   const [company,  setCompany]  = React.useState('')
   const [contact,  setContact]  = React.useState('')
   const [message,  setMessage]  = React.useState('')
@@ -80,6 +83,8 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
 
   const submit = async (e) => {
     e.preventDefault()
+    if (status === 'loading') return
+    if (!captchaToken) { setErrMsg('Подтвердите, что вы не робот.'); return }
     if (!contact.trim()) { setErrMsg('Укажите номер телефона'); return }
     if (!consent)         { setErrMsg('Необходимо согласие на обработку данных'); return }
     setErrMsg('')
@@ -88,12 +93,16 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
       const r = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ company, contact, message, button }),
+        body: JSON.stringify({ company, contact, message, button, captchaToken }),
       })
       if (r.ok) { router.push('/thank-you'); return }
-      setStatus('error'); setErrMsg('Ошибка отправки. Попробуйте ещё раз.')
+      const data = await r.json().catch(() => ({}))
+      setStatus('error'); setErrMsg(data.error || 'Ошибка отправки. Попробуйте ещё раз.')
     } catch {
       setStatus('error'); setErrMsg('Ошибка сети. Попробуйте ещё раз.')
+    } finally {
+      setCaptchaToken('')
+      setCaptchaVersion(v => v + 1)
     }
   }
 
@@ -132,7 +141,8 @@ export function LeadForm({ button = 'Отправить заявку', textarea 
             onClick={e => e.stopPropagation()}>Политике конфиденциальности</a>
         </span>
       </label>
-      {errMsg && <p className="font-mono-terminal text-red-400 text-xs">{errMsg}</p>}
+      <SmartCaptcha key={captchaVersion} onToken={setCaptchaToken} />
+      {errMsg && <p role="alert" className="font-mono-terminal text-red-400 text-xs">{errMsg}</p>}
       <button
         type="submit"
         disabled={status === 'loading' || !consent}

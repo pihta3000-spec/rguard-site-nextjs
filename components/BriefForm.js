@@ -1,4 +1,5 @@
 import React from 'react'
+import SmartCaptcha from './SmartCaptcha'
 import { useRouter } from 'next/router'
 import { STEPS, ROOT_ID, TASK_LABELS } from '../lib/briefSteps'
 
@@ -37,6 +38,8 @@ function OptionButton({ active, onClick, children }) {
 }
 
 export default function BriefForm({ onCancel, onSubmitted }) {
+  const [captchaToken, setCaptchaToken] = React.useState('')
+  const [captchaVersion, setCaptchaVersion] = React.useState(0)
   const [stepId, setStepId] = React.useState(ROOT_ID)
   const [history, setHistory] = React.useState([])
   const [answers, setAnswers] = React.useState({})
@@ -106,6 +109,8 @@ export default function BriefForm({ onCancel, onSubmitted }) {
 
   const submitContacts = async (e) => {
     e.preventDefault()
+    if (status === 'loading') return
+    if (!captchaToken) { setErrMsg('Подтвердите, что вы не робот.'); return }
     for (const f of step.fields) {
       if (f.required && !contacts[f.name]?.trim()) {
         setErrMsg(`Заполните поле «${f.label}»`)
@@ -122,7 +127,7 @@ export default function BriefForm({ onCancel, onSubmitted }) {
       const r = await fetch('/api/brief', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers, contacts }),
+        body: JSON.stringify({ answers, contacts, captchaToken }),
       })
       if (r.ok) {
         onSubmitted?.()
@@ -130,10 +135,14 @@ export default function BriefForm({ onCancel, onSubmitted }) {
         return
       }
       setStatus('error')
-      setErrMsg('Ошибка отправки. Попробуйте еще раз.')
+      const data = await r.json().catch(() => ({}))
+      setErrMsg(data.error || 'Ошибка отправки. Попробуйте еще раз.')
     } catch {
       setStatus('error')
       setErrMsg('Ошибка сети. Попробуйте еще раз.')
+    } finally {
+      setCaptchaToken('')
+      setCaptchaVersion(v => v + 1)
     }
   }
 
@@ -227,7 +236,8 @@ export default function BriefForm({ onCancel, onSubmitted }) {
               </a>
             </span>
           </label>
-          {errMsg && <p className="font-mono-terminal text-red-400 text-xs">{errMsg}</p>}
+          <SmartCaptcha key={captchaVersion} onToken={setCaptchaToken} />
+          {errMsg && <p role="alert" className="font-mono-terminal text-red-400 text-xs">{errMsg}</p>}
           <div className="flex flex-wrap gap-3 items-center justify-between pt-2">
             <button type="button" onClick={goBack} className="btn-secondary">Назад</button>
             <button

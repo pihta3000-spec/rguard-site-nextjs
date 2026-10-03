@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { verifySmartCaptcha } from '../../lib/smartCaptcha'
 import { STEPS, ROOT_ID, TASK_LABELS } from '../../lib/briefSteps'
 import { sendLeadToRguardApp } from '../../lib/rguardAppLeads'
 
@@ -27,6 +28,9 @@ function buildAnswersRows(answers) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
+
+  const captchaError = await verifySmartCaptcha(req.body?.captchaToken)
+  if (captchaError) return res.status(captchaError.status).json({ error: captchaError.error })
 
   const { answers, contacts } = req.body || {}
 

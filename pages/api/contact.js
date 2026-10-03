@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { verifySmartCaptcha } from '../../lib/smartCaptcha'
 import { sendLeadToRguardApp } from '../../lib/rguardAppLeads'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -9,7 +10,10 @@ const ALBATO_WEBHOOK = 'https://h.albato.ru/wh/38/1lfg8o0/6SsVMAXBQo-THCEglgsN0Z
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  const { company, contact, message, button } = req.body
+  const captchaError = await verifySmartCaptcha(req.body?.captchaToken)
+  if (captchaError) return res.status(captchaError.status).json({ error: captchaError.error })
+
+  const { company, contact, message, button } = req.body || {}
 
   if (!contact) return res.status(400).json({ error: 'Телефон обязателен' })
 
