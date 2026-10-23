@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS cases (
   whatWorked TEXT,            -- JSON [string]
   insight    TEXT,            -- «Главный инсайт кейса» (блок // СИЛЬНЫЙ ИНСАЙТ)
   coverImage TEXT,            -- URL графической обложки карточки
+  seo        TEXT,            -- JSON {metaTitle,metaDescription,ogImage}
   featured   INTEGER DEFAULT 0,
   "order"    INTEGER
 );

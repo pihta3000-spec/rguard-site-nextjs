@@ -49,12 +49,12 @@ export default function CasePage({ item, related = [] }) {
   const links = item.links || []
   const worked = item.whatWorked || []
   const isLocalVideo = (link) => /^\/.*\.(mp4|webm|mov)(\?|#|$)/i.test(link)
-  const seoTitle = `Кейс ${item.title} — RGUARD`
-  const seoDesc = item.shortText || `Кейс RGUARD: ${item.title}.`
+  const seoTitle = item.seo?.metaTitle || `Кейс ${item.title} — RGUARD`
+  const seoDesc = item.seo?.metaDescription || item.shortText || `Кейс RGUARD: ${item.title}.`
 
   return (
     <Layout title={`${item.title} — кейс RGUARD`} description={seoDesc}>
-      <SocialMeta title={seoTitle} description={seoDesc} url={`/cases/${item.id}`} image={item.coverImage} />
+      <SocialMeta title={seoTitle} description={seoDesc} url={`/cases/${item.id}`} image={item.seo?.ogImage || item.coverImage} />
       <Head><script key="case-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(caseSchema(item)) }} /></Head>
       <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto">
         <Link href="/cases" className="mb-10 inline-block font-mono-terminal text-zinc-500 hover:text-red-400 text-xs uppercase tracking-[3px]">← Назад к кейсам</Link>
